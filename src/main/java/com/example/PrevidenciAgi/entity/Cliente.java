@@ -8,6 +8,8 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+// Campo de relacionamento com a entidade Simulacao
 import jakarta.persistence.OneToMany;
 
 @Entity

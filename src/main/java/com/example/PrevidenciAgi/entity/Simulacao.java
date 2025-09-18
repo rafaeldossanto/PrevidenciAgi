@@ -3,5 +3,5 @@ package com.example.PrevidenciAgi.entity;
 import jakarta.persistence.Entity;
 
 @Entity
-public class Cliente {
+public class Simulacao {
 }

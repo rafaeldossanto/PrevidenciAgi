@@ -6,8 +6,19 @@ import lombok.*;
 import org.hibernate.validator.constraints.br.CPF;
 
 @Data
-
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class ClienteDto {
+
+    public static ClienteDto fromCliente(Cliente cliente) {
+        return ClienteDto.builder()
+                .cpf(cliente.getCpf())
+                .nome(cliente.getNome())
+                .genero(cliente.getGenero())
+                .email(cliente.getEmail())
+                .build();
+    }
 
     @NotBlank(message = "CPF é obrigatório")
     @CPF(message = "CPF inválido")
@@ -30,10 +41,5 @@ public class ClienteDto {
     @Size(min = 6, message = "Senha deve ter no mínimo 6 caracteres")
     private String senha;
 
-    public ClienteDto(Cliente clientedto) {
-        this.cpf = clientedto.getCpf();
-        this.nome = clientedto.getNome();
-        this.genero = clientedto.getGenero();
-        this.email = clientedto.getEmail();
-    }
+
 }

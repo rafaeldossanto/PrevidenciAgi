@@ -18,7 +18,7 @@ public class ClienteService {
         }
 
         Cliente clientedto = clienteRepository.save(cliente);
-        return new ClienteDto(clientedto);
+        return ClienteDto.fromCliente(clientedto);
     }
 
     public void deletarCliente(Long id){

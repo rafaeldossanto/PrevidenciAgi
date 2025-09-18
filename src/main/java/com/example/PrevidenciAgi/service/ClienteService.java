@@ -17,4 +17,11 @@ public class ClienteService {
         clienteRepository.save(cliente);
         return Optional.of(cliente);
     }
+
+    public void deletarCliente(Long id){
+        if (!clienteRepository.existsById(id)){
+            throw new IllegalArgumentException("Cliente não encontrado.");
+        }
+        clienteRepository.deleteById(id);
+    }
 }

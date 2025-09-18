@@ -4,10 +4,7 @@ import com.example.PrevidenciAgi.dto.ClienteDto;
 import com.example.PrevidenciAgi.entity.Cliente;
 import com.example.PrevidenciAgi.service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
@@ -19,5 +16,10 @@ public class ClienteController {
     @PostMapping("/criar")
     public ClienteDto cadastrarCliente(@RequestBody Cliente cliente){
         return clienteService.CadastrarCliente(cliente);
+    }
+
+    @DeleteMapping("/deletar/{id}")
+    public void deletarCliente(@PathVariable Long id){
+        clienteService.deletarCliente(id);
     }
 }

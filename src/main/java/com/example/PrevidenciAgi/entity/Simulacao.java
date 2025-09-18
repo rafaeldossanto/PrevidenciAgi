@@ -12,23 +12,26 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Data // (Lombok) - Gera automaticamente os getters, setters, toString, equals e hashCode
-@NoArgsConstructor // (Lombok) - Cria um construtor sem argumentos, obrigatório pelo JPA
-@AllArgsConstructor // (Lombok) - Cria um construtor com todos os argumentos
-@Table(name="Simulacao") // Define o nome da tabela no banco de dados
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "Simulacao")
 public class Simulacao {
 
-    @Id // Marca este campo como a chave primária da tabela
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // Configura o banco de dados para gerar automaticamente o ID (auto-incremento)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idSimulacao;
-    private double  valorMensal, valorReceber;
-    private String genero, tipoContribuicao;
-    private Integer dataInicial, dataAposentar, tempoContribuicao, tempoRecebimento;
 
-    // Campo de relacionamento com a entidade Cliente
-    // @ManyToOne indica que muitas simulações podem pertencer a um único cliente (relação N:1)
+    private Double valorMensal;
+    private Double valorReceber;
+    private String genero;
+    private String tipoContribuicao;
+    private Integer dataInicial;
+    private Integer dataAposentar;
+    private Integer tempoContribuicao;
+    private Integer tempoRecebimento;
+
     @ManyToOne
-    // @JoinColumn(name = "cliente_id") - Cria uma coluna na tabela "simulacao" chamada "cliente_id", que será a chave estrangeira (foreign key)
     @JoinColumn(name = "idCliente")
     private Cliente cliente;
 }

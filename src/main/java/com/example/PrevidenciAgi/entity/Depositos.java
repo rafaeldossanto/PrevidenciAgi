@@ -21,6 +21,6 @@ public class Depositos {
     private LocalDateTime dataDeposito;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "cliente_id", referencedColumnName = "id")
+    @JoinColumn(name = "idCliente", referencedColumnName = "id")
     private Cliente cliente;
 }

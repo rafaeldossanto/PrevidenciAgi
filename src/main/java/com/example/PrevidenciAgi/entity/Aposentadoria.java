@@ -23,7 +23,7 @@ public class Aposentadoria {
     private String dataContratada;      // Data em que contratou o plano
 
     @ManyToOne
-    @JoinColumn(name = "cliente_id", nullable = false)  // Relacionamento com Cliente
+    @JoinColumn(name = "idCliente", nullable = false)  // Relacionamento com Cliente
     private Cliente cliente;  // Cliente que escolheu esse plano de aposentadoria
 }
 

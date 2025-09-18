@@ -31,6 +31,6 @@ public class Simulacao {
     // @ManyToOne indica que muitas simulações podem pertencer a um único cliente (relação N:1)
     @ManyToOne
     // @JoinColumn(name = "cliente_id") - Cria uma coluna na tabela "simulacao" chamada "cliente_id", que será a chave estrangeira (foreign key)
-    @JoinColumn(name = "cliente_id")
+    @JoinColumn(name = "idCliente")
     private Cliente cliente;
 }

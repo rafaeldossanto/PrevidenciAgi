@@ -1,22 +1,36 @@
 package com.example.PrevidenciAgi.dto;
 
-import jakarta.validation.constraints.NotNull;
-import lombok.Data;
+import jakarta.validation.constraints.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.hibernate.validator.constraints.br.CPF;
 
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class ClienteDto {
-    @NotNull(message = "CPF é obrigatório")
+
+    @NotBlank(message = "CPF é obrigatório")
+    @CPF(message = "CPF inválido")
     private String cpf;
 
-    @NotNull(message = "Nome é obrigatório")
+    @NotBlank(message = "Nome é obrigatório")
+    @Size(min = 2, max = 100, message = "Nome deve ter entre 2 e 100 caracteres")
     private String nome;
 
-    @NotNull(message = "Gênero é obrigatório")
+    @NotBlank(message = "Gênero é obrigatório")
+    @Pattern(regexp = "^(MASCULINO|FEMININO|OUTRO)$",
+            message = "Gênero deve ser MASCULINO, FEMININO ou OUTRO")
     private String genero;
 
-    @NotNull(message = "Email é obrigatório")
+    @NotBlank(message = "Email é obrigatório")
+    @Email(message = "Email inválido")
     private String email;
 
-    @NotNull(message = "Senha é obrigatório")
+    @NotBlank(message = "Senha é obrigatória")
+    @Size(min = 6, message = "Senha deve ter no mínimo 6 caracteres")
     private String senha;
 }

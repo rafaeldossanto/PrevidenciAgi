@@ -1,6 +1,6 @@
 package com.example.PrevidenciAgi.controller;
 
-import com.example.PrevidenciAgi.dto.ClienteDto;
+import com.example.PrevidenciAgi.entity.Cliente;
 import com.example.PrevidenciAgi.service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,7 +17,7 @@ public class ClienteController {
     private ClienteService clienteService;
 
     @PostMapping("/criar")
-    public Optional<ClienteDto> cadastrarCliente(@RequestBody ClienteDto clienteDto){
-        return clienteService.CadastrarCliente(clienteDto);
+    public Optional<Cliente> cadastrarCliente(@RequestBody Cliente cliente){
+        return clienteService.CadastrarCliente(cliente);
     }
 }

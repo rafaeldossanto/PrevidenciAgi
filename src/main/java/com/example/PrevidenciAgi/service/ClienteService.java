@@ -1,6 +1,6 @@
 package com.example.PrevidenciAgi.service;
 
-import com.example.PrevidenciAgi.dto.ClienteDto;
+import com.example.PrevidenciAgi.entity.Cliente;
 import com.example.PrevidenciAgi.repository.ClienteRepository;
 import org.springframework.stereotype.Service;
 
@@ -10,7 +10,7 @@ import java.util.Optional;
 public class ClienteService {
     private ClienteRepository clienteRepository;
 
-    public Optional<ClienteDto> CadastrarCliente(ClienteDto cliente){
+    public Optional<Cliente> CadastrarCliente(Cliente cliente){
         if (clienteRepository.existsByCpf(cliente.getCpf())){
             throw new IllegalArgumentException("Cliente cadastrado.");
         }

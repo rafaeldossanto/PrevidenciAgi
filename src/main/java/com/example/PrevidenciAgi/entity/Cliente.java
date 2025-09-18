@@ -23,11 +23,12 @@ public class Cliente {
     @NotNull
     private String cpf, nome, genero, email, senha;
 
-    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Simulacao> simulacoes;
+    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Depositos> depositos;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne
     @JoinColumn(name = "idAposentadoria")
     private Aposentadoria aposentadoria;
 }

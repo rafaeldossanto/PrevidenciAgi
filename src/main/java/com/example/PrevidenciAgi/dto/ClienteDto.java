@@ -1,16 +1,12 @@
 package com.example.PrevidenciAgi.dto;
 
+import com.example.PrevidenciAgi.entity.Cliente;
 import jakarta.validation.constraints.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.validator.constraints.br.CPF;
 
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
+@Data
+
 public class ClienteDto {
 
     @NotBlank(message = "CPF é obrigatório")
@@ -33,4 +29,11 @@ public class ClienteDto {
     @NotBlank(message = "Senha é obrigatória")
     @Size(min = 6, message = "Senha deve ter no mínimo 6 caracteres")
     private String senha;
+
+    public ClienteDto(Cliente clientedto) {
+        this.cpf = clientedto.getCpf();
+        this.nome = clientedto.getNome();
+        this.genero = clientedto.getGenero();
+        this.email = clientedto.getEmail();
+    }
 }

@@ -20,12 +20,10 @@ public class Simulacao {
 
     @Id // Marca este campo como a chave primária da tabela
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Configura o banco de dados para gerar automaticamente o ID (auto-incremento)
-    private Long id;
-
-    // Atributos da simulação
-    private String descricao;
-    private String objetivo;
-    private String resultado; // Armazena o resultado da simulação
+    private Long idSimulacao;
+    private double  valorMensal, valorReceber;
+    private String genero, tipoContribuicao;
+    private Integer dataInicial, dataAposentar, tempoContribuicao, tempoRecebimento;
 
     // Campo de relacionamento com a entidade Cliente
     // @ManyToOne indica que muitas simulações podem pertencer a um único cliente (relação N:1)

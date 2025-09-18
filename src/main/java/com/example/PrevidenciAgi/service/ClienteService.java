@@ -1,21 +1,24 @@
 package com.example.PrevidenciAgi.service;
 
+import com.example.PrevidenciAgi.dto.ClienteDto;
 import com.example.PrevidenciAgi.entity.Cliente;
 import com.example.PrevidenciAgi.repository.ClienteRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
 
 @Service
 public class ClienteService {
+    @Autowired
     private ClienteRepository clienteRepository;
 
-    public Optional<Cliente> CadastrarCliente(Cliente cliente){
+    public ClienteDto CadastrarCliente(Cliente cliente){
         if (clienteRepository.existsByCpf(cliente.getCpf())){
             throw new IllegalArgumentException("Cliente cadastrado.");
         }
-        clienteRepository.save(cliente);
-        return Optional.of(cliente);
+
+        Cliente clientedto = clienteRepository.save(cliente);
+        return new ClienteDto(clientedto);
     }
 
     public void deletarCliente(Long id){

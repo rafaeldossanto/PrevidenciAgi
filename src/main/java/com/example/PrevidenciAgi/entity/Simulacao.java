@@ -10,6 +10,7 @@ import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import java.time.LocalDate; // Importação adicionada para o LocalDate
 
 @Entity
 @Data
@@ -26,8 +27,10 @@ public class Simulacao {
     private Double valorReceber;
     private String genero;
     private String tipoContribuicao;
-    private Integer dataInicial;
-    private Integer dataAposentar;
+
+    private LocalDate dataInicial; // Alterado de Integer para LocalDate
+    private LocalDate dataAposentar; // Alterado de Integer para LocalDate
+    
     private Integer tempoContribuicao;
     private Integer tempoRecebimento;
 

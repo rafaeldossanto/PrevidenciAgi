@@ -1,3 +1,10 @@
+/*
+Módulo: SimulacaoDto.java
+Descrição: Define as regras de negócio da nossa entity simulação
+Autor: Gustavo Henrique dos Anjos
+Data: 18/09/2025
+*/
+
 package com.example.PrevidenciAgi.dto;
 
 import jakarta.validation.constraints.NotNull;

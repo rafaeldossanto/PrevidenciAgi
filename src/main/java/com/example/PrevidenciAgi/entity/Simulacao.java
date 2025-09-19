@@ -1,3 +1,10 @@
+"""
+Módulo: Simulacao.java
+Descrição: Define a entity simulação e suas propriedades
+Autor: Gustavo Henrique dos Anjos
+Data: 17/09/2025
+"""
+
 package com.example.PrevidenciAgi.entity;
 
 import jakarta.persistence.Entity;

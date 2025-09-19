@@ -3,6 +3,7 @@ package com.example.PrevidenciAgi.dto;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.Data;
+import java.time.LocalDate; // Importação adicionada para o LocalDate
 
 @Data
 public class SimulacaoDto {
@@ -18,10 +19,10 @@ public class SimulacaoDto {
     private String tipoContribuicao;
 
     @NotNull(message = "A data inicial não pode ser nula.")
-    private Integer dataInicial;
+    private LocalDate dataInicial; // Alterado de Integer para LocalDate
 
     @NotNull(message = "A data de aposentadoria não pode ser nula.")
-    private Integer dataAposentar;
+    private LocalDate dataAposentar; // Alterado de Integer para LocalDate
 
     @NotNull(message = "O tempo de contribuicao não pode ser nulo.")
     @Positive(message = "O tempo de contribuicao deve ser um numero positivo.")

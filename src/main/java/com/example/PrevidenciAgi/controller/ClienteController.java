@@ -1,6 +1,7 @@
 package com.example.PrevidenciAgi.controller;
 
 import com.example.PrevidenciAgi.dto.ClienteDto;
+import com.example.PrevidenciAgi.dto.cliente.response.DadosCadastroResponse;
 import com.example.PrevidenciAgi.entity.Cliente;
 import com.example.PrevidenciAgi.service.ClienteService;
 import jakarta.persistence.EntityNotFoundException;
@@ -22,7 +23,7 @@ public class ClienteController {
 
     @PostMapping("/criar")
     @Transactional
-    public ClienteDto cadastrarCliente(@Valid @RequestBody Cliente cliente) {
+    public DadosCadastroResponse cadastrarCliente(@Valid @RequestBody Cliente cliente) {
         return clienteService.CadastrarCliente(cliente);
     }
 

@@ -1,7 +1,5 @@
 package com.example.PrevidenciAgi.service;
 
-import com.example.PrevidenciAgi.dto.ClienteDto;
-import com.example.PrevidenciAgi.dto.cliente.request.DadosCadastroRequest;
 import com.example.PrevidenciAgi.dto.cliente.response.DadosCadastroResponse;
 import com.example.PrevidenciAgi.entity.Cliente;
 import com.example.PrevidenciAgi.repository.ClienteRepository;
@@ -21,7 +19,7 @@ public class ClienteService {
         this.clienteRepository = clienteRepository;
     }
 
-    public DadosCadastroResponse CadastrarCliente(DadosCadastroRequest dados){
+    public DadosCadastroResponse CadastrarCliente(@Valid Cliente dados){
         Cliente cliente = clienteRepository.save(new Cliente(dados));
         return new DadosCadastroResponse(cliente);
     }

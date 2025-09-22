@@ -1,6 +1,5 @@
 package com.example.PrevidenciAgi.service;
 
-import com.example.PrevidenciAgi.dto.cliente.request.DadosCadastroRequest;
 import com.example.PrevidenciAgi.entity.Cliente;
 import com.example.PrevidenciAgi.repository.ClienteRepository;
 import jakarta.persistence.EntityExistsException;

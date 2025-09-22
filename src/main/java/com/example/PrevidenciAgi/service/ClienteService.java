@@ -1,18 +1,36 @@
 package com.example.PrevidenciAgi.service;
 
+import com.example.PrevidenciAgi.component.JwtTokenGenerator;
 import com.example.PrevidenciAgi.entity.Cliente;
 import com.example.PrevidenciAgi.repository.ClienteRepository;
 import jakarta.persistence.EntityExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.UUID;
 
 
 @Service
 public class ClienteService {
     @Autowired
     private ClienteRepository clienteRepository;
-    private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+    @Autowired
+    private JwtTokenGenerator jwtTokenGenerator;
+
+    public String login(String email, String senha) {
+        Cliente cliente = clienteRepository.findByEmail(email);
+
+
+        if (!passwordEncoder.matches(senha, cliente.getSenha())) {
+            throw new RuntimeException("Senha incorreta");
+        }
+
+        // Gera um token simples (substitir JWT depois)
+        return "token-simples-" + UUID.randomUUID();
+    }
 
     public void CadastrarCliente(Cliente cliente) {
         if (clienteRepository.existsByCpf(cliente.getCpf())) {

@@ -1,5 +1,6 @@
 package com.example.PrevidenciAgi.controller;
 
+import com.example.PrevidenciAgi.dto.cliente.request.LoginRequest;
 import com.example.PrevidenciAgi.entity.Cliente;
 import com.example.PrevidenciAgi.service.ClienteService;
 import jakarta.validation.Valid;
@@ -16,6 +17,16 @@ import java.util.Map;
 public class ClienteController {
     @Autowired
     private ClienteService clienteService;
+
+    @PostMapping("/login")
+    public ResponseEntity<Map<String, String>> login(@RequestBody LoginRequest login){
+        String token = clienteService.login(login.email(), login.senha());
+
+        return ResponseEntity.ok(Map.of(
+                "token", token,
+                "message", "Login realizado com sucesso"
+        ));
+    }
 
     @PostMapping("/criar")
     @Transactional

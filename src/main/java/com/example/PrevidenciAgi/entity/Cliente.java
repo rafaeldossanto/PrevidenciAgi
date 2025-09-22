@@ -28,7 +28,7 @@ public class Cliente {
     @NotBlank(message = "O campo nome e obrigatorio!")
     private String nome;
 
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
     private GeneroEnum genero;
 
     @Email

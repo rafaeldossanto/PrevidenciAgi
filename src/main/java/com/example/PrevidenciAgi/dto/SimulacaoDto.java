@@ -7,6 +7,7 @@ Data: 18/09/2025
 
 package com.example.PrevidenciAgi.dto;
 
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.Data;
@@ -15,11 +16,11 @@ import java.time.LocalDate; // Importação adicionada para o LocalDate
 @Data
 public class SimulacaoDto {
 
-    @NotNull(message = "O valor mensal não pode ser nulo.")
+    @NotBlank(message = "O valor mensal e obrigatorio!")
     @Positive(message = "O valor mensal deve ser um número positivo.")
     private Double valorMensal;
 
-    @NotNull(message = "O gênero não pode ser nulo.")
+    @NotBlank(message = "O genero e obrigatorio!")
     private String genero;
 
     @NotNull(message = "O tipo de contribuicao não pode ser nulo.")

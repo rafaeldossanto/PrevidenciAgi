@@ -1,9 +1,12 @@
 package com.example.PrevidenciAgi.service;
 
 import com.example.PrevidenciAgi.dto.ClienteDto;
+import com.example.PrevidenciAgi.dto.cliente.request.DadosCadastroRequest;
+import com.example.PrevidenciAgi.dto.cliente.response.DadosCadastroResponse;
 import com.example.PrevidenciAgi.entity.Cliente;
 import com.example.PrevidenciAgi.repository.ClienteRepository;
 import jakarta.persistence.EntityExistsException;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,15 +15,15 @@ import org.springframework.stereotype.Service;
 @Service
 public class ClienteService {
     @Autowired
-    private ClienteRepository clienteRepository;
+    private final ClienteRepository clienteRepository;
 
-    public ClienteDto CadastrarCliente(Cliente cliente){
-        if (clienteRepository.existsByCpf(cliente.getCpf())){
-            throw new IllegalArgumentException("Cliente cadastrado.");
-        }
+    public ClienteService(ClienteRepository clienteRepository) {
+        this.clienteRepository = clienteRepository;
+    }
 
-        Cliente clientedto = clienteRepository.save(cliente);
-        return ClienteDto.fromCliente(clientedto);
+    public DadosCadastroResponse CadastrarCliente(DadosCadastroRequest dados){
+        Cliente cliente = clienteRepository.save(new Cliente(dados));
+        return new DadosCadastroResponse(cliente);
     }
 
     public void deletarCliente(Long id){

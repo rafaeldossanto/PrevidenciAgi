@@ -1,7 +1,6 @@
-package com.example.PrevidenciAgi.dto.cliente.response;
+package com.example.PrevidenciAgi.dto.cliente.request;
 
-public record ClienteResponse(
-        Long id,
+public record DadosCadastroRequest(
         String cpf,
         String nome,
         String genero,

@@ -30,16 +30,13 @@ public class ClienteService {
         Cliente cliente = clienteRepository.findById(id)
                 .orElseThrow(() -> new EntityExistsException("Cliente com esse Id nao encontrado."));
 
-        String dadoAntigo;
 
         switch (dado.toLowerCase()) {
             case "email":
-                dadoAntigo = cliente.getEmail();
                 cliente.setEmail(dadoNovo);
                 break;
 
             case "senha":
-                dadoAntigo = cliente.getSenha();
                 String novaSenha = passwordEncoder.encode(dadoNovo);
                 cliente.setSenha(novaSenha);
                 break;

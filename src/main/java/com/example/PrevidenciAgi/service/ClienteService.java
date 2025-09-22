@@ -1,36 +1,32 @@
 package com.example.PrevidenciAgi.service;
 
-import com.example.PrevidenciAgi.dto.ClienteDto;
+import com.example.PrevidenciAgi.dto.cliente.request.DadosCadastroRequest;
 import com.example.PrevidenciAgi.entity.Cliente;
 import com.example.PrevidenciAgi.repository.ClienteRepository;
 import jakarta.persistence.EntityExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
 
 
 @Service
 public class ClienteService {
     @Autowired
     private ClienteRepository clienteRepository;
+    private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-    public ClienteDto CadastrarCliente(Cliente cliente){
-        if (clienteRepository.existsByCpf(cliente.getCpf())){
+    public void CadastrarCliente(Cliente cliente) {
+        if (clienteRepository.existsByCpf(cliente.getCpf())) {
             throw new IllegalArgumentException("Cliente cadastrado.");
         }
 
-        Cliente clientedto = clienteRepository.save(cliente);
-        return ClienteDto.fromCliente(clientedto);
+        String senhaCriptografada = passwordEncoder.encode(cliente.getSenha());
+        cliente.setSenha(senhaCriptografada);
+
+        clienteRepository.save(cliente);
     }
 
-    public void deletarCliente(Long id){
-        if (!clienteRepository.existsById(id)){
-            throw new IllegalArgumentException("Cliente não encontrado.");
-        }
-        clienteRepository.deleteById(id);
-    }
-
-    public String atualizarDados(Long id, String dado, String dadoNovo) {
+    public void atualizarDados(Long id, String dado, String dadoNovo) {
         Cliente cliente = clienteRepository.findById(id)
                 .orElseThrow(() -> new EntityExistsException("Cliente com esse Id nao encontrado."));
 
@@ -44,13 +40,13 @@ public class ClienteService {
 
             case "senha":
                 dadoAntigo = cliente.getSenha();
-                cliente.setSenha(dadoNovo);
+                String novaSenha = passwordEncoder.encode(dadoNovo);
+                cliente.setSenha(novaSenha);
                 break;
 
             default:
                 throw new IllegalArgumentException("Campo '" + dado + "' não é válido para atualização. Use 'email' ou 'senha'");
         }
         clienteRepository.save(cliente);
-        return dado + " alterado de: " + dadoAntigo + " para: " + dadoNovo;
     }
 }

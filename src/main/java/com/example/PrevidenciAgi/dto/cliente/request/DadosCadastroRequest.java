@@ -4,7 +4,6 @@ public record DadosCadastroRequest(
         String cpf,
         String nome,
         String genero,
-        String email,
-        String senha
+        String email
 ) {
 }

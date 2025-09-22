@@ -21,12 +21,12 @@ public class ClienteController {
     private ClienteService clienteService;
 
     @PostMapping("/criar")
-    @Transactional // Explicita para o spring que esta conversando com o bcd, e gerencia transacoes do bcd automaticamente
-    public ClienteDto cadastrarCliente(@Valid @RequestBody Cliente cliente) { // Valid: se nao passar dados deixa explicito o que nao passou e nao percorre o service
+    @Transactional
+    public ClienteDto cadastrarCliente(@Valid @RequestBody Cliente cliente) {
         return clienteService.CadastrarCliente(cliente);
     }
 
-    @DeleteMapping("/deletar/{id}")
+    @PutMapping("/atualizar/{id}")
     public ResponseEntity<?> atualizarDados(
             @PathVariable Long id,
             @RequestBody Map<String, String> dadosAtualizacao) {

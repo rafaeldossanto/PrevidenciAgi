@@ -4,9 +4,11 @@ import com.example.PrevidenciAgi.dto.ClienteDto;
 import com.example.PrevidenciAgi.entity.Cliente;
 import com.example.PrevidenciAgi.service.ClienteService;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -19,7 +21,8 @@ public class ClienteController {
     private ClienteService clienteService;
 
     @PostMapping("/criar")
-    public ClienteDto cadastrarCliente(@RequestBody Cliente cliente) {
+    @Transactional // Explicita para o spring que esta conversando com o bcd, e gerencia transacoes do bcd automaticamente
+    public ClienteDto cadastrarCliente(@Valid @RequestBody Cliente cliente) { // Valid: se nao passar dados deixa explicito o que nao passou e nao percorre o service
         return clienteService.CadastrarCliente(cliente);
     }
 

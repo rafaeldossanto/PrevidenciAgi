@@ -12,6 +12,7 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -62,6 +63,20 @@ public class DepositosService {
         }
 
         return deposito;
+    }
+
+    public Depositos realizarDeposito(Long clienteId, double valor){
+        Cliente cliente = clienteRepository.findById(clienteId)
+                .orElseThrow(() -> new EntityNotFoundException("Cliente com esse Id nao encontrado."));
+
+        LocalDateTime agora = LocalDateTime.now();
+        int mesAtual = agora.getMonthValue();
+        int anoAtual = agora.getYear();
+        //Inacabado
+        /*mas eu quero fazer o seguinte, vamos supor que um cliente estabeleça que ele vai depositar 200 reais por mes,
+        e por algum a caso ele so fez depositos de 50 reais no mes e realizou 6 depositos em um unico mes,
+        eu quero pegar esses depositos e 4 deles serao considerados mensais e os outros 2 seriao aporte, entendeu ?*/
+        return null;
     }
 
 

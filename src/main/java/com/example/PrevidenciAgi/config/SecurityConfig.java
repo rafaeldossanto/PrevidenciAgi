@@ -20,19 +20,17 @@ public class SecurityConfig {
         return config.getAuthenticationManager();
     }
 
-    // ✅ Bean do PasswordEncoder
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-    // ✅ Configuração SIMPLES do SecurityFilterChain
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(authz -> authz
-                        .requestMatchers("/previdencia/**").permitAll() // ⚠️ PERMITE TUDO temporariamente
+                        .requestMatchers("/previdencia/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session

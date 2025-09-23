@@ -1,5 +1,6 @@
 package com.example.PrevidenciAgi.repository;
 
+import com.example.PrevidenciAgi.entity.Aposentadoria;
 import com.example.PrevidenciAgi.entity.Cliente;
 import com.example.PrevidenciAgi.entity.Depositos;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,7 +12,7 @@ import java.util.List;
 
 @Repository
 public interface DepositosRepository extends JpaRepository<Depositos, Long> {
-    List<Depositos> findByCliente(Cliente cliente);
+    List<Depositos> findByAposentadoria(Aposentadoria aposentadoriaCliente);
 
     @Query("SELECT SUM(d.valor) FROM Depositos d " +
            "WHERE d.cliente.id = :clienteId " +

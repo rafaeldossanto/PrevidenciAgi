@@ -27,6 +27,6 @@ public class Depositos {
     private LocalDateTime dataDeposito;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "idCliente", referencedColumnName = "id")
-    private Cliente cliente;
+    @JoinColumn(name = "idAposentadoria", referencedColumnName = "id")
+    private Aposentadoria aposentadoriaCliente;
 }

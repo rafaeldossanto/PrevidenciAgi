@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -18,13 +19,11 @@ public class Depositos {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idDeposito;
 
-    @NotBlank(message = "O tipo e obrigatorio!")
     private String tipo;
 
-    @NotBlank(message = "O valor e obrigatorio!")
     private double valor;
 
-    @NotNull
+    @CreationTimestamp
     private LocalDateTime dataDeposito;
 
     @ManyToOne(optional = false)

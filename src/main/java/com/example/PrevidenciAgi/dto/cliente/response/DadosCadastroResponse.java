@@ -1,12 +1,13 @@
 package com.example.PrevidenciAgi.dto.cliente.response;
 
 import com.example.PrevidenciAgi.entity.Cliente;
+import com.example.PrevidenciAgi.enums.Genero;
 
 public record DadosCadastroResponse(
         Long id,
         String cpf,
         String nome,
-        String genero,
+        Genero genero,
         String email,
         String senha
 ) {

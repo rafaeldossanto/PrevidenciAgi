@@ -1,7 +1,9 @@
 package com.example.PrevidenciAgi.entity;
 
 import com.example.PrevidenciAgi.dto.cliente.request.DadosCadastroRequest;
+import com.example.PrevidenciAgi.enums.Genero;
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
@@ -11,7 +13,6 @@ import java.util.List;
 
 
 @Entity
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -28,8 +29,8 @@ public class Cliente {
     @NotBlank(message = "O campo nome e obrigatorio!")
     private String nome;
 
-    @NotBlank(message = "O genero e obrigatorio!")
-    private String genero;
+    @Enumerated(EnumType.STRING)
+    private Genero genero;
 
     @NotBlank(message = "O email e obrigatorio!")
     private String email;

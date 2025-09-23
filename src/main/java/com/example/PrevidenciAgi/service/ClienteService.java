@@ -25,13 +25,6 @@ public class ClienteService {
         return new DadosCadastroResponse(cliente);
     }
 
-    public void deletarCliente(Long id) {
-        if (!clienteRepository.existsById(id)) {
-            throw new IllegalArgumentException("Cliente não encontrado.");
-        }
-        clienteRepository.deleteById(id);
-    }
-
     public String atualizarDados(Long id, String dado, String dadoNovo) {
         Cliente cliente = clienteRepository.findById(id)
                 .orElseThrow(() -> new EntityExistsException("Cliente com esse Id nao encontrado."));

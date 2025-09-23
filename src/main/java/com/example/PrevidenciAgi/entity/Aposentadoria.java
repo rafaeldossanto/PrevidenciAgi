@@ -10,12 +10,11 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Aposentadoria {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idAposentadoria;  // O id não será mostrado no DTO
 
-    @NotBlank(message = "O tipo de aposentadoria e obrigatorio!")
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private String tipoAposentadoria;   // Ex: progressiva ou regressiva
 

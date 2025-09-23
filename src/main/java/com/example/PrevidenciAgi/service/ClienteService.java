@@ -7,9 +7,8 @@ import com.example.PrevidenciAgi.repository.ClienteRepository;
 import jakarta.persistence.EntityExistsException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
-
 
 @Service
 public class ClienteService {
@@ -20,9 +19,17 @@ public class ClienteService {
         this.clienteRepository = clienteRepository;
     }
 
-    public DadosCadastroResponse CadastrarCliente(DadosCadastroRequest dados){
-        Cliente cliente = clienteRepository.save(new Cliente(dados)); // Entidade
-        return new DadosCadastroResponse(cliente); // DTO
+    public DadosCadastroResponse CadastrarCliente(@Valid DadosCadastroRequest dados) {
+        Cliente cliente = new Cliente(dados);
+        clienteRepository.save(cliente);
+        return new DadosCadastroResponse(cliente);
+    }
+
+    public void deletarCliente(Long id) {
+        if (!clienteRepository.existsById(id)) {
+            throw new IllegalArgumentException("Cliente não encontrado.");
+        }
+        clienteRepository.deleteById(id);
     }
 
     public String atualizarDados(Long id, String dado, String dadoNovo) {

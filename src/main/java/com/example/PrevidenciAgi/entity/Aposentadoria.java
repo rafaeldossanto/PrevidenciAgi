@@ -1,5 +1,6 @@
 package com.example.PrevidenciAgi.entity;
 
+import com.example.PrevidenciAgi.entity.Enum.TipoAposentadoriaEnum;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
@@ -15,9 +16,8 @@ public class Aposentadoria {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idAposentadoria;  // O id não será mostrado no DTO
 
-    @NotBlank(message = "O tipo de aposentadoria e obrigatorio!")
-    @Column(nullable = false)
-    private String tipoAposentadoria;   // Ex: progressiva ou regressiva
+    @Enumerated(EnumType.STRING)
+    private TipoAposentadoriaEnum tipoAposentadoria;
 
     @NotBlank(message = "A data de aposentadoria e obrigatorio!")
     @Column(nullable = false)

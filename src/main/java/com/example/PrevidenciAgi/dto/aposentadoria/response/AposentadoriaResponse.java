@@ -1,8 +1,10 @@
 package com.example.PrevidenciAgi.dto.aposentadoria.response;
 
+import com.example.PrevidenciAgi.entity.Enum.TipoAposentadoriaEnum;
+
 public record AposentadoriaResponse(
         Long idAposentadoria,
-        String tipoAposentadoria,
+        TipoAposentadoriaEnum tipoAposentadoria,
         String dataAposentar,
         String dataContratada
 ) {

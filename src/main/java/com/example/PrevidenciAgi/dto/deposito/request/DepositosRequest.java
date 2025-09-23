@@ -1,6 +1,6 @@
 package com.example.PrevidenciAgi.dto.deposito.request;
 
-public record DepositosRequest(
+public record   DepositosRequest(
         Double valor
 ) {
 }

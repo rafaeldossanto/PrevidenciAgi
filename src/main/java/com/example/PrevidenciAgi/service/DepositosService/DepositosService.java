@@ -8,6 +8,7 @@ import com.example.PrevidenciAgi.entity.Depositos;
 import com.example.PrevidenciAgi.repository.ClienteRepository;
 import com.example.PrevidenciAgi.repository.DepositosRepository;
 import jakarta.persistence.EntityExistsException;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -47,6 +48,20 @@ public class DepositosService {
                         deposito.getDataDeposito()
                 ))
                 .toList();
+    }
+
+    public Depositos listarUnico (Long clienteId, Long depositoId){
+        Cliente cliente = clienteRepository.findById(clienteId)
+                .orElseThrow(() -> new EntityNotFoundException("Cliente com esse Id nao encontrado."));
+
+        Depositos deposito = depositosRepository.findById(depositoId)
+                .orElseThrow(() -> new EntityNotFoundException("Cliente com esse Id nao encontrado."));
+
+        if (!deposito.getCliente().getId().equals(cliente.getId())) {
+            throw new IllegalArgumentException("Esse depósito não pertence ao cliente informado.");
+        }
+
+        return deposito;
     }
 
 

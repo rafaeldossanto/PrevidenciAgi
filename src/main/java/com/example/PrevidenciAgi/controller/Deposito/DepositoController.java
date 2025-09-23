@@ -30,4 +30,12 @@ public class DepositoController {
     public ResponseEntity<List<DepositosResponse>> listarDepositos(@PathVariable Long id){
         return ResponseEntity.ok(depositosService.listarDepositos(id));
     }
+
+    @GetMapping("/listar/{id}/{idUnico}")
+    public ResponseEntity<DepositosResponse> listarDepositoUnico(@PathVariable Long id,
+                                                         @PathVariable Long idUnico){
+        Depositos deposito = depositosService.listarUnico(id, idUnico);
+        DepositosResponse response = new DepositosResponse(deposito);
+        return ResponseEntity.ok(response);
+    }
 }

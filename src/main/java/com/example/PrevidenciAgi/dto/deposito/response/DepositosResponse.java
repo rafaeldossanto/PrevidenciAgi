@@ -1,5 +1,7 @@
 package com.example.PrevidenciAgi.dto.deposito.response;
 
+import com.example.PrevidenciAgi.entity.Depositos;
+
 import java.time.LocalDateTime;
 
 public record DepositosResponse(
@@ -8,4 +10,13 @@ public record DepositosResponse(
         Double valor,
         LocalDateTime dataDeposito
 ) {
+    public DepositosResponse(Depositos deposito) {
+        this(
+                deposito.getIdDeposito(),
+                deposito.getTipo(),
+                deposito.getValor(),
+                deposito.getDataDeposito()
+
+        );
+    }
 }

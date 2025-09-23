@@ -5,10 +5,15 @@ import com.example.PrevidenciAgi.entity.Cliente;
 import com.example.PrevidenciAgi.repository.ClienteRepository;
 import jakarta.persistence.EntityExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.UUID;
+import java.util.Arrays;
+import java.util.List;
 
 
 @Service
@@ -21,15 +26,21 @@ public class ClienteService {
     private JwtTokenGenerator jwtTokenGenerator;
 
     public String login(String email, String senha) {
-        Cliente cliente = clienteRepository.findByEmail(email);
+        Cliente cliente = clienteRepository.findByEmail(email)
+                .orElseThrow(() -> new IllegalArgumentException("Email não encontrado"));
 
 
         if (!passwordEncoder.matches(senha, cliente.getSenha())) {
             throw new RuntimeException("Senha incorreta");
         }
 
-        // Gera um token simples (substitir JWT depois)
-        return "token-simples-" + UUID.randomUUID();
+        List<GrantedAuthority> authorities = List.of(
+                new SimpleGrantedAuthority("ROLE_CLIENTE")
+        );
+
+        Authentication authentication = new UsernamePasswordAuthenticationToken(cliente.getEmail(), null, authorities);
+
+        return jwtTokenGenerator.generateToken(authentication);
     }
 
     public void CadastrarCliente(Cliente cliente) {

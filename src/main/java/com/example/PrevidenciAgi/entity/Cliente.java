@@ -1,6 +1,7 @@
 package com.example.PrevidenciAgi.entity;
 
 import com.example.PrevidenciAgi.entity.Enum.GeneroEnum;
+import com.example.PrevidenciAgi.entity.Enum.Role;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -30,6 +31,9 @@ public class Cliente {
 
     @Enumerated(EnumType.STRING)
     private GeneroEnum genero;
+
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     @Email
     @NotBlank(message = "O email e obrigatorio!")

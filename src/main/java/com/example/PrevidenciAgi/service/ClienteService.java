@@ -7,12 +7,11 @@ import jakarta.persistence.EntityExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 
 
 @Service
@@ -33,11 +32,13 @@ public class ClienteService {
             throw new RuntimeException("Senha incorreta");
         }
 
-        List<GrantedAuthority> authorities = List.of(
-                new SimpleGrantedAuthority("ROLE_CLIENTE")
-        );
+        UserDetails userDetails = User.builder()
+                .username(cliente.getEmail())
+                .password(cliente.getSenha())
+                .roles(cliente.getRole().name())
+                .build();
 
-        Authentication authentication = new UsernamePasswordAuthenticationToken(cliente.getEmail(), null, authorities);
+        Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
 
         return jwtTokenGenerator.generateToken(authentication);
     }

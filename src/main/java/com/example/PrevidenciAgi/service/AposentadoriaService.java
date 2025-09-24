@@ -1,8 +1,37 @@
 package com.example.PrevidenciAgi.service;
 
+import com.example.PrevidenciAgi.dto.aposentadoria.request.AposentadoriaRequest;
+import com.example.PrevidenciAgi.entity.Aposentadoria;
+import com.example.PrevidenciAgi.entity.Cliente;
+import com.example.PrevidenciAgi.repository.AposentadoriaRepository;
+import com.example.PrevidenciAgi.repository.ClienteRepository;
+import jakarta.persistence.EntityNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class AposentadoriaService {
+    @Autowired
+    private AposentadoriaRepository aposentadoriaRepository;
+    @Autowired
+    private ClienteRepository clienteRepository;
+
+    public Aposentadoria assinarAposentadoria(AposentadoriaRequest request){
+        if (aposentadoriaRepository.existsByClienteId(request.id())){
+            throw new IllegalStateException("Cliente ja possui aposentadoria cadastrada");
+        }
+
+        Cliente cliente = clienteRepository.findById(request.id())
+                .orElseThrow(() -> new EntityNotFoundException("Cliente com esse id nao encontrado."));
+
+        Aposentadoria aposentadoria = new Aposentadoria();
+        aposentadoria.setTipoAposentadoria(request.tipoAposentadoria());
+        aposentadoria.setValor_mensal(request.valor_mensal());
+        aposentadoria.setData_aposentar(request.data_aposentar());
+        aposentadoria.setData_inicio(request.data_inicio());
+        aposentadoria.setCliente(cliente);
+
+        return aposentadoriaRepository.save(aposentadoria);
+    }
 
 }

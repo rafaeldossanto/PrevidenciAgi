@@ -1,7 +1,9 @@
 package com.example.PrevidenciAgi.dto.aposentadoria.request;
 
+import com.example.PrevidenciAgi.enums.TipoAposentadoria;
+
 public record AposentadoriaRequest(
-        String tipoAposentadoria,
+        TipoAposentadoria tipoAposentadoria,
         String dataAposentar,
         String dataContratada
 ) {

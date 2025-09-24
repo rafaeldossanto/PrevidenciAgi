@@ -1,33 +1,28 @@
 package com.example.PrevidenciAgi.service;
 
-import com.example.PrevidenciAgi.dto.ClienteDto;
+import com.example.PrevidenciAgi.dto.cliente.request.DadosCadastroRequest;
+import com.example.PrevidenciAgi.dto.cliente.response.DadosCadastroResponse;
 import com.example.PrevidenciAgi.entity.Cliente;
 import com.example.PrevidenciAgi.repository.ClienteRepository;
 import jakarta.persistence.EntityExistsException;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
-
 
 @Service
 public class ClienteService {
-    @Autowired
-    private ClienteRepository clienteRepository;
 
-    public ClienteDto CadastrarCliente(Cliente cliente){
-        if (clienteRepository.existsByCpf(cliente.getCpf())){
-            throw new IllegalArgumentException("Cliente cadastrado.");
-        }
+    private final ClienteRepository clienteRepository;
 
-        Cliente clientedto = clienteRepository.save(cliente);
-        return ClienteDto.fromCliente(clientedto);
+    public ClienteService(ClienteRepository clienteRepository) {
+        this.clienteRepository = clienteRepository;
     }
 
-    public void deletarCliente(Long id){
-        if (!clienteRepository.existsById(id)){
-            throw new IllegalArgumentException("Cliente não encontrado.");
-        }
-        clienteRepository.deleteById(id);
+    public DadosCadastroResponse CadastrarCliente(@Valid DadosCadastroRequest dados) {
+        Cliente cliente = new Cliente(dados);
+        clienteRepository.save(cliente);
+        return new DadosCadastroResponse(cliente);
     }
 
     public String atualizarDados(Long id, String dado, String dadoNovo) {

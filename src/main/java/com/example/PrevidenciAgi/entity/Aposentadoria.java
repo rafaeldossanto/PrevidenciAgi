@@ -2,35 +2,42 @@ package com.example.PrevidenciAgi.entity;
 
 import com.example.PrevidenciAgi.entity.Enum.TipoAposentadoriaEnum;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Future;
+import jakarta.validation.constraints.FutureOrPresent;
+import jakarta.validation.constraints.Positive;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
 @Table(name = "tbAposentadoria")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Aposentadoria {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idAposentadoria;  // O id não será mostrado no DTO
+    private Long idAposentadoria;
 
     @Enumerated(EnumType.STRING)
     private TipoAposentadoriaEnum tipoAposentadoria;
 
-    @NotBlank(message = "A data de aposentadoria e obrigatorio!")
-    @Column(nullable = false)
-    private String dataAposentar;       // Data que ele quer se aposentar
+    @Positive
+    private Double valor_mensal;
 
-    @NotBlank(message = "A data contratada e obrigatoria!")
-    private String dataContratada;      // Data em que contratou o plano
+    @Future
+    private LocalDateTime data_aposentar;
+
+    @FutureOrPresent
+    private LocalDateTime data_inicio;
 
     @OneToOne
-    @JoinColumn(name = "idCliente", nullable = false)  // Relacionamento com Cliente
-    private Cliente cliente;  // Cliente que escolheu esse plano de aposentadoria
+    @JoinColumn(name = "id_cliente", referencedColumnName = "id",nullable = false)
+    private Cliente cliente;
+
     @OneToMany(mappedBy = "aposentadoria", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Depositos> depositos;
 }

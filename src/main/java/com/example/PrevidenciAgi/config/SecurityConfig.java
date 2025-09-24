@@ -30,11 +30,8 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(authz -> authz
-                        .requestMatchers("/previdencia/login", "previdecia/criar")
+                        .requestMatchers("/previdencia/**", "/aposentadoria/**")
                         .permitAll()
-                        .requestMatchers("/previdencia/**").hasRole("ADMIN")
-                        .requestMatchers("/previdencia/**").authenticated()
-                        .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)

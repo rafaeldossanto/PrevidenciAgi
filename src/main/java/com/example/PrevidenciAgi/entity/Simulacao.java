@@ -1,13 +1,5 @@
-/*
-Módulo: Simulacao.java
-Descrição: Define a entity simulação e suas propriedades
-Autor: Gustavo Henrique dos Anjos
-Data: 17/09/2025
-*/
-
 package com.example.PrevidenciAgi.entity;
 
-import com.example.PrevidenciAgi.entity.Cliente;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -17,10 +9,11 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive; // Adicionado para campos Double/Integer
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import java.time.LocalDate; // Importação adicionada para o LocalDate
+import java.time.LocalDate;
 
 @Entity
 @Data
@@ -33,29 +26,40 @@ public class Simulacao {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idSimulacao;
 
-    @NotBlank(message = "O valor mensal e obrigatorio!")
+    // --- Campos Numéricos e de Data (Usam @NotNull ou @Positive) ---
+
+    // NOTA: Entidades JPA tipicamente não devem ter validação de input (@NotNull, @Positive),
+    // pois isso é função do DTO. Mantenho aqui por fins de mapeamento, mas o DTO é o local correto.
+    @NotNull(message = "O valor mensal é obrigatório.")
+    @Positive(message = "O valor mensal deve ser positivo.")
     private Double valorMensal;
 
-    @NotBlank(message = "O valor a receber e obrigatorio!")
+    @NotNull(message = "O valor a receber é obrigatório.")
     private Double valorReceber;
 
-    @NotBlank(message = "O genero e obrigatorio!")
-    private String genero;
+    @NotNull(message = "A data inicial é obrigatória.")
+    private LocalDate dataInicial;
 
-    @NotBlank(message = "O tipo de contribuicao e obrigatorio!")
-    private String tipoContribuicao;
+    @NotNull(message = "A data de aposentadoria é obrigatória.")
+    private LocalDate dataAposentar;
 
-    @NotNull
-    private LocalDate dataInicial; // Alterado de Integer para LocalDate
-
-    @NotBlank
-    private LocalDate dataAposentar; // Alterado de Integer para LocalDate
-
-    @NotBlank(message = "O tempo contribuicao e obrigatorio!")
+    @NotNull(message = "O tempo de contribuição é obrigatório.")
+    @Positive(message = "O tempo de contribuição deve ser positivo.")
     private Integer tempoContribuicao;
 
-    @NotBlank(message = "O tempo de recebimento e obrigatorio!")
+    @NotNull(message = "O tempo de recebimento é obrigatório.")
+    @Positive(message = "O tempo de recebimento deve ser positivo.")
     private Integer tempoRecebimento;
+
+    // --- Campos de String (Usam @NotBlank) ---
+
+    @NotBlank(message = "O gênero é obrigatório.")
+    private String genero;
+
+    @NotBlank(message = "O tipo de contribuição é obrigatório.")
+    private String tipoContribuicao; // Ex: PGBL, VGBL
+
+    // --- Relacionamento ---
 
     @ManyToOne
     @JoinColumn(name = "idCliente")

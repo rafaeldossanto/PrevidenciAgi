@@ -10,6 +10,9 @@ public record SimulacaoRequest(
         LocalDate dataInicial,
         LocalDate dataAposentar,
         Integer tempoContribuicao,
-        Integer tempoRecebimento
+        Integer tempoRecebimento,
+        // CAMPOS ADICIONADOS PARA CORREÇÃO:
+        Long idCliente,
+        String regimeTributario // Ex: "Progressiva" ou "Regressiva"
 ) {
 }

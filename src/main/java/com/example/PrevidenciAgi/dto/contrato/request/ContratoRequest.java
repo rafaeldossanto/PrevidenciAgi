@@ -1,4 +1,4 @@
-// package com.example.PrevidenciAgi.dto.contrato.request;
+package com.example.PrevidenciAgi.dto.contrato.request;// package com.example.PrevidenciAgi.dto.contrato.request;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;

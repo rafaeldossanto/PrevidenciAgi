@@ -1,24 +1,40 @@
 package com.example.PrevidenciAgi.service;
 
 import com.example.PrevidenciAgi.dto.simulacao.request.SimulacaoRequest;
-
+import org.springframework.stereotype.Service; // Import necessário
 import java.time.temporal.ChronoUnit;
 
+@Service // Adicionar para ser injetado
 public class VGBLService {
 
-    private final TributacaoService tributacao;
+    // Injeta as duas implementações
+    private final TributacaoService tributacaoProgressiva;
+    private final TributacaoService tributacaoRegressiva;
 
-    // Constante: exemplo de taxa de rendimento padrão anual
     private static final double TAXA_RENDIMENTO_PADRAO = 0.05;
 
-    public VGBLService(TributacaoService tributacao) {
-        this.tributacao = tributacao;
+    // Construtor CORRIGIDO: injeta as implementações específicas
+    public VGBLService(TributacaoProgressivaService tributacaoProgressiva, TributacaoRegressivaService tributacaoRegressiva) {
+        this.tributacaoProgressiva = tributacaoProgressiva;
+        this.tributacaoRegressiva = tributacaoRegressiva;
     }
 
     /**
-     * Calcula o valor líquido no momento do resgate
+     * Calcula o valor líquido no momento do resgate, com seleção de tributação.
+     * Assinatura alterada para receber o regimeTributario.
      */
-    public double calcularResgateLiquido(SimulacaoRequest request) {
+    public double calcularResgateLiquido(SimulacaoRequest request, String regimeTributario) {
+        // 1. Seleciona o Serviço de Tributação correto
+        TributacaoService tributacao;
+        if ("PROGRESSIVA".equalsIgnoreCase(regimeTributario)) {
+            tributacao = tributacaoProgressiva;
+        } else if ("REGRESSIVA".equalsIgnoreCase(regimeTributario)) {
+            tributacao = tributacaoRegressiva;
+        } else {
+            throw new IllegalArgumentException("Regime de tributação inválido: " + regimeTributario);
+        }
+
+        // 2. Continua o cálculo VGBL (imposto só sobre rendimentos)
         double saldoBruto = calcularSaldoProjetado(request);
         double totalAportado = calcularTotalAportado(request);
 
@@ -34,9 +50,7 @@ public class VGBLService {
         return saldoBruto - imposto;
     }
 
-    /**
-     * Calcula o total de aportes realizados até a aposentadoria
-     */
+    // ... (Mantenha os outros métodos auxiliares: calcularTotalAportado, calcularSaldoProjetado)
     public double calcularTotalAportado(SimulacaoRequest request) {
         long anosContribuicao = ChronoUnit.YEARS.between(
                 request.dataInicial(),
@@ -45,9 +59,6 @@ public class VGBLService {
         return request.valorMensal() * 12 * anosContribuicao;
     }
 
-    /**
-     * Projeta o saldo acumulado até a data de aposentadoria
-     */
     public double calcularSaldoProjetado(SimulacaoRequest request) {
         long anosDeContribuicao = ChronoUnit.YEARS.between(
                 request.dataInicial(),
@@ -62,5 +73,4 @@ public class VGBLService {
         }
         return saldo;
     }
-
 }

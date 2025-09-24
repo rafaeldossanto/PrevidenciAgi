@@ -2,54 +2,87 @@ package com.example.PrevidenciAgi.service;
 
 import com.example.PrevidenciAgi.dto.simulacao.request.SimulacaoRequest;
 import com.example.PrevidenciAgi.dto.simulacao.response.SimulacaoResponse;
+import com.example.PrevidenciAgi.entity.Cliente; // Import necessário
 import com.example.PrevidenciAgi.entity.Simulacao;
+import com.example.PrevidenciAgi.repository.ClienteRepository; // Import necessário
 import com.example.PrevidenciAgi.repository.SimulacaoRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import java.time.LocalDate; // Import necessário
 
 @Service
 public class SimulacaoService {
 
-    // Repositórios e Serviços (Injeção via Construtor)
     private final SimulacaoRepository simulacaoRepository;
+    private final ClienteRepository clienteRepository; // Adicionado para buscar o cliente
     private final PGBLService pgblService;
     private final VGBLService vgblService;
-    // ... ClienteRepository para buscar o Cliente
 
-    // Construtor
-    public SimulacaoService(/* ... */) { /* ... */ }
+    // Construtor CORRIGIDO e COMPLETO
+    public SimulacaoService(
+            SimulacaoRepository simulacaoRepository,
+            ClienteRepository clienteRepository,
+            PGBLService pgblService,
+            VGBLService vgblService) {
+        this.simulacaoRepository = simulacaoRepository;
+        this.clienteRepository = clienteRepository;
+        this.pgblService = pgblService;
+        this.vgblService = vgblService;
+    }
 
     @Transactional
     public SimulacaoResponse realizarSimulacao(SimulacaoRequest request) {
 
         // 1. Determinar o Serviço de Cálculo (PGBL ou VGBL)
         double valorLiquido;
-        String tipoPlano = request.tipoContribuicao(); // PGBL ou VGBL
+        String tipoPlano = request.tipoContribuicao();
+        String regimeTributario = request.regimeTributario(); // Pego do Request
 
         if ("PGBL".equalsIgnoreCase(tipoPlano)) {
-            // A implementação de PGBLService precisa ser injetada com a tributação correta
-            valorLiquido = pgblService.calcularResgateLiquido(request);
+            // Chama PGBLService com o regime de tributação
+            valorLiquido = pgblService.calcularResgateLiquido(request, regimeTributario);
         } else if ("VGBL".equalsIgnoreCase(tipoPlano)) {
-            // A implementação de VGBLService precisa ser injetada com a tributação correta
-            valorLiquido = vgblService.calcularResgateLiquido(request);
+            // Chama VGBLService com o regime de tributação
+            valorLiquido = vgblService.calcularResgateLiquido(request, regimeTributario);
         } else {
             throw new IllegalArgumentException("Tipo de contribuição inválido.");
         }
 
-        // 2. Criar a Entidade Simulacao (Rascunho)
+        // 2. Buscar o Cliente (necessário para o relacionamento JPA)
+        Cliente cliente = clienteRepository.findById(request.idCliente())
+                .orElseThrow(() -> new EntityNotFoundException("Cliente não encontrado com ID: " + request.idCliente()));
+
+        // 3. Criar a Entidade Simulacao (Rascunho)
         Simulacao novaSimulacao = new Simulacao();
 
-        // Mapeia os dados do Request
-        // ... (Mapear todos os campos do Request para a Entidade)
-        novaSimulacao.setValorReceber(valorLiquido); // Salva o resultado
-        // ... (Buscar e setar o Cliente)
+        // Mapeamento dos dados do Request para a Entidade
+        novaSimulacao.setCliente(cliente);
+        novaSimulacao.setValorMensal(request.valorMensal());
+        novaSimulacao.setValorReceber(valorLiquido);
+        novaSimulacao.setGenero(request.genero());
+        novaSimulacao.setTipoContribuicao(tipoPlano);
+        // Assumindo que o campo regimeTributario existe na Entidade Simulacao, adicione:
+        // novaSimulacao.setRegimeTributario(regimeTributario);
+        novaSimulacao.setDataInicial(request.dataInicial());
+        novaSimulacao.setDataAposentar(request.dataAposentar());
+        novaSimulacao.setTempoContribuicao(request.tempoContribuicao());
+        novaSimulacao.setTempoRecebimento(request.tempoRecebimento());
 
-        // 3. Salvar Simulação (Rascunho)
+        // 4. Salvar Simulação (Rascunho)
         Simulacao simulacaoSalva = simulacaoRepository.save(novaSimulacao);
 
-        // 4. Retornar DTO de Resposta
-        // Retorna o resultado com o ID gerado (para futura contratação)
-        // SimulacaoResponse.fromEntity(simulacaoSalva);
-        return new SimulacaoResponse( /* ... */ );
+        // 5. Retornar DTO de Resposta
+        return new SimulacaoResponse(
+                simulacaoSalva.getIdSimulacao(),
+                simulacaoSalva.getValorMensal(),
+                simulacaoSalva.getValorReceber(),
+                simulacaoSalva.getGenero(),
+                simulacaoSalva.getTipoContribuicao(),
+                simulacaoSalva.getDataInicial(),
+                simulacaoSalva.getDataAposentar(),
+                simulacaoSalva.getTempoContribuicao(),
+                simulacaoSalva.getTempoRecebimento()
+        );
     }
 }

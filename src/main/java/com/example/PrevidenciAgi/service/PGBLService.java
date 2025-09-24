@@ -1,25 +1,42 @@
 package com.example.PrevidenciAgi.service;
 
 import com.example.PrevidenciAgi.dto.simulacao.request.SimulacaoRequest;
-
+import org.springframework.stereotype.Service; // Import necessário
 import java.time.temporal.ChronoUnit;
 
+@Service // Adicionar para ser injetado
 public class PGBLService {
 
-    private final TributacaoService tributacao;
+    // Injeta as duas implementações
+    private final TributacaoService tributacaoProgressiva;
+    private final TributacaoService tributacaoRegressiva;
 
     // Constantes importantes para o cálculo
-    private static final double LIMITE_DEDUCAO = 0.12; // 12% da renda bruta anual
-    private static final double TAXA_RENDIMENTO_PADRAO = 0.05; // exemplo: 5% ao ano
+    private static final double LIMITE_DEDUCAO = 0.12;
+    private static final double TAXA_RENDIMENTO_PADRAO = 0.05;
 
-    public PGBLService(TributacaoService tributacao) {
-        this.tributacao = tributacao;
+    // Construtor CORRIGIDO: injeta as implementações específicas
+    public PGBLService(TributacaoProgressivaService tributacaoProgressiva, TributacaoRegressivaService tributacaoRegressiva) {
+        this.tributacaoProgressiva = tributacaoProgressiva;
+        this.tributacaoRegressiva = tributacaoRegressiva;
     }
 
     /**
-     * Calcula o valor líquido no momento do resgate
+     * Calcula o valor líquido no momento do resgate, com seleção de tributação.
+     * Assinatura alterada para receber o regimeTributario.
      */
-    public double calcularResgateLiquido(SimulacaoRequest request) {
+    public double calcularResgateLiquido(SimulacaoRequest request, String regimeTributario) {
+        // 1. Seleciona o Serviço de Tributação correto
+        TributacaoService tributacao;
+        if ("PROGRESSIVA".equalsIgnoreCase(regimeTributario)) {
+            tributacao = tributacaoProgressiva;
+        } else if ("REGRESSIVA".equalsIgnoreCase(regimeTributario)) {
+            tributacao = tributacaoRegressiva;
+        } else {
+            throw new IllegalArgumentException("Regime de tributação inválido: " + regimeTributario);
+        }
+
+        // 2. Continua o cálculo PGBL (baseado no saldo bruto)
         double saldoBruto = calcularSaldoProjetado(request);
         long anosContribuicao = ChronoUnit.YEARS.between(
                 request.dataInicial(),
@@ -29,39 +46,13 @@ public class PGBLService {
         return saldoBruto - imposto;
     }
 
-    /**
-     * Calcula a renda bruta anual a partir do valor mensal
-     */
-    public double calcularRendaAnual(SimulacaoRequest request) {
-        return request.valorMensal() * 12;
-    }
-
-    /**
-     * Calcula o valor máximo dedutível no IR (12% da renda anual)
-     */
-    public double calcularDeducaoMaxima(SimulacaoRequest request) {
-        double rendaAnual = calcularRendaAnual(request);
-        return rendaAnual * LIMITE_DEDUCAO;
-    }
-
-    /**
-     * Calcula a economia de IR no ano com base na alíquota efetiva informada
-     */
-    public double calcularEconomiaIR(SimulacaoRequest request, double aliquotaIR) {
-        double deducao = calcularDeducaoMaxima(request);
-        return deducao * aliquotaIR;
-    }
-
-    /**
-     * Projeta o saldo acumulado até a data de aposentadoria
-     */
+    // ... (Mantenha os outros métodos auxiliares: calcularRendaAnual, calcularDeducaoMaxima, etc.)
     public double calcularSaldoProjetado(SimulacaoRequest request) {
         long anosDeContribuicao = ChronoUnit.YEARS.between(
                 request.dataInicial(),
                 request.dataAposentar()
         );
 
-        // Considera o aporte mensal (não apenas a dedução fiscal)
         double aporteAnual = request.valorMensal() * 12;
         double saldo = 0.0;
 
@@ -69,5 +60,16 @@ public class PGBLService {
             saldo = (saldo + aporteAnual) * (1 + TAXA_RENDIMENTO_PADRAO);
         }
         return saldo;
+    }
+    public double calcularRendaAnual(SimulacaoRequest request) {
+        return request.valorMensal() * 12;
+    }
+    public double calcularDeducaoMaxima(SimulacaoRequest request) {
+        double rendaAnual = calcularRendaAnual(request);
+        return rendaAnual * LIMITE_DEDUCAO;
+    }
+    public double calcularEconomiaIR(SimulacaoRequest request, double aliquotaIR) {
+        double deducao = calcularDeducaoMaxima(request);
+        return deducao * aliquotaIR;
     }
 }

@@ -1,15 +1,15 @@
-// package com.example.PrevidenciAgi.dto.contrato.response;
+package com.example.PrevidenciAgi.dto.contrato.response;
 
 import java.time.LocalDate;
 
 public record ContratoResponse(
         Long idContrato,
-        String tipoPlano,            // Ex: PGBL, VGBL
-        String regimeTributario,     // Ex: Progressiva, Regressiva
+        String tipoPlano,
+        String regimeTributario,
         Double valorMensal,
-        Double valorBeneficioEsperado, // Valor projetado na simulação
+        Double valorBeneficioEsperado,
         LocalDate dataAposentadoria,
         LocalDate dataAssinatura,
-        String statusContrato         // Ex: ASSINADO
+        String statusContrato
 ) {
 }

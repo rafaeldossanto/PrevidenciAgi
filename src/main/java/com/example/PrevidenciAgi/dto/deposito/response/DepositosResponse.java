@@ -1,12 +1,13 @@
 package com.example.PrevidenciAgi.dto.deposito.response;
 
 import com.example.PrevidenciAgi.entity.Depositos;
+import com.example.PrevidenciAgi.enums.TiposDepositos;
 
 import java.time.LocalDateTime;
 
 public record DepositosResponse(
         Long idDeposito,
-        String tipo,
+        TiposDepositos tipo,
         Double valor,
         LocalDateTime dataDeposito
 ) {

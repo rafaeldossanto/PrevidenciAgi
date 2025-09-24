@@ -1,5 +1,6 @@
 package com.example.PrevidenciAgi.entity;
 
+import com.example.PrevidenciAgi.enums.TiposDepositos;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -19,7 +20,7 @@ public class Depositos {
     private Long idDeposito;
 
     @NotBlank(message = "O tipo e obrigatorio!")
-    private String tipo;
+    private TiposDepositos tipo;
 
     @NotBlank(message = "O valor e obrigatorio!")
     private double valor;

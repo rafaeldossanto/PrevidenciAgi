@@ -46,7 +46,6 @@ public class Cliente {
     private List<Simulacao> simulacoes;
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Depositos> depositos;
-
     @OneToOne
     @JoinColumn(name = "idAposentadoria")
     private Aposentadoria aposentadoria;

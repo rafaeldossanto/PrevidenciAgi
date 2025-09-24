@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "tbAposentadoria")
 @Data
@@ -29,5 +31,7 @@ public class Aposentadoria {
     @OneToOne
     @JoinColumn(name = "idCliente", nullable = false)  // Relacionamento com Cliente
     private Cliente cliente;  // Cliente que escolheu esse plano de aposentadoria
+    @OneToMany(mappedBy = "aposentadoria", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Depositos> depositos;
 }
 

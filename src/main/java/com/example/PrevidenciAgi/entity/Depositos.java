@@ -27,7 +27,11 @@ public class Depositos {
     @NotNull
     private LocalDateTime dataDeposito;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "idAposentadoria", referencedColumnName = "id")
-    private Aposentadoria aposentadoriaCliente;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_cliente")
+    private Cliente cliente;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_aposentadoria")
+    private Aposentadoria aposentadoria;
 }

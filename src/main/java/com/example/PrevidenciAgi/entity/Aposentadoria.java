@@ -5,9 +5,10 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.*;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -28,11 +29,17 @@ public class Aposentadoria {
     @Positive
     private Double valor_mensal;
 
-    @Future
-    private LocalDateTime data_aposentar;
+    @PositiveOrZero
+    private Double valor_deposito;
 
     @FutureOrPresent
-    private LocalDateTime data_inicio;
+    private LocalDate data_contratada;
+
+    @Future
+    private LocalDate data_aposentar;
+
+    @FutureOrPresent
+    private LocalDate data_inicio;
 
     @OneToOne
     @JoinColumn(name = "id_cliente", referencedColumnName = "id",nullable = false)

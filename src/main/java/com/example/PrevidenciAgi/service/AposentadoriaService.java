@@ -9,6 +9,8 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+
 @Service
 public class AposentadoriaService {
     @Autowired
@@ -27,8 +29,10 @@ public class AposentadoriaService {
         Aposentadoria aposentadoria = new Aposentadoria();
         aposentadoria.setTipoAposentadoria(request.tipoAposentadoria());
         aposentadoria.setValor_mensal(request.valor_mensal());
+        aposentadoria.setValor_deposito(request.valor_deposito());
         aposentadoria.setData_aposentar(request.data_aposentar());
         aposentadoria.setData_inicio(request.data_inicio());
+        aposentadoria.setData_contratada(LocalDate.now());
         aposentadoria.setCliente(cliente);
 
         return aposentadoriaRepository.save(aposentadoria);

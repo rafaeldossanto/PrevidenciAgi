@@ -38,4 +38,11 @@ public class DepositoController {
         DepositosResponse response = new DepositosResponse(deposito);
         return ResponseEntity.ok(response);
     }
+
+    @PostMapping("/rdepositar/{id}")
+    public ResponseEntity<DepositosResponse> depositoAuto(@PathVariable Long id, @RequestBody DepositosRequest request){
+        Depositos deposito = depositosService.realizarDeposito(id, request);
+        DepositosResponse resposta = DepositosResponse.fromEntity(deposito);
+        return ResponseEntity.ok(resposta);
+    }
 }

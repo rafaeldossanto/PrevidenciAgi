@@ -30,8 +30,9 @@ public class ClienteController {
 
     @PostMapping("/criar")
     @Transactional
-    public void cadastrarCliente(@Valid @RequestBody Cliente cliente) {
+    public ResponseEntity<String> cadastrarCliente(@Valid @RequestBody Cliente cliente) {
         clienteService.CadastrarCliente(cliente);
+        return ResponseEntity.ok("Cliente cadastrado com sucesso!");
     }
 
     @PutMapping("/atualizar/{id}")

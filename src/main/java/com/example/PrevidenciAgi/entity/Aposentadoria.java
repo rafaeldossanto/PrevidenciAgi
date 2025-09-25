@@ -45,7 +45,7 @@ public class Aposentadoria {
     @JoinColumn(name = "id_cliente", referencedColumnName = "id",nullable = false)
     private Cliente cliente;
 
-    @OneToMany(mappedBy = "aposentadoria", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "aposentadoriaCliente", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Depositos> depositos;
 }
 

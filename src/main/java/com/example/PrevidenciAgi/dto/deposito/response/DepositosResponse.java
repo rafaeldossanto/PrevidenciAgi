@@ -20,4 +20,13 @@ public record DepositosResponse(
 
         );
     }
+
+    public static DepositosResponse fromEntity(Depositos deposito) {
+        return new DepositosResponse(
+                deposito.getIdDeposito(),
+                deposito.getTipo(),
+                deposito.getValor(),
+                deposito.getDataDeposito()
+        );
+    }
 }

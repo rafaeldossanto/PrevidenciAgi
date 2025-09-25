@@ -43,7 +43,7 @@ public class DepositosService {
         Aposentadoria aposentadoriaCliente = aposentadoriaRepository.findById(idAposentadoria)
                 .orElseThrow(() -> new EntityExistsException("Cliente com esse Id nao encontrado."));
 
-        return depositosRepository.findByAposentadoria(aposentadoriaCliente).stream()
+        return depositosRepository.findByAposentadoriaCliente(aposentadoriaCliente).stream()
                 .map(deposito -> new DepositosResponse(
                         deposito.getIdDeposito(),
                         deposito.getTipo(),
@@ -70,10 +70,16 @@ public class DepositosService {
     //Metodo ainda nao testado, consiste no deposito ja automatico se for aporte ou mensal,
     // com a variavel de VALORESCOLHIDO na tabela de aposentadoria.
     //Metodo ainda nao atribuido no controller.
-    public Depositos realizarDeposito(Long idAposentadoria, double valor){
-        Aposentadoria aposentadoriaCliente = aposentadoriaRepository.findById(idAposentadoria)
-                .orElseThrow(() -> new EntityExistsException("Cliente com esse Id nao encontrado."));
+    public Depositos realizarDeposito(Long idAposentadoria, DepositosRequest request){
+        Aposentadoria aposentadoriaCliente = aposentadoriaRepository.findByIdWithCliente(idAposentadoria)
+                .orElseThrow(() -> new EntityExistsException("Cliente com esse Id não encontrado."));
 
+        Cliente cliente = aposentadoriaCliente.getCliente();
+        if (cliente == null) {
+            throw new IllegalStateException("A aposentadoria não está vinculada a um cliente.");
+        }
+
+        double valor = request.valor();
         LocalDateTime agora = LocalDateTime.now();
         int mes = agora.getMonthValue();
         int ano = agora.getYear();
@@ -84,9 +90,9 @@ public class DepositosService {
         double totalComNovo = somaMensal + valor;
 
         TiposDepositos tipo;
-        if (somaMensal >= aposentadoriaCliente.getValorMensalG()){
+        if (somaMensal >= aposentadoriaCliente.getValor_mensal()){
             tipo = TiposDepositos.APORTE;
-        }else if (totalComNovo <= aposentadoriaCliente.getValorMensalG()){
+        }else if (totalComNovo <= aposentadoriaCliente.getValor_mensal()){
             tipo = TiposDepositos.MENSAL;
         }else {
             tipo = TiposDepositos.APORTE;
@@ -94,6 +100,7 @@ public class DepositosService {
 
         Depositos deposito = new Depositos();
         deposito.setAposentadoriaCliente(aposentadoriaCliente);
+        deposito.setCliente(cliente);
         deposito.setValor(valor);
         deposito.setTipo(tipo);
         deposito.setDataDeposito(agora);

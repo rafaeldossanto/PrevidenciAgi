@@ -2,6 +2,7 @@ package com.example.PrevidenciAgi.entity;
 
 import com.example.PrevidenciAgi.entity.Enum.GeneroEnum;
 import com.example.PrevidenciAgi.entity.Enum.Role;
+import com.example.PrevidenciAgi.enums.Genero;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -30,7 +31,7 @@ public class Cliente {
     private String nome;
 
     @Enumerated(EnumType.STRING)
-    private GeneroEnum genero;
+    private Genero genero;
 
     @Enumerated(EnumType.STRING)
     private Role role;
@@ -44,8 +45,6 @@ public class Cliente {
 
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Simulacao> simulacoes;
-    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Depositos> depositos;
     @OneToOne
     @JoinColumn(name = "idAposentadoria")
     private Aposentadoria aposentadoria;

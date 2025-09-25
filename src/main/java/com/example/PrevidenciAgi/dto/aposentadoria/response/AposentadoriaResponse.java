@@ -4,6 +4,7 @@ public record AposentadoriaResponse(
         Long idAposentadoria,
         String tipoAposentadoria,
         String dataAposentar,
-        String dataContratada
+        String dataContratada,
+        Double valorDeposito
 ) {
 }

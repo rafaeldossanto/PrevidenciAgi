@@ -26,6 +26,9 @@ public class Aposentadoria {
     @NotBlank(message = "A data contratada e obrigatoria!")
     private String dataContratada;      // Data em que contratou o plano
 
+    @NotBlank(message = "O valor mensal do plano e obrigatorio!")
+    private double valorDeposito;
+
     @OneToOne
     @JoinColumn(name = "idCliente", nullable = false)  // Relacionamento com Cliente
     private Cliente cliente;  // Cliente que escolheu esse plano de aposentadoria

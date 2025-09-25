@@ -1,42 +1,51 @@
 package com.example.PrevidenciAgi.entity;
 
-import com.example.PrevidenciAgi.dto.aposentadoria.request.AposentadoriaRequest;
-import com.example.PrevidenciAgi.enums.TipoAposentadoria;
+import com.example.PrevidenciAgi.entity.Enum.TipoAposentadoriaEnum;
 import jakarta.persistence.*;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Future;
+import jakarta.validation.constraints.FutureOrPresent;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.*;
+
+import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "tbAposentadoria")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Aposentadoria {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idAposentadoria;  // O id não será mostrado no DTO
+    private Long idAposentadoria;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private TipoAposentadoria tipoAposentadoria;   // Ex: progressiva ou regressiva
+    private TipoAposentadoriaEnum tipoAposentadoria;
 
-    @NotBlank(message = "A data de aposentadoria e obrigatorio!")
-    @Column(nullable = false)
-    private String dataAposentar;       // Data que ele quer se aposentar
+    @Positive
+    private Double valor_mensal;
 
-    @NotBlank(message = "A data contratada e obrigatoria!")
-    private String dataContratada;      // Data em que contratou o plano
+    @PositiveOrZero
+    private Double valor_deposito;
+
+    @FutureOrPresent
+    private LocalDate data_contratada;
+
+    @Future
+    private LocalDate data_aposentar;
+
+    @FutureOrPresent
+    private LocalDate data_inicio;
 
     @OneToOne
-    @JoinColumn(name = "idCliente", nullable = false)  // Relacionamento com Cliente
-    private Cliente cliente;  // Cliente que escolheu esse plano de aposentadoria
+    @JoinColumn(name = "id_cliente", referencedColumnName = "id",nullable = false)
+    private Cliente cliente;
 
-
-    public Aposentadoria(@Valid AposentadoriaRequest dados) {
-        this.tipoAposentadoria = dados.tipoAposentadoria();
-        this.dataAposentar = dados.dataAposentar();
-        this.dataContratada = dados.dataContratada();
-    }
+    @OneToMany(mappedBy = "aposentadoria", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Depositos> depositos;
 }
 

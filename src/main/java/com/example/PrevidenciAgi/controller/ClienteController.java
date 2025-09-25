@@ -1,11 +1,10 @@
 package com.example.PrevidenciAgi.controller;
 
-import com.example.PrevidenciAgi.dto.cliente.request.DadosCadastroRequest;
-import com.example.PrevidenciAgi.dto.cliente.response.DadosCadastroResponse;
+import com.example.PrevidenciAgi.dto.cliente.request.LoginRequest;
+import com.example.PrevidenciAgi.entity.Cliente;
 import com.example.PrevidenciAgi.service.ClienteService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -16,34 +15,27 @@ import java.util.Map;
 @RestController
 @RequestMapping("/previdencia")
 public class ClienteController {
+    @Autowired
+    private ClienteService clienteService;
 
-    private final ClienteService clienteService;
+    @PostMapping("/login")
+    public ResponseEntity<Map<String, String>> login(@RequestBody LoginRequest login){
+        String token = clienteService.login(login.email(), login.senha());
 
-    public ClienteController(ClienteService clienteService) {
-        this.clienteService = clienteService;
+        return ResponseEntity.ok(Map.of(
+                "token", token,
+                "message", "Login realizado com sucesso"
+        ));
     }
 
     @PostMapping("/criar")
     @Transactional
-    public ResponseEntity<DadosCadastroResponse> cadastrarCliente(@Valid @RequestBody DadosCadastroRequest dados) {
-        DadosCadastroResponse response = clienteService.CadastrarCliente(dados);
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    public void cadastrarCliente(@Valid @RequestBody Cliente cliente) {
+        clienteService.CadastrarCliente(cliente);
     }
 
     @PutMapping("/atualizar/{id}")
-    public ResponseEntity<?> atualizarDados(
-            @PathVariable Long id,
-            @RequestBody Map<String, String> dadosAtualizacao) {
-
-        if (!dadosAtualizacao.containsKey("campo") || !dadosAtualizacao.containsKey("valor")) {
-            return ResponseEntity.badRequest()
-                    .body("JSON deve conter 'campo' e 'valor'");
-        }
-
-        String campo = dadosAtualizacao.get("campo");
-        String valor = dadosAtualizacao.get("valor");
-
-        String resultado = clienteService.atualizarDados(id, campo, valor);
-        return ResponseEntity.ok(resultado);
+    public void atualizarDados(@PathVariable Long id, @RequestBody String dado, @RequestBody String dadoNovo){
+        clienteService.atualizarDados(id, dado, dadoNovo);
     }
 }

@@ -29,10 +29,10 @@ public class Depositos {
     private LocalDateTime dataDeposito;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "cliente_id")
+    @JoinColumn(name = "id_cliente")
     private Cliente cliente;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_aposentadoria")
+    @JoinColumn(name = "id_aposentadoria", referencedColumnName = "idAposentadoria")
     private Aposentadoria aposentadoria;
 }

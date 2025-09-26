@@ -19,7 +19,7 @@ public class Depositos {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idDeposito;
 
-    @NotBlank(message = "O tipo e obrigatorio!")
+    @Enumerated(EnumType.STRING)
     private TipoAposentadoriaEnum tipo;
 
     @Positive

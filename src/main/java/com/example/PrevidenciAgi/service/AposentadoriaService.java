@@ -37,7 +37,4 @@ public class AposentadoriaService {
 
         return aposentadoriaRepository.save(aposentadoria);
     }
-    
-    //
-
 }

@@ -47,7 +47,7 @@ public class DepositosService {
         LocalDateTime fimMes = agora.withDayOfMonth(agora.toLocalDate().lengthOfMonth())
                 .withHour(23).withMinute(59).withSecond(59);
 
-        Double totalDepositadoMes = depositosRepository.findTotalDepositadoNoMesPorCliente(aposentadoria.getCliente().getId(), inicioMes, fimMes);
+        Double totalDepositadoMes = depositosRepository.findTotalDepositadoNoPeriodo(aposentadoria.getCliente().getId(), inicioMes, fimMes);
         Double valorMensal = aposentadoria.getValor_mensal();
 
         if (totalDepositadoMes.compareTo(valorMensal) >= 0){

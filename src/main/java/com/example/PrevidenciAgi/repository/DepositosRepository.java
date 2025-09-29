@@ -16,7 +16,8 @@ public interface DepositosRepository extends JpaRepository<Depositos, Long> {
     List<Depositos> findByClienteId(Long id);
     List<Depositos> findByAposentadoriaIdAposentadoria(Long id);
 
-    Double findTotalDepositadoNoMesPorCliente(@Param("id") Long id,
-                                                  @Param("inicioMes") LocalDateTime inicioMes,
-                                                  @Param("fimMes")LocalDateTime fimMes);
+    @Query("SELECT COALESCE(SUM(d.valor), 0) FROM Depositos d WHERE d.cliente.id = :clienteId AND d.dataDeposito BETWEEN :inicioMes AND :fimMes")
+    Double findTotalDepositadoNoPeriodo(@Param("clienteId") Long clienteId,
+                                        @Param("inicioMes") LocalDateTime inicioMes,
+                                        @Param("fimMes") LocalDateTime fimMes);
 }

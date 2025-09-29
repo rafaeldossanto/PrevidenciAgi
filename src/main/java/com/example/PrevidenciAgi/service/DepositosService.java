@@ -29,6 +29,8 @@ public class DepositosService {
         Aposentadoria aposentadoria = aposentadoriaRepository.findById(request.id_aposentadoria())
                 .orElseThrow(() -> new NaoEncontrado("Aposentadoria nao encontrada"));
 
+        if()
+
         deposito.setDataDeposito(LocalDateTime.now());
         deposito.setValor(request.valor());
         deposito.setAposentadoria(aposentadoria);

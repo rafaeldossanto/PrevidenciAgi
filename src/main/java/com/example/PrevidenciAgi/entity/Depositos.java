@@ -4,6 +4,7 @@ import com.example.PrevidenciAgi.entity.Enum.TipoAposentadoriaEnum;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.*;
+import org.aspectj.bridge.IMessage;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -24,10 +25,10 @@ public class Depositos {
     @PositiveOrZero
     private Double saldo;
 
-    @Positive
+    @Positive(message = "O valor tem que ser maior que zero.")
     private Double valor;
 
-    @PastOrPresent
+    @PastOrPresent(message = "A data deve ser no dia atual.")
     private LocalDateTime dataDeposito;
 
     @ManyToOne(fetch = FetchType.LAZY)

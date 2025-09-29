@@ -36,7 +36,7 @@ public class Cliente {
     private Role role;
 
     @Email
-    @NotBlank(message = "O email e obrigatorio!")
+    @NotBlank(message = "O email e obrigatorio!, e deve ser do formato correto.")
     private String email;
 
     @NotBlank(message = "A senha e obrigatoria!")

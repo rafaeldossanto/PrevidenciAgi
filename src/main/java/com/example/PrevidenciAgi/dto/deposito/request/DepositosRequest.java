@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 
 public record DepositosRequest(
         Long id_aposentadoria,
-        String tipo,
         Double valor
 ) {
 }

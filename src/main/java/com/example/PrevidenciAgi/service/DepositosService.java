@@ -19,6 +19,7 @@ import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -36,28 +37,36 @@ public class DepositosService {
         Aposentadoria aposentadoria = aposentadoriaRepository.findById(request.id_aposentadoria())
                 .orElseThrow(() -> new NaoEncontrado("Aposentadoria nao encontrada"));
 
-        deposito.setDataDeposito(LocalDateTime.now());
+        LocalDateTime agora = LocalDateTime.now();
+        Cliente cliente = aposentadoria.getCliente();
+
+        deposito.setDataDeposito(agora);
         deposito.setValor(request.valor());
         deposito.setAposentadoria(aposentadoria);
-        deposito.setCliente(aposentadoria.getCliente());
-        deposito.setSaldo(deposito.getSaldo() + request.valor());
+        deposito.setCliente(cliente);
 
-        LocalDateTime agora = LocalDateTime.now();
+        Double saldoAtual = totalDoCliente(cliente.getId());
+        deposito.setSaldo(saldoAtual + request.valor());
+
         LocalDateTime inicioMes = agora.withDayOfMonth(1).withHour(0).withMinute(0).withSecond(0);
         LocalDateTime fimMes = agora.withDayOfMonth(agora.toLocalDate().lengthOfMonth())
                 .withHour(23).withMinute(59).withSecond(59);
 
-        Double totalDepositadoMes = depositosRepository.findTotalDepositadoNoPeriodo(aposentadoria.getCliente().getId(), inicioMes, fimMes);
-        Double valorMensal = aposentadoria.getValor_mensal();
+        Double totalDepositadoMes = depositosRepository.findTotalDepositadoNoPeriodo(
+                cliente.getId(), inicioMes, fimMes);
 
-        if (totalDepositadoMes.compareTo(valorMensal) >= 0){
+        Double valorMensal = aposentadoria.getValor_mensal();
+        Double valorDepositoAtual = request.valor();
+
+        Double totalAposDeposito = totalDepositadoMes + valorDepositoAtual;
+
+        if (totalDepositadoMes >= valorMensal || totalAposDeposito > valorMensal) {
             deposito.setTipo(TipoDeposito.APORTE);
-        } else if(totalDepositadoMes.compareTo(valorMensal) <= 0){
+        } else {
             deposito.setTipo(TipoDeposito.MENSAL);
         }
 
         depositosRepository.save(deposito);
-
         return deposito;
     }
 

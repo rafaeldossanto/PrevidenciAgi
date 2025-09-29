@@ -21,7 +21,7 @@ public class Depositos {
     private TipoDeposito tipo;
 
     @PositiveOrZero
-    private Double saldo;
+    private Double saldo = 0.0;
 
     @Positive(message = "O valor tem que ser maior que zero.")
     private Double valor;

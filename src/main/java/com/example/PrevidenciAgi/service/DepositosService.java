@@ -53,12 +53,10 @@ public class DepositosService {
         Double totalDepositadoMes = depositosRepository.findTotalDepositadoNoPeriodo(
                 cliente.getId(), inicioMes, fimMes);
 
-        Double valorMensal = aposentadoria.getValor_mensal();
         Double valorDepositoAtual = request.valor();
-
         Double totalAposDeposito = totalDepositadoMes + valorDepositoAtual;
 
-        if (totalDepositadoMes >= valorMensal || totalAposDeposito > valorMensal) {
+        if (totalDepositadoMes >= aposentadoria.getValor_mensal() || totalAposDeposito > aposentadoria.getValor_mensal()) {
             deposito.setTipo(TipoDeposito.APORTE);
         } else {
             deposito.setTipo(TipoDeposito.MENSAL);

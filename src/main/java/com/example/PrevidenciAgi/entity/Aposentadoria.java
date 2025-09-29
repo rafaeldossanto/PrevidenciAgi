@@ -12,7 +12,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Entity
-@Table(name = "tbAposentadoria")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -26,19 +25,19 @@ public class Aposentadoria {
     @Enumerated(EnumType.STRING)
     private TipoAposentadoriaEnum tipoAposentadoria;
 
-    @Positive
+    @Positive(message = "O valor mensal deve ser positivo")
     private Double valor_mensal;
 
-    @PositiveOrZero
+    @PositiveOrZero(message = "valor do deposito tem que ser maior que zero.")
     private Double valor_deposito;
 
-    @FutureOrPresent
+    @FutureOrPresent(message = "A data deve ser atual ou futura.")
     private LocalDate data_contratada;
 
-    @Future
+    @Future(message = "A data pra se aposentar tem que ser futura.")
     private LocalDate data_aposentar;
 
-    @FutureOrPresent
+    @FutureOrPresent(message = "A data deve ser agora ou futura.")
     private LocalDate data_inicio;
 
     @OneToOne

@@ -7,7 +7,6 @@ Data: 17/09/2025
 
 package com.example.PrevidenciAgi.entity;
 
-import com.example.PrevidenciAgi.entity.Cliente;
 import com.example.PrevidenciAgi.entity.Enum.Genero;
 import com.example.PrevidenciAgi.entity.Enum.TempoRecebendo;
 import com.example.PrevidenciAgi.entity.Enum.TipoSimulacao;

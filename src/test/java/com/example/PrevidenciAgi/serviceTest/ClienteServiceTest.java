@@ -102,7 +102,6 @@ class ClienteServiceTest {
 
     @Test
     void cadastrarCliente_DeveSalvarCliente_QuandoDadosSaoValidos() {
-        // Arrange
         Cliente cliente = new Cliente();
         cliente.setCpf("123.456.789-00");
         cliente.setSenha("senhaSegura123");

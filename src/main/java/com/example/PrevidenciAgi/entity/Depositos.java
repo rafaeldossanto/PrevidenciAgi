@@ -3,15 +3,14 @@ package com.example.PrevidenciAgi.entity;
 import com.example.PrevidenciAgi.entity.Enum.TipoAposentadoriaEnum;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Depositos {
@@ -21,6 +20,9 @@ public class Depositos {
 
     @Enumerated(EnumType.STRING)
     private TipoAposentadoriaEnum tipo;
+
+    @PositiveOrZero
+    private Double saldo;
 
     @Positive
     private Double valor;

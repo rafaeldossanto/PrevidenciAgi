@@ -33,7 +33,7 @@ public class DepositosService {
         deposito.setValor(request.valor());
         deposito.setAposentadoria(aposentadoria);
         deposito.setCliente(aposentadoria.getCliente());
-        deposito.setSaldo(aposentadoria.getSaldo + request.valor());
+        deposito.setSaldo(deposito.getSaldo() + request.valor());
 
         depositosRepository.save(deposito);
 

@@ -1,11 +1,11 @@
 package com.example.PrevidenciAgi.dto.aposentadoria.request;
 
-import com.example.PrevidenciAgi.entity.Enum.TipoAposentadoriaEnum;
+import com.example.PrevidenciAgi.entity.Enum.TipoAposentadoria;
 
 import java.time.LocalDate;
 
 public record AposentadoriaRequest(
-        TipoAposentadoriaEnum tipoAposentadoria,
+        TipoAposentadoria tipoAposentadoria,
         Double valor_mensal,
         Double valor_deposito,
         LocalDate data_contratada,

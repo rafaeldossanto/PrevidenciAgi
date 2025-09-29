@@ -1,12 +1,10 @@
 package com.example.PrevidenciAgi.entity;
 
-import com.example.PrevidenciAgi.entity.Enum.TipoAposentadoriaEnum;
+import com.example.PrevidenciAgi.entity.Enum.TipoDeposito;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.*;
-import org.aspectj.bridge.IMessage;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -20,7 +18,7 @@ public class Depositos {
     private Long idDeposito;
 
     @Enumerated(EnumType.STRING)
-    private TipoAposentadoriaEnum tipo;
+    private TipoDeposito tipo;
 
     @PositiveOrZero
     private Double saldo;

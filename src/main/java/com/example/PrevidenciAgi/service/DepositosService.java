@@ -4,6 +4,7 @@ import com.example.PrevidenciAgi.dto.deposito.request.DepositosRequest;
 import com.example.PrevidenciAgi.entity.Aposentadoria;
 import com.example.PrevidenciAgi.entity.Cliente;
 import com.example.PrevidenciAgi.entity.Depositos;
+import com.example.PrevidenciAgi.entity.Enum.TipoDeposito;
 import com.example.PrevidenciAgi.repository.AposentadoriaRepository;
 import com.example.PrevidenciAgi.repository.ClienteRepository;
 import com.example.PrevidenciAgi.repository.DepositosRepository;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
@@ -39,6 +41,20 @@ public class DepositosService {
         deposito.setAposentadoria(aposentadoria);
         deposito.setCliente(aposentadoria.getCliente());
         deposito.setSaldo(deposito.getSaldo() + request.valor());
+
+        LocalDateTime agora = LocalDateTime.now();
+        LocalDateTime inicioMes = agora.withDayOfMonth(1).withHour(0).withMinute(0).withSecond(0);
+        LocalDateTime fimMes = agora.withDayOfMonth(agora.toLocalDate().lengthOfMonth())
+                .withHour(23).withMinute(59).withSecond(59);
+
+        Double totalDepositadoMes = depositosRepository.findTotalDepositadoNoMesPorCliente(aposentadoria.getCliente().getId(), inicioMes, fimMes);
+        Double valorMensal = aposentadoria.getValor_mensal();
+
+        if (totalDepositadoMes.compareTo(valorMensal) >= 0){
+            deposito.setTipo(TipoDeposito.APORTE);
+        } else if(totalDepositadoMes.compareTo(valorMensal) <= 0){
+            deposito.setTipo(TipoDeposito.MENSAL);
+        }
 
         depositosRepository.save(deposito);
 

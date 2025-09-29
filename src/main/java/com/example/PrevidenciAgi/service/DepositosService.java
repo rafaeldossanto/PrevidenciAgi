@@ -44,9 +44,7 @@ public class DepositosService {
         deposito.setValor(request.valor());
         deposito.setAposentadoria(aposentadoria);
         deposito.setCliente(cliente);
-
-        Double saldoAtual = totalDoCliente(cliente.getId());
-        deposito.setSaldo(saldoAtual + request.valor());
+        deposito.setSaldo(totalDoCliente(cliente.getId()) + request.valor());
 
         LocalDateTime inicioMes = agora.withDayOfMonth(1).withHour(0).withMinute(0).withSecond(0);
         LocalDateTime fimMes = agora.withDayOfMonth(agora.toLocalDate().lengthOfMonth())

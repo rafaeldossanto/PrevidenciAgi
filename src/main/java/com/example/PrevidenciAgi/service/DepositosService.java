@@ -6,6 +6,7 @@ import com.example.PrevidenciAgi.entity.Depositos;
 import com.example.PrevidenciAgi.repository.AposentadoriaRepository;
 import com.example.PrevidenciAgi.repository.ClienteRepository;
 import com.example.PrevidenciAgi.repository.DepositosRepository;
+import com.example.PrevidenciAgi.service.exception.NaoEncontrado;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,7 +27,7 @@ public class DepositosService {
     public Depositos depositar(DepositosRequest request){
         Depositos deposito = new Depositos();
         Aposentadoria aposentadoria = aposentadoriaRepository.findById(request.id_aposentadoria())
-                .orElseThrow(() -> new EntityNotFoundException("Aposentadoria nao encontrada"));
+                .orElseThrow(() -> new NaoEncontrado("Aposentadoria nao encontrada"));
 
         deposito.setDataDeposito(LocalDateTime.now());
         deposito.setValor(request.valor());

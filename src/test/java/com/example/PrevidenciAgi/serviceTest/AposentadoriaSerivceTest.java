@@ -67,4 +67,39 @@ public class AposentadoriaSerivceTest {
 
         verify(aposentadoriaRepository).save(any(Aposentadoria.class));
     }
+
+    @Test
+    void DeveAjustarValorMensal_CasoValorSejaValido() {
+        Long id = 1L;
+        Double novoValor = 1000.0;
+
+        Aposentadoria aposentadoria = new Aposentadoria();
+        aposentadoria.setIdAposentadoria(id);
+        aposentadoria.setValor_mensal(500.0);
+
+        when(aposentadoriaRepository.findById(id)).thenReturn(Optional.of(aposentadoria));
+
+        aposentadoriaService.ajustarValorMensal(id, novoValor);
+
+        verify(aposentadoriaRepository).save(aposentadoria);
+        assert (aposentadoria.getValor_mensal().equals(novoValor));
+
+    }
+
+    @Test
+    void NaoDeveSalvar_SeValorMensalForIgual() {
+        Long id = 1L;
+        Double valorAtual = 1000.0;
+
+        Aposentadoria aposentadoria = new Aposentadoria();
+        aposentadoria.setIdAposentadoria(id);
+        aposentadoria.setValor_mensal(valorAtual);
+
+        when(aposentadoriaRepository.findById(id)).thenReturn(Optional.of(aposentadoria));
+
+        aposentadoriaService.ajustarValorMensal(id, valorAtual);
+
+        verify(aposentadoriaRepository, org.mockito.Mockito.never()).save(any(Aposentadoria.class));
+    }
+
 }

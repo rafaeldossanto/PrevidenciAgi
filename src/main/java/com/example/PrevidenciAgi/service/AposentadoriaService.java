@@ -39,4 +39,9 @@ public class AposentadoriaService {
 
         return aposentadoriaRepository.save(aposentadoria);
     }
+
+
+    public void ajustarValorMensal(Long id){
+        //metododo para atualizar o valor mensal que ira ser depositado na aposentadoria
+    }
 }

@@ -30,6 +30,12 @@ public class Simulacao {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idSimulacao;
 
+    @Positive
+    private Integer idade;
+
+    @Positive
+    private Integer taxaJuros;
+
     @Enumerated(EnumType.STRING)
     private TipoSimulacao tipoSimulacao;
 
@@ -39,14 +45,17 @@ public class Simulacao {
     @Positive
     private BigDecimal valorMensal;
 
-    @FutureOrPresent
-    private LocalDate dataInicial;
-
     @Future
     private LocalDate dataAposentar;
 
     @Enumerated(EnumType.STRING)
     private TempoRecebendo tempoRecebimento;
+
+    @Positive
+    private BigDecimal TotalInvestidoJuros;
+
+    @Positive
+    private BigDecimal valorInvestido;
 
     @ManyToOne
     @JoinColumn(name = "idCliente")

@@ -2,6 +2,7 @@ package com.example.PrevidenciAgi.service;
 
 import com.example.PrevidenciAgi.component.JwtTokenGenerator;
 import com.example.PrevidenciAgi.entity.Cliente;
+import com.example.PrevidenciAgi.entity.Enum.Role;
 import com.example.PrevidenciAgi.repository.ClienteRepository;
 import com.example.PrevidenciAgi.service.exception.EscolhaEnumInvalida;
 import com.example.PrevidenciAgi.service.exception.JaExistente;
@@ -61,6 +62,7 @@ public class ClienteService {
 
         String senhaCriptografada = passwordEncoder.encode(cliente.getSenha());
         cliente.setSenha(senhaCriptografada);
+        cliente.setRole(Role.CLIENTE);
 
         clienteRepository.save(cliente);
     }

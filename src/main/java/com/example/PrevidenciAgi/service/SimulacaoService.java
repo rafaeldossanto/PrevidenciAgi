@@ -26,18 +26,11 @@ public class SimulacaoService {
             throw new IllegalArgumentException("Valor mensal deve ser fornecido para simulação do tipo DEPOSITAR.");
         }
 
-        int mesesContribuidos = (request.dataAposentar().getYear() - LocalDate.now().getYear()) * 12;
-
-        BigDecimal valorMensal = request.valorMensal();
-        double taxaMensal = request.taxaJuros() / 12.0 / 100.0;
-        BigDecimal montanteFinal = valorMensal.multiply(
-                BigDecimal.valueOf((Math.pow(1 + taxaMensal, mesesContribuidos) - 1) / taxaMensal)
-        );
-
-        BigDecimal totalInvestido = valorMensal.multiply(BigDecimal.valueOf(mesesContribuidos));
+        BigDecimal montanteFinal = calculandoMontanteFinal(request);
+        BigDecimal totalInvestido = request.valorMensal().multiply(BigDecimal.valueOf((request.dataAposentar().getYear() - LocalDate.now().getYear())* 12L));
 
         simulacao.setIdade(request.idade());
-        simulacao.setValorMensal(valorMensal);
+        simulacao.setValorMensal(request.valorMensal());
         simulacao.setTaxaJuros(request.taxaJuros());
         simulacao.setTipoSimulacao(request.tipoSimulacao());
         simulacao.setGenero(request.genero());
@@ -49,4 +42,12 @@ public class SimulacaoService {
         simulacaoRepository.save(simulacao);
     }
 
+    private BigDecimal calculandoMontanteFinal(SimulacaoRequest request){
+        double taxaMensal = (double) request.taxaJuros() /12/100.0;
+        int mesesContribuidos = (request.dataAposentar().getYear() - LocalDate.now().getYear()) *12;
+
+        return request.valorMensal().multiply(
+                BigDecimal.valueOf((Math.pow(1 + taxaMensal, mesesContribuidos) - 1) / taxaMensal)
+        );
+    }
 }

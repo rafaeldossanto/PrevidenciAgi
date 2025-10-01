@@ -8,8 +8,13 @@ Data: 17/09/2025
 package com.example.PrevidenciAgi.entity;
 
 import com.example.PrevidenciAgi.entity.Cliente;
-import com.example.PrevidenciAgi.enums.Genero;
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -34,8 +39,8 @@ public class Simulacao {
     @NotBlank(message = "O valor a receber e obrigatorio!")
     private Double valorReceber;
 
-    @Enumerated(EnumType.STRING)
-    private Genero genero;
+    @NotBlank(message = "O genero e obrigatorio!")
+    private String genero;
 
     @NotBlank(message = "O tipo de contribuicao e obrigatorio!")
     private String tipoContribuicao;

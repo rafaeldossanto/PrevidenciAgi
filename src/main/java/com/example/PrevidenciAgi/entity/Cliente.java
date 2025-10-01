@@ -1,11 +1,11 @@
 package com.example.PrevidenciAgi.entity;
 
-import com.example.PrevidenciAgi.dto.cliente.request.DadosCadastroRequest;
-import com.example.PrevidenciAgi.enums.Genero;
 import jakarta.persistence.*;
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
-import lombok.*;
+import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
@@ -13,11 +13,7 @@ import java.util.List;
 
 
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter
-@Setter
-@Builder
+@Data
 public class Cliente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,8 +25,8 @@ public class Cliente {
     @NotBlank(message = "O campo nome e obrigatorio!")
     private String nome;
 
-    @Enumerated(EnumType.STRING)
-    private Genero genero;
+    @NotBlank(message = "O genero e obrigatorio!")
+    private String genero;
 
     @NotBlank(message = "O email e obrigatorio!")
     private String email;
@@ -46,12 +42,4 @@ public class Cliente {
     @OneToOne
     @JoinColumn(name = "idAposentadoria")
     private Aposentadoria aposentadoria;
-
-    public Cliente(DadosCadastroRequest dados) {
-        this.cpf = dados.cpf();
-        this.nome = dados.nome();
-        this.genero = dados.genero();
-        this.email = dados.email();
-        this.senha = dados.senha();
-    }
 }

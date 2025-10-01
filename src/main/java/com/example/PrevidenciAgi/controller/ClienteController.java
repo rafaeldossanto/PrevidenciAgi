@@ -1,8 +1,9 @@
 package com.example.PrevidenciAgi.controller;
 
-import com.example.PrevidenciAgi.dto.cliente.request.DadosCadastroRequest;
-import com.example.PrevidenciAgi.dto.cliente.response.DadosCadastroResponse;
+import com.example.PrevidenciAgi.dto.ClienteDto;
+import com.example.PrevidenciAgi.entity.Cliente;
 import com.example.PrevidenciAgi.service.ClienteService;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,18 +17,13 @@ import java.util.Map;
 @RestController
 @RequestMapping("/previdencia")
 public class ClienteController {
-
-    private final ClienteService clienteService;
-
-    public ClienteController(ClienteService clienteService) {
-        this.clienteService = clienteService;
-    }
+    @Autowired
+    private ClienteService clienteService;
 
     @PostMapping("/criar")
     @Transactional
-    public ResponseEntity<DadosCadastroResponse> cadastrarCliente(@Valid @RequestBody DadosCadastroRequest dados) {
-        DadosCadastroResponse response = clienteService.CadastrarCliente(dados);
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    public ClienteDto cadastrarCliente(@Valid @RequestBody Cliente cliente) {
+        return clienteService.CadastrarCliente(cliente);
     }
 
     @PutMapping("/atualizar/{id}")

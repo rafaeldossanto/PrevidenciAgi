@@ -1,9 +1,6 @@
 package com.example.PrevidenciAgi.dto.cliente.request;
 
-public record DadosCadastroRequest(
-        String cpf,
-        String nome,
-        String genero,
+public record LoginRequest(
         String email,
         String senha
 ) {

@@ -1,12 +1,11 @@
 package com.example.PrevidenciAgi.serviceTest;
 
-import com.example.PrevidenciAgi.dto.aposentadoria.request.AposentadoriaRequest;
-import com.example.PrevidenciAgi.entity.Aposentadoria;
-import com.example.PrevidenciAgi.entity.Cliente;
-import com.example.PrevidenciAgi.entity.Enum.TipoAposentadoria;
+import com.example.PrevidenciAgi.model.aposentadoria.request.AposentadoriaRequest;
+import com.example.PrevidenciAgi.model.aposentadoria.Aposentadoria;
+import com.example.PrevidenciAgi.model.cliente.Cliente;
+import com.example.PrevidenciAgi.enums.TipoAposentadoria;
 import com.example.PrevidenciAgi.repository.AposentadoriaRepository;
 import com.example.PrevidenciAgi.repository.ClienteRepository;
-import com.example.PrevidenciAgi.service.AposentadoriaService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

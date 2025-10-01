@@ -1,35 +1,33 @@
 package com.example.PrevidenciAgi.service;
 
-import com.example.PrevidenciAgi.dto.ClienteDto;
-import com.example.PrevidenciAgi.entity.Cliente;
+import com.example.PrevidenciAgi.model.cliente.Cliente;
+import com.example.PrevidenciAgi.model.cliente.request.ClienteRequest;
+import com.example.PrevidenciAgi.model.cliente.response.ClienteResponse;
 import com.example.PrevidenciAgi.repository.ClienteRepository;
 import jakarta.persistence.EntityExistsException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 
 
 @Service
 public class ClienteService {
-    @Autowired
-    private ClienteRepository clienteRepository;
 
-    public ClienteDto CadastrarCliente(Cliente cliente){
-        if (clienteRepository.existsByCpf(cliente.getCpf())){
-            throw new IllegalArgumentException("Cliente cadastrado.");
-        }
+    private final ClienteRepository clienteRepository;
 
-        Cliente clientedto = clienteRepository.save(cliente);
-        return ClienteDto.fromCliente(clientedto);
+    public ClienteService(ClienteRepository clienteRepository) {
+        this.clienteRepository = clienteRepository;
     }
 
-    public void deletarCliente(Long id){
-        if (!clienteRepository.existsById(id)){
-            throw new IllegalArgumentException("Cliente não encontrado.");
+    //Cadastrar cliente
+    public ClienteResponse CadastrarCliente(ClienteRequest dados) {
+        if (clienteRepository.existsByCpf(dados.cpf())) {
+            throw new IllegalArgumentException("Cliente já cadastrado.");
         }
-        clienteRepository.deleteById(id);
+        Cliente cliente = new Cliente(dados);
+        Cliente clienteSalvo = clienteRepository.save(cliente);
+        return new ClienteResponse(clienteSalvo);
     }
 
+    //Atualizar dados do cliente
     public String atualizarDados(Long id, String dado, String dadoNovo) {
         Cliente cliente = clienteRepository.findById(id)
                 .orElseThrow(() -> new EntityExistsException("Cliente com esse Id nao encontrado."));

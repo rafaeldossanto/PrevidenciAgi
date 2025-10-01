@@ -1,15 +1,15 @@
 package com.example.PrevidenciAgi.serviceTest;
 
 import com.example.PrevidenciAgi.component.JwtTokenGenerator;
-import com.example.PrevidenciAgi.entity.Cliente;
-import com.example.PrevidenciAgi.entity.Enum.Genero;
-import com.example.PrevidenciAgi.entity.Enum.Role;
+import com.example.PrevidenciAgi.model.cliente.Cliente;
+import com.example.PrevidenciAgi.enums.Genero;
+import com.example.PrevidenciAgi.enums.Role;
 import com.example.PrevidenciAgi.repository.ClienteRepository;
 import com.example.PrevidenciAgi.service.ClienteService;
-import com.example.PrevidenciAgi.service.exception.EscolhaEnumInvalida;
-import com.example.PrevidenciAgi.service.exception.JaExistente;
-import com.example.PrevidenciAgi.service.exception.NaoEncontrado;
-import com.example.PrevidenciAgi.service.exception.SenhaInvalida;
+import com.example.PrevidenciAgi.exception.EscolhaEnumInvalida;
+import com.example.PrevidenciAgi.exception.JaExistente;
+import com.example.PrevidenciAgi.exception.NaoEncontrado;
+import com.example.PrevidenciAgi.exception.SenhaInvalida;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

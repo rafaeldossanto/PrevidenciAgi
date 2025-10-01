@@ -1,6 +1,6 @@
 package com.example.PrevidenciAgi.repository;
 
-import com.example.PrevidenciAgi.entity.Aposentadoria;
+import com.example.PrevidenciAgi.model.aposentadoria.Aposentadoria;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

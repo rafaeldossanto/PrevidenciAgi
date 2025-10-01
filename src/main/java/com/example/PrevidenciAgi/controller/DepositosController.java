@@ -1,9 +1,8 @@
 package com.example.PrevidenciAgi.controller;
 
 import com.example.PrevidenciAgi.dto.deposito.request.DepositosRequest;
-import com.example.PrevidenciAgi.entity.Depositos;
+import com.example.PrevidenciAgi.model.deposito.Depositos;
 import com.example.PrevidenciAgi.service.DepositosService;
-import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

@@ -1,14 +1,14 @@
 package com.example.PrevidenciAgi.service;
 
 import com.example.PrevidenciAgi.dto.deposito.request.DepositosRequest;
-import com.example.PrevidenciAgi.entity.Aposentadoria;
-import com.example.PrevidenciAgi.entity.Cliente;
-import com.example.PrevidenciAgi.entity.Depositos;
-import com.example.PrevidenciAgi.entity.Enum.TipoDeposito;
+import com.example.PrevidenciAgi.model.aposentadoria.Aposentadoria;
+import com.example.PrevidenciAgi.model.cliente.Cliente;
+import com.example.PrevidenciAgi.model.deposito.Depositos;
+import com.example.PrevidenciAgi.enums.TipoDeposito;
 import com.example.PrevidenciAgi.repository.AposentadoriaRepository;
 import com.example.PrevidenciAgi.repository.ClienteRepository;
 import com.example.PrevidenciAgi.repository.DepositosRepository;
-import com.example.PrevidenciAgi.service.exception.NaoEncontrado;
+import com.example.PrevidenciAgi.exception.NaoEncontrado;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

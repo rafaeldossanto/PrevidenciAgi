@@ -1,6 +1,6 @@
 package com.example.PrevidenciAgi.entity;
 
-import com.example.PrevidenciAgi.entity.Enum.GeneroEnum;
+import com.example.PrevidenciAgi.entity.Enum.Genero;
 import com.example.PrevidenciAgi.entity.Enum.Role;
 import com.example.PrevidenciAgi.enums.Genero;
 import jakarta.persistence.*;

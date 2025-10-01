@@ -1,18 +1,15 @@
 package com.example.PrevidenciAgi.entity;
 
-import com.example.PrevidenciAgi.enums.TiposDepositos;
+import com.example.PrevidenciAgi.entity.Enum.TipoDeposito;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
+import jakarta.validation.constraints.*;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Depositos {
@@ -20,18 +17,23 @@ public class Depositos {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idDeposito;
 
-    private TiposDepositos tipo;
+    @Enumerated(EnumType.STRING)
+    private TipoDeposito tipo;
 
-    private double valor;
+    @PositiveOrZero
+    private Double saldo = 0.0;
 
-    @CreationTimestamp
+    @Positive(message = "O valor tem que ser maior que zero.")
+    private Double valor;
+
+    @PastOrPresent(message = "A data deve ser no dia atual.")
     private LocalDateTime dataDeposito;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "idAposentadoria", referencedColumnName = "idAposentadoria")
-    private Aposentadoria aposentadoriaCliente;
-
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "cliente_id", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_cliente")
     private Cliente cliente;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_aposentadoria", referencedColumnName = "idAposentadoria")
+    private Aposentadoria aposentadoria;
 }

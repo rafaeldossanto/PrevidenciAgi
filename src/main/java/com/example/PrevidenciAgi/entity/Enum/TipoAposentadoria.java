@@ -1,6 +1,6 @@
 package com.example.PrevidenciAgi.entity.Enum;
 
-public enum TipoAposentadoriaEnum {
+public enum TipoAposentadoria {
     PGBL_PROGRESSIVO,
     VGBL_PROGRESSIVO,
     PGBL_REGRESSIVO,

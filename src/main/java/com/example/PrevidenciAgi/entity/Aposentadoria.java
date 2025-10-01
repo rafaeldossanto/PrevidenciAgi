@@ -1,6 +1,6 @@
 package com.example.PrevidenciAgi.entity;
 
-import com.example.PrevidenciAgi.entity.Enum.TipoAposentadoriaEnum;
+import com.example.PrevidenciAgi.entity.Enum.TipoAposentadoria;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.FutureOrPresent;
@@ -8,6 +8,7 @@ import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 import lombok.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -23,7 +24,7 @@ public class Aposentadoria {
     private Long idAposentadoria;
 
     @Enumerated(EnumType.STRING)
-    private TipoAposentadoriaEnum tipoAposentadoria;
+    private TipoAposentadoria tipoAposentadoria;
 
     @Positive(message = "O valor mensal deve ser positivo")
     private Double valor_mensal;

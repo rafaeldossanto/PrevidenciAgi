@@ -7,14 +7,16 @@ Data: 17/09/2025
 
 package com.example.PrevidenciAgi.entity;
 
-import com.example.PrevidenciAgi.entity.Cliente;
-import com.example.PrevidenciAgi.enums.Genero;
+import com.example.PrevidenciAgi.entity.Enum.Genero;
+import com.example.PrevidenciAgi.entity.Enum.TempoRecebendo;
+import com.example.PrevidenciAgi.entity.Enum.TipoSimulacao;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.math.BigDecimal;
 import java.time.LocalDate; // Importação adicionada para o LocalDate
 
 @Entity
@@ -28,29 +30,23 @@ public class Simulacao {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idSimulacao;
 
-    @NotBlank(message = "O valor mensal e obrigatorio!")
-    private Double valorMensal;
-
-    @NotBlank(message = "O valor a receber e obrigatorio!")
-    private Double valorReceber;
+    @Enumerated(EnumType.STRING)
+    private TipoSimulacao tipoSimulacao;
 
     @Enumerated(EnumType.STRING)
     private Genero genero;
 
-    @NotBlank(message = "O tipo de contribuicao e obrigatorio!")
-    private String tipoContribuicao;
+    @Positive
+    private BigDecimal valorMensal;
 
-    @NotNull
-    private LocalDate dataInicial; // Alterado de Integer para LocalDate
+    @FutureOrPresent
+    private LocalDate dataInicial;
 
-    @NotBlank
-    private LocalDate dataAposentar; // Alterado de Integer para LocalDate
+    @Future
+    private LocalDate dataAposentar;
 
-    @NotBlank(message = "O tempo contribuicao e obrigatorio!")
-    private Integer tempoContribuicao;
-
-    @NotBlank(message = "O tempo de recebimento e obrigatorio!")
-    private Integer tempoRecebimento;
+    @Enumerated(EnumType.STRING)
+    private TempoRecebendo tempoRecebimento;
 
     @ManyToOne
     @JoinColumn(name = "idCliente")

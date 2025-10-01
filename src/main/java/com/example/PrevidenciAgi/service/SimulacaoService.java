@@ -2,6 +2,7 @@ package com.example.PrevidenciAgi.service;
 
 
 import com.example.PrevidenciAgi.dto.simulacao.request.SimulacaoRequest;
+import com.example.PrevidenciAgi.entity.Enum.TempoRecebendo;
 import com.example.PrevidenciAgi.entity.Enum.TipoSimulacao;
 import com.example.PrevidenciAgi.entity.Simulacao;
 import com.example.PrevidenciAgi.repository.SimulacaoRepository;
@@ -24,10 +25,24 @@ public class SimulacaoService {
         if (request.tipoSimulacao().equals(TipoSimulacao.DEPOSITAR)
                 && request.valorMensal() == null) {
             throw new IllegalArgumentException("Valor mensal deve ser fornecido para simulação do tipo DEPOSITAR.");
+        } else if (request.tipoSimulacao().equals(TipoSimulacao.DEPOSITAR)) {
+            BigDecimal montanteFinal = calculandoMontanteFinal(request);
+            BigDecimal valorRecebendo = montanteFinal.divide(BigDecimal.valueOf(request.tempoRecebimento().toAnos() * 12F));
+
+            simulacao.setValorRecebendo(valorRecebendo);
+            simulacao.setTotalInvestidoJuros(montanteFinal);
         }
 
-        BigDecimal montanteFinal = calculandoMontanteFinal(request);
-        BigDecimal totalInvestido = request.valorMensal().multiply(BigDecimal.valueOf((request.dataAposentar().getYear() - LocalDate.now().getYear())* 12L));
+        if (request.tipoSimulacao().equals(TipoSimulacao.RECEBER)
+        && request.valorMensal() != null) {
+            throw new IllegalArgumentException("Valor mensal nessa ocasiao deve ser vazio.");
+        } else if (request.tipoSimulacao().equals(TipoSimulacao.RECEBER)){
+            BigDecimal valorRecebendo = calcularSimulacaoRecebendo(request);
+
+            simulacao.setValorRecebendo(valorRecebendo);
+        }
+        BigDecimal totalInvestido = request.valorMensal().multiply(BigDecimal.valueOf((request.dataAposentar().getYear() - LocalDate.now().getYear()) * 12L));
+
 
         simulacao.setIdade(request.idade());
         simulacao.setValorMensal(request.valorMensal());
@@ -37,17 +52,30 @@ public class SimulacaoService {
         simulacao.setDataAposentar(request.dataAposentar());
         simulacao.setTempoRecebimento(request.tempoRecebimento());
         simulacao.setValorInvestido(totalInvestido);
-        simulacao.setTotalInvestidoJuros(montanteFinal);
+
 
         simulacaoRepository.save(simulacao);
     }
 
-    private BigDecimal calculandoMontanteFinal(SimulacaoRequest request){
-        double taxaMensal = (double) request.taxaJuros() /12/100.0;
-        int mesesContribuidos = (request.dataAposentar().getYear() - LocalDate.now().getYear()) *12;
+    private BigDecimal calculandoMontanteFinal(SimulacaoRequest request) {
+        double taxaMensal = (double) request.taxaJuros() / 12 / 100.0;
+        int mesesContribuidos = (request.dataAposentar().getYear() - LocalDate.now().getYear()) * 12;
 
         return request.valorMensal().multiply(
                 BigDecimal.valueOf((Math.pow(1 + taxaMensal, mesesContribuidos) - 1) / taxaMensal)
         );
+    }
+
+    private BigDecimal calcularSimulacaoRecebendo(SimulacaoRequest request) {
+        BigDecimal rendaMensalDesejada = request.valorMensal();
+        int mesesRecebimento = request.tempoRecebimento().toAnos() * 12;
+        double taxaJurosMensal = (double) request.taxaJuros() / 12 / 100.0;
+        int mesesAteAposentadoria = (request.dataAposentar().getYear() - LocalDate.now().getYear()) * 12;
+
+        double vp = rendaMensalDesejada.doubleValue() * (1 - Math.pow(1 + taxaJurosMensal, -mesesRecebimento)) / taxaJurosMensal;
+
+        double valorMensal = vp * taxaJurosMensal / (Math.pow(1 + taxaJurosMensal, mesesAteAposentadoria) - 1);
+
+        return BigDecimal.valueOf(valorMensal);
     }
 }

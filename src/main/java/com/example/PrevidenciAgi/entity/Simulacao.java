@@ -45,6 +45,9 @@ public class Simulacao {
     @Positive
     private BigDecimal valorMensal;
 
+    @Positive
+    private BigDecimal valorRecebendo;
+
     @Future
     private LocalDate dataAposentar;
 

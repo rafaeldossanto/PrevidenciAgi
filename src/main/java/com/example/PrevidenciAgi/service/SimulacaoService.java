@@ -2,7 +2,6 @@ package com.example.PrevidenciAgi.service;
 
 
 import com.example.PrevidenciAgi.dto.simulacao.request.SimulacaoRequest;
-import com.example.PrevidenciAgi.entity.Enum.TempoRecebendo;
 import com.example.PrevidenciAgi.entity.Enum.TipoSimulacao;
 import com.example.PrevidenciAgi.entity.Simulacao;
 import com.example.PrevidenciAgi.repository.SimulacaoRepository;

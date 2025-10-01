@@ -1,12 +1,13 @@
 package com.example.PrevidenciAgi.entity;
 
+import com.example.PrevidenciAgi.entity.Enum.TipoAposentadoriaEnum;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -19,15 +20,19 @@ public class Depositos {
     private Long idDeposito;
 
     @NotBlank(message = "O tipo e obrigatorio!")
-    private String tipo;
+    private TipoAposentadoriaEnum tipo;
 
-    @NotBlank(message = "O valor e obrigatorio!")
-    private double valor;
+    @Positive
+    private Double valor;
 
-    @NotNull
+    @PastOrPresent
     private LocalDateTime dataDeposito;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "idCliente", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "cliente_id")
     private Cliente cliente;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_aposentadoria")
+    private Aposentadoria aposentadoria;
 }

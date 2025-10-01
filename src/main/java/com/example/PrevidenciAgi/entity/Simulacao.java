@@ -1,19 +1,23 @@
+/*
+Módulo: Simulacao.java
+Descrição: Define a entity simulação e suas propriedades
+Autor: Gustavo Henrique dos Anjos
+Data: 17/09/2025
+*/
+
 package com.example.PrevidenciAgi.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive; // Adicionado para campos Double/Integer
+import com.example.PrevidenciAgi.entity.Enum.Genero;
+import com.example.PrevidenciAgi.entity.Enum.TempoRecebendo;
+import com.example.PrevidenciAgi.entity.Enum.TipoSimulacao;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import java.time.LocalDate;
+
+import java.math.BigDecimal;
+import java.time.LocalDate; // Importação adicionada para o LocalDate
 
 @Entity
 @Data
@@ -26,40 +30,35 @@ public class Simulacao {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idSimulacao;
 
-    // --- Campos Numéricos e de Data (Usam @NotNull ou @Positive) ---
+    @Positive
+    private Integer idade;
 
-    // NOTA: Entidades JPA tipicamente não devem ter validação de input (@NotNull, @Positive),
-    // pois isso é função do DTO. Mantenho aqui por fins de mapeamento, mas o DTO é o local correto.
-    @NotNull(message = "O valor mensal é obrigatório.")
-    @Positive(message = "O valor mensal deve ser positivo.")
-    private Double valorMensal;
+    @Positive
+    private Integer taxaJuros;
 
-    @NotNull(message = "O valor a receber é obrigatório.")
-    private Double valorReceber;
+    @Enumerated(EnumType.STRING)
+    private TipoSimulacao tipoSimulacao;
 
-    @NotNull(message = "A data inicial é obrigatória.")
-    private LocalDate dataInicial;
+    @Enumerated(EnumType.STRING)
+    private Genero genero;
 
-    @NotNull(message = "A data de aposentadoria é obrigatória.")
+    @Positive
+    private BigDecimal valorMensal;
+
+    @Positive
+    private BigDecimal valorRecebendo;
+
+    @Future
     private LocalDate dataAposentar;
 
-    @NotNull(message = "O tempo de contribuição é obrigatório.")
-    @Positive(message = "O tempo de contribuição deve ser positivo.")
-    private Integer tempoContribuicao;
+    @Enumerated(EnumType.STRING)
+    private TempoRecebendo tempoRecebimento;
 
-    @NotNull(message = "O tempo de recebimento é obrigatório.")
-    @Positive(message = "O tempo de recebimento deve ser positivo.")
-    private Integer tempoRecebimento;
+    @Positive
+    private BigDecimal TotalInvestidoJuros;
 
-    // --- Campos de String (Usam @NotBlank) ---
-
-    @NotBlank(message = "O gênero é obrigatório.")
-    private String genero;
-
-    @NotBlank(message = "O tipo de contribuição é obrigatório.")
-    private String tipoContribuicao; // Ex: PGBL, VGBL
-
-    // --- Relacionamento ---
+    @Positive
+    private BigDecimal valorInvestido;
 
     @ManyToOne
     @JoinColumn(name = "idCliente")

@@ -2,7 +2,12 @@ package com.example.PrevidenciAgi.service;
 
 import com.example.PrevidenciAgi.component.JwtTokenGenerator;
 import com.example.PrevidenciAgi.entity.Cliente;
+import com.example.PrevidenciAgi.entity.Enum.Role;
 import com.example.PrevidenciAgi.repository.ClienteRepository;
+import com.example.PrevidenciAgi.service.exception.EscolhaEnumInvalida;
+import com.example.PrevidenciAgi.service.exception.JaExistente;
+import com.example.PrevidenciAgi.service.exception.NaoEncontrado;
+import com.example.PrevidenciAgi.service.exception.SenhaInvalida;
 import jakarta.persistence.EntityExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -25,11 +30,11 @@ public class ClienteService {
 
     public String login(String email, String senha) {
         Cliente cliente = clienteRepository.findByEmail(email)
-                .orElseThrow(() -> new IllegalArgumentException("Email não encontrado"));
+                .orElseThrow(() -> new NaoEncontrado("Email não encontrado"));
 
 
         if (!passwordEncoder.matches(senha, cliente.getSenha())) {
-            throw new RuntimeException("Senha incorreta");
+            throw new SenhaInvalida("Senha incorreta");
         }
 
         UserDetails userDetails = User.builder()
@@ -45,18 +50,26 @@ public class ClienteService {
 
     public void CadastrarCliente(Cliente cliente) {
         if (clienteRepository.existsByCpf(cliente.getCpf())) {
-            throw new IllegalArgumentException("Cliente cadastrado.");
+            throw new JaExistente("Cliente cadastrado.");
+        }
+        if (cliente.getSenha().length() < 8){
+            throw new SenhaInvalida("Senha muito pequena, coloque uma senha segura");
+        }
+
+        if (!cliente.getGenero().getDeclaringClass().isEnum()){
+            throw new EscolhaEnumInvalida("Coloque um genero valido.");
         }
 
         String senhaCriptografada = passwordEncoder.encode(cliente.getSenha());
         cliente.setSenha(senhaCriptografada);
+        cliente.setRole(Role.CLIENTE);
 
         clienteRepository.save(cliente);
     }
 
     public void atualizarDados(Long id, String dado, String dadoNovo) {
         Cliente cliente = clienteRepository.findById(id)
-                .orElseThrow(() -> new EntityExistsException("Cliente com esse Id nao encontrado."));
+                .orElseThrow(() -> new NaoEncontrado("Cliente com esse Id nao encontrado."));
 
 
         switch (dado.toLowerCase()) {
@@ -70,7 +83,7 @@ public class ClienteService {
                 break;
 
             default:
-                throw new IllegalArgumentException("Campo '" + dado + "' não é válido para atualização. Use 'email' ou 'senha'");
+                throw new EscolhaEnumInvalida("Campo '" + dado + "' não é válido para atualização. Use 'email' ou 'senha'");
         }
         clienteRepository.save(cliente);
     }

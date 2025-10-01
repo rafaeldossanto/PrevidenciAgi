@@ -1,7 +1,9 @@
 package com.example.PrevidenciAgi.dto.deposito.request;
 
+import java.math.BigDecimal;
+
 public record DepositosRequest(
-        String tipo,
+        Long id_aposentadoria,
         Double valor
 ) {
 }

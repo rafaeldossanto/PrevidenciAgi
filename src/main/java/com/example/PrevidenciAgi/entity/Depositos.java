@@ -1,17 +1,15 @@
 package com.example.PrevidenciAgi.entity;
 
-import com.example.PrevidenciAgi.entity.Enum.TipoAposentadoriaEnum;
+import com.example.PrevidenciAgi.entity.Enum.TipoDeposito;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Depositos {
@@ -19,20 +17,23 @@ public class Depositos {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idDeposito;
 
-    @NotBlank(message = "O tipo e obrigatorio!")
-    private TipoAposentadoriaEnum tipo;
+    @Enumerated(EnumType.STRING)
+    private TipoDeposito tipo;
 
-    @Positive
+    @PositiveOrZero
+    private Double saldo = 0.0;
+
+    @Positive(message = "O valor tem que ser maior que zero.")
     private Double valor;
 
-    @PastOrPresent
+    @PastOrPresent(message = "A data deve ser no dia atual.")
     private LocalDateTime dataDeposito;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "cliente_id")
+    @JoinColumn(name = "id_cliente")
     private Cliente cliente;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_aposentadoria")
+    @JoinColumn(name = "id_aposentadoria", referencedColumnName = "idAposentadoria")
     private Aposentadoria aposentadoria;
 }

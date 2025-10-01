@@ -1,6 +1,6 @@
 package com.example.PrevidenciAgi.entity;
 
-import com.example.PrevidenciAgi.entity.Enum.TipoAposentadoriaEnum;
+import com.example.PrevidenciAgi.entity.Enum.TipoAposentadoria;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.FutureOrPresent;
@@ -8,11 +8,11 @@ import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 import lombok.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
 @Entity
-@Table(name = "tbAposentadoria")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -24,21 +24,21 @@ public class Aposentadoria {
     private Long idAposentadoria;
 
     @Enumerated(EnumType.STRING)
-    private TipoAposentadoriaEnum tipoAposentadoria;
+    private TipoAposentadoria tipoAposentadoria;
 
-    @Positive
+    @Positive(message = "O valor mensal deve ser positivo")
     private Double valor_mensal;
 
-    @PositiveOrZero
+    @PositiveOrZero(message = "valor do deposito tem que ser maior que zero.")
     private Double valor_deposito;
 
-    @FutureOrPresent
+    @FutureOrPresent(message = "A data deve ser atual ou futura.")
     private LocalDate data_contratada;
 
-    @Future
+    @Future(message = "A data pra se aposentar tem que ser futura.")
     private LocalDate data_aposentar;
 
-    @FutureOrPresent
+    @FutureOrPresent(message = "A data deve ser agora ou futura.")
     private LocalDate data_inicio;
 
     @OneToOne

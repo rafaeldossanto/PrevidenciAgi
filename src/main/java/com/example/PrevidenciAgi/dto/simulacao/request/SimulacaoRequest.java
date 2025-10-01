@@ -1,18 +1,19 @@
 package com.example.PrevidenciAgi.dto.simulacao.request;
 
+import com.example.PrevidenciAgi.entity.Enum.Genero;
+import com.example.PrevidenciAgi.entity.Enum.TempoRecebendo;
+import com.example.PrevidenciAgi.entity.Enum.TipoSimulacao;
+
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public record SimulacaoRequest(
-        Double valorMensal,
-        Double valorReceber,
-        String genero,
-        String tipoContribuicao,
-        LocalDate dataInicial,
+        Integer idade,
+        Integer taxaJuros,
+        TipoSimulacao tipoSimulacao,
+        BigDecimal valorMensal,
+        Genero genero,
         LocalDate dataAposentar,
-        Integer tempoContribuicao,
-        Integer tempoRecebimento,
-        // CAMPOS ADICIONADOS PARA CORREÇÃO:
-        Long idCliente,
-        String regimeTributario // Ex: "Progressiva" ou "Regressiva"
-) {
+        TempoRecebendo tempoRecebimento
+        ) {
 }

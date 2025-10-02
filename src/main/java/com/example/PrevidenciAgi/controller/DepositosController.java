@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -23,7 +24,7 @@ public class DepositosController {
     }
 
     @GetMapping("/{id}")
-    public Map<LocalDateTime, Double> listarDepositos(@PathVariable Long id){
+    public List<Double> listarDepositos(@PathVariable Long id){
         return depositosService.listarDepositos(id);
     }
 }

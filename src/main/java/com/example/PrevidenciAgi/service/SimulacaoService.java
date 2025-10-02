@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 
 @Service
@@ -18,7 +19,7 @@ public class SimulacaoService {
     private SimulacaoRepository simulacaoRepository;
 
 
-    public void calcularSimulacaoDepositando(SimulacaoRequest request) {
+    public void calcularSimulacao(SimulacaoRequest request) {
         Simulacao simulacao = new Simulacao();
 
         if (request.tipoSimulacao().equals(TipoSimulacao.DEPOSITAR)
@@ -26,7 +27,11 @@ public class SimulacaoService {
             throw new IllegalArgumentException("Valor mensal deve ser fornecido para simulação do tipo DEPOSITAR.");
         } else if (request.tipoSimulacao().equals(TipoSimulacao.DEPOSITAR)) {
             BigDecimal montanteFinal = calculandoMontanteFinal(request);
-            BigDecimal valorRecebendo = montanteFinal.divide(BigDecimal.valueOf(request.tempoRecebimento().toAnos() * 12F));
+            BigDecimal valorRecebendo = montanteFinal.divide(
+                    BigDecimal.valueOf(request.tempoRecebimento().toAnos() * 12F),
+                    2,
+                    RoundingMode.HALF_UP
+            );
 
             simulacao.setValorRecebendo(valorRecebendo);
             simulacao.setTotalInvestidoJuros(montanteFinal);

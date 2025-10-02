@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -28,52 +27,54 @@ public class DepositosService {
     @Autowired
     private DepositosRepository depositosRepository;
 
-    public Depositos depositar(DepositosRequest request){
-        Depositos deposito = new Depositos();
+    public Depositos depositar(DepositosRequest request) {
         Aposentadoria aposentadoria = aposentadoriaRepository.findById(request.id_aposentadoria())
                 .orElseThrow(() -> new NaoEncontrado("Aposentadoria nao encontrada"));
 
-        LocalDateTime agora = LocalDateTime.now();
         Cliente cliente = aposentadoria.getCliente();
+        LocalDateTime agora = LocalDateTime.now();
 
+        Double ultimoSaldo = depositosRepository.findTopByClienteIdOrderByDataDepositoDesc(cliente.getId())
+                .map(Depositos::getSaldo)
+                .orElse(0.0);
+        Double novoSaldo = ultimoSaldo + request.valor();
+
+        LocalDateTime inicioMes = agora.toLocalDate().withDayOfMonth(1).atStartOfDay();
+        LocalDateTime fimMes = agora.toLocalDate().withDayOfMonth(agora.toLocalDate().lengthOfMonth()).atTime(23, 59, 59);
+
+        Double totalDepositadoMes = depositosRepository.findTotalDepositadoNoPeriodo(cliente.getId(), inicioMes, fimMes);
+        if (totalDepositadoMes == null) {
+            totalDepositadoMes = 0.0;
+        }
+
+        Double totalAposDeposito = totalDepositadoMes + request.valor();
+
+        Depositos deposito = new Depositos();
         deposito.setDataDeposito(agora);
         deposito.setValor(request.valor());
         deposito.setAposentadoria(aposentadoria);
         deposito.setCliente(cliente);
-        deposito.setSaldo(totalDoCliente(cliente.getId()) + request.valor());
+        deposito.setSaldo(novoSaldo);
 
-        LocalDateTime inicioMes = agora.withDayOfMonth(1).withHour(0).withMinute(0).withSecond(0);
-        LocalDateTime fimMes = agora.withDayOfMonth(agora.toLocalDate().lengthOfMonth())
-                .withHour(23).withMinute(59).withSecond(59);
-
-        Double totalDepositadoMes = depositosRepository.findTotalDepositadoNoPeriodo(
-                cliente.getId(), inicioMes, fimMes);
-
-        Double valorDepositoAtual = request.valor();
-        Double totalAposDeposito = totalDepositadoMes + valorDepositoAtual;
-
-        if (totalDepositadoMes >= aposentadoria.getValor_mensal() || totalAposDeposito > aposentadoria.getValor_mensal()) {
+        if (totalAposDeposito > aposentadoria.getValor_mensal()) {
             deposito.setTipo(TipoDeposito.APORTE);
         } else {
             deposito.setTipo(TipoDeposito.MENSAL);
         }
 
-        depositosRepository.save(deposito);
-        return deposito;
+        return depositosRepository.save(deposito);
     }
 
-    public Map<LocalDateTime,Double> listarDepositos(Long id){
+
+    public List<Double> listarDepositos(Long id) {
         return clienteRepository.findById(id)
-                .map(Cliente::getDepositos)
-                .orElse(Collections.emptyList())
-                .stream()
-                .collect(Collectors.toMap(
-                        Depositos::getDataDeposito,
-                        Depositos::getValor
-                ));
+                .map(cliente -> cliente.getDepositos().stream()
+                        .map(Depositos::getValor)
+                        .collect(Collectors.toList()))
+                .orElse(Collections.emptyList());
     }
 
-    public Double totalDoCliente(Long id){
+    public Double totalDoCliente(Long id) {
         List<Depositos> depositos = depositosRepository.findByClienteId(id);
 
         return depositos.stream()
@@ -81,10 +82,10 @@ public class DepositosService {
                 .sum();
     }
 
-    public Double totalDaAposentadoria(Long id){
+    public Double totalDaAposentadoria(Long id) {
         List<Depositos> depositos = depositosRepository.findByAposentadoriaIdAposentadoria(id);
 
-        return  depositos.stream()
+        return depositos.stream()
                 .mapToDouble(Depositos::getValor)
                 .sum();
     }

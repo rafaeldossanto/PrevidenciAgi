@@ -2,6 +2,7 @@ package com.example.PrevidenciAgi.service;
 
 import com.example.PrevidenciAgi.component.JwtTokenGenerator;
 import com.example.PrevidenciAgi.entity.Cliente;
+import com.example.PrevidenciAgi.entity.Enum.AtualizacaoDeDados;
 import com.example.PrevidenciAgi.entity.Enum.Role;
 import com.example.PrevidenciAgi.repository.ClienteRepository;
 import com.example.PrevidenciAgi.service.exception.EscolhaEnumInvalida;
@@ -67,17 +68,17 @@ public class ClienteService {
         clienteRepository.save(cliente);
     }
 
-    public void atualizarDados(Long id, String dado, String dadoNovo) {
+    public void atualizarDados(Long id, AtualizacaoDeDados dado, String dadoNovo) {
         Cliente cliente = clienteRepository.findById(id)
                 .orElseThrow(() -> new NaoEncontrado("Cliente com esse Id nao encontrado."));
 
 
-        switch (dado.toLowerCase()) {
-            case "email":
+        switch (dado) {
+            case AtualizacaoDeDados.EMAIL:
                 cliente.setEmail(dadoNovo);
                 break;
 
-            case "senha":
+            case AtualizacaoDeDados.SENHA:
                 String novaSenha = passwordEncoder.encode(dadoNovo);
                 cliente.setSenha(novaSenha);
                 break;

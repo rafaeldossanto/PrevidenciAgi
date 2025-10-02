@@ -1,5 +1,6 @@
 package com.example.PrevidenciAgi.controller;
 
+import com.example.PrevidenciAgi.dto.cliente.request.AtualizarDadosRequest;
 import com.example.PrevidenciAgi.dto.cliente.request.LoginRequest;
 import com.example.PrevidenciAgi.entity.Cliente;
 import com.example.PrevidenciAgi.service.ClienteService;
@@ -35,7 +36,7 @@ public class ClienteController {
     }
 
     @PutMapping("/atualizar/{id}")
-    public void atualizarDados(@PathVariable Long id, @RequestBody String dado, @RequestBody String dadoNovo){
-        clienteService.atualizarDados(id, dado, dadoNovo);
+    public void atualizarDados(@PathVariable Long id, @RequestBody AtualizarDadosRequest request){
+        clienteService.atualizarDados(id, request.dado(), request.mudanca());
     }
 }

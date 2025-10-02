@@ -18,7 +18,7 @@ public class AposentadoriaController {
     }
 
     @PutMapping("/ajuste/{id}")
-    public void ajustarValorMensal(@PathVariable Long id,@RequestBody Double novoValor){
+    public void ajustarValorMensal(@PathVariable Long id,@RequestParam Double novoValor){
         aposentadoriaService.ajustarValorMensal(id, novoValor);
     }
 }

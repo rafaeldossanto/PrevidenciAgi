@@ -45,6 +45,7 @@ public class SimulacaoService {
 
             simulacao.setValorRecebendo(valorRecebendo);
         }
+        assert request.valorMensal() != null;
         BigDecimal totalInvestido = request.valorMensal().multiply(BigDecimal.valueOf((request.dataAposentar().getYear() - LocalDate.now().getYear()) * 12L));
 
 

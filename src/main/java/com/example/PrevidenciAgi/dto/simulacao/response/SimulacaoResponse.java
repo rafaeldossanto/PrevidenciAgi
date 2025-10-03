@@ -1,16 +1,18 @@
 package com.example.PrevidenciAgi.dto.simulacao.response;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public record SimulacaoResponse(
         Long idSimulacao,
-        Double valorMensal,
-        Double valorReceber,
+        BigDecimal valorMensalReceber,
+        BigDecimal valorReceber,
         String genero,
         String tipoContribuicao,
         LocalDate dataInicial,
         LocalDate dataAposentar,
-        Integer tempoContribuicao,
-        Integer tempoRecebimento
+        String tempoContribuicao,
+        String tempoRecebimento
 ) {
 }
+

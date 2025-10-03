@@ -1,6 +1,6 @@
 package com.example.PrevidenciAgi.service;
 
-import com.example.PrevidenciAgi.enums.TipoTributacao;
+import com.example.PrevidenciAgi.entity.Enum.TipoTributacao;
 import org.springframework.stereotype.Service;
 
 @Service

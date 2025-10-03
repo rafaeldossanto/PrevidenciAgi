@@ -1,8 +1,8 @@
 package com.example.PrevidenciAgi.service;
 
 import com.example.PrevidenciAgi.dto.simulacao.request.SimulacaoRequest;
-import com.example.PrevidenciAgi.enums.TipoPlano;
-import com.example.PrevidenciAgi.enums.TipoTributacao;
+import com.example.PrevidenciAgi.entity.Enum.TipoPlano;
+import com.example.PrevidenciAgi.entity.Enum.TipoTributacao;
 import org.springframework.stereotype.Service;
 
 import java.time.temporal.ChronoUnit;

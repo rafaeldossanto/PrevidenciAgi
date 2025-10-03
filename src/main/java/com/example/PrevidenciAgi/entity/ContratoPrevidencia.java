@@ -3,6 +3,7 @@ package com.example.PrevidenciAgi.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
@@ -14,7 +15,7 @@ public class ContratoPrevidencia {
     private Long id;
 
     // Dados do Contrato
-    private Double valorMensal;
+    private BigDecimal valorMensal;
     private String tipoPlano; // PGBL ou VGBL
     private String regimeTributario; // Progressiva ou Regressiva
     private LocalDate dataInicioContrato; // Data da assinatura

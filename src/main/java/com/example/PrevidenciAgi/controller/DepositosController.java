@@ -24,7 +24,7 @@ public class DepositosController {
     }
 
     @GetMapping("/{id}")
-    public List<Double> listarDepositos(@PathVariable Long id){
+    public List<Double> listarDepositosAposentadoria(@PathVariable Long id){
         return depositosService.listarDepositos(id);
     }
 }

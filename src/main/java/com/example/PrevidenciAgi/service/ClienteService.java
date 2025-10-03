@@ -9,7 +9,6 @@ import com.example.PrevidenciAgi.service.exception.EscolhaEnumInvalida;
 import com.example.PrevidenciAgi.service.exception.JaExistente;
 import com.example.PrevidenciAgi.service.exception.NaoEncontrado;
 import com.example.PrevidenciAgi.service.exception.SenhaInvalida;
-import jakarta.persistence.EntityExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;

@@ -11,8 +11,6 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-// Campo de relacionamento com a entidade Simulacao
-
 
 @Entity
 @Data

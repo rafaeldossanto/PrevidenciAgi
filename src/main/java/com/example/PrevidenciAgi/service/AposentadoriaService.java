@@ -7,7 +7,6 @@ import com.example.PrevidenciAgi.repository.AposentadoriaRepository;
 import com.example.PrevidenciAgi.repository.ClienteRepository;
 import com.example.PrevidenciAgi.service.exception.JaExistente;
 import com.example.PrevidenciAgi.service.exception.NaoEncontrado;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

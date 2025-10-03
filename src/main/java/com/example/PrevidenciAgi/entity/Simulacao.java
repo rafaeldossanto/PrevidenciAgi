@@ -1,10 +1,3 @@
-/*
-Módulo: Simulacao.java
-Descrição: Define a entity simulação e suas propriedades
-Autor: Gustavo Henrique dos Anjos
-Data: 17/09/2025
-*/
-
 package com.example.PrevidenciAgi.entity;
 
 import com.example.PrevidenciAgi.entity.Enum.Genero;
@@ -17,7 +10,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
-import java.time.LocalDate; // Importação adicionada para o LocalDate
+import java.time.LocalDate;
 
 @Entity
 @Data

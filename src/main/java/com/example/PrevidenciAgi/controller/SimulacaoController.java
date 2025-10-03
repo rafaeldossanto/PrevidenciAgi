@@ -14,7 +14,7 @@ public class SimulacaoController {
     @Autowired
     private SimulacaoService simulacaoService;
 
-    @PostMapping
+    @PostMapping("/calculo")
     public void calcularSimulacao(@RequestBody SimulacaoRequest request){
         simulacaoService.calcularSimulacao(request);
     }

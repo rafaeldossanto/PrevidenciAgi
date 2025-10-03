@@ -30,8 +30,18 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(csrf -> csrf.disable())
-                .authorizeHttpRequests(authz -> authz
-                        .anyRequest().permitAll()
+                .sessionManagement(session -> session
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                )
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/previdencia/login", "/previdencia/criar").permitAll()
+                        .requestMatchers("/simulacao/**").permitAll()
+                        .requestMatchers(
+                                "/previdencia/**",
+                                "/depositos/**",
+                                "/aposentadoria/**"
+                        ).hasRole("CLIENTE")
+                        .anyRequest().authenticated()
                 );
 
         return http.build();

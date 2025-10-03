@@ -75,11 +75,19 @@ public class ClienteService {
 
         switch (dado) {
             case AtualizacaoDeDados.EMAIL:
+                if (dadoNovo.equals(cliente.getEmail())){
+                    return;
+                }
                 cliente.setEmail(dadoNovo);
                 break;
 
             case AtualizacaoDeDados.SENHA:
                 String novaSenha = passwordEncoder.encode(dadoNovo);
+                if (novaSenha.equals(cliente.getSenha())){
+                    return;
+                } else if (novaSenha.length() < 8){
+                    throw new SenhaInvalida("senha muito pequena.");
+                }
                 cliente.setSenha(novaSenha);
                 break;
 

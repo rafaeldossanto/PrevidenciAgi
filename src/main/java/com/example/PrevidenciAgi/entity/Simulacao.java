@@ -56,4 +56,5 @@ public class Simulacao {
     @ManyToOne
     @JoinColumn(name = "idCliente")
     private Cliente cliente;
+    //Test
 }

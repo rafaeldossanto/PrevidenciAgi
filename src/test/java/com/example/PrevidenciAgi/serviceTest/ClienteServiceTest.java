@@ -2,6 +2,7 @@ package com.example.PrevidenciAgi.serviceTest;
 
 import com.example.PrevidenciAgi.component.JwtTokenGenerator;
 import com.example.PrevidenciAgi.entity.Cliente;
+import com.example.PrevidenciAgi.entity.Enum.AtualizacaoDeDados;
 import com.example.PrevidenciAgi.entity.Enum.Genero;
 import com.example.PrevidenciAgi.entity.Enum.Role;
 import com.example.PrevidenciAgi.repository.ClienteRepository;
@@ -158,7 +159,7 @@ class ClienteServiceTest {
     @Test
     void atualizarDados_DeveAtualizarEmail_QuandoDadoEEmail() {
         Long id = 1L;
-        String dado = "email";
+        AtualizacaoDeDados dado = AtualizacaoDeDados.EMAIL;
         String novoEmail = "novoemail@teste.com";
 
         Cliente cliente = new Cliente();
@@ -178,7 +179,7 @@ class ClienteServiceTest {
     @Test
     void atualizarDados_DeveAtualizarSenha_QuandoDadoESenha() {
         Long id = 1L;
-        String dado = "senha";
+        AtualizacaoDeDados dado = AtualizacaoDeDados.SENHA;
         String novaSenha = "novaSenha123";
         String novaSenhaCriptografada = "nova_senha_criptografada";
 
@@ -202,7 +203,7 @@ class ClienteServiceTest {
     @Test
     void atualizarDados_DeveLancarExcecao_QuandoClienteNaoEncontrado() {
         Long id = 999L;
-        String dado = "email";
+        AtualizacaoDeDados dado = AtualizacaoDeDados.EMAIL;
         String novoValor = "novo@teste.com";
 
         when(clienteRepository.findById(id))
@@ -216,7 +217,7 @@ class ClienteServiceTest {
     @Test
     void atualizarDados_DeveLancarExcecao_QuandoCampoInvalido() {
         Long id = 1L;
-        String dado = "nome";
+        AtualizacaoDeDados dado = AtualizacaoDeDados.EMAIL;
         String novoValor = "Novo Nome";
 
         Cliente cliente = new Cliente();
@@ -234,7 +235,7 @@ class ClienteServiceTest {
     void atualizarDados_DeveFuncionarComCaseInsensitive() {
         // Arrange
         Long id = 1L;
-        String dado = "EMAIL";
+        AtualizacaoDeDados dado = AtualizacaoDeDados.EMAIL;
         String novoEmail = "novoemail@teste.com";
 
         Cliente cliente = new Cliente();
@@ -270,7 +271,7 @@ class ClienteServiceTest {
     @Test
     void atualizarDados_DeveManterDadosNaoAlterados() {
         Long id = 1L;
-        String dado = "email";
+        AtualizacaoDeDados dado = AtualizacaoDeDados.EMAIL;
         String novoEmail = "novoemail@teste.com";
 
         Cliente cliente = new Cliente();

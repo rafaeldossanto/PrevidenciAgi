@@ -67,7 +67,7 @@ public class DepositosService {
         return depositosRepository.save(deposito);
     }
 
-    public Double emprestimo(Long id, Double valor){
+    public Double saqueAdiantado(Long id, Double valor){
         Aposentadoria aposentadoria = aposentadoriaRepository.findById(id)
                 .orElseThrow(() -> new NaoEncontrado("Aposentadoria nao encontrada"));
 

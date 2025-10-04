@@ -1,0 +1,99 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+/* Header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 30px;
+  background: #004AAD;
+  color: white;
+}
+.logo {
+  font-size: 22px;
+  font-weight: bold;
+}
+.cta {
+  background: white;
+  color: #004AAD;
+  padding: 8px 15px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+/* Hero */
+.hero {
+  text-align: center;
+  padding: 80px 20px;
+  background: #EAF1FF;
+}
+.hero h2 {
+  font-size: 28px;
+  margin-bottom: 15px;
+  color: #004AAD;
+}
+.hero p {
+  font-size: 16px;
+  margin-bottom: 25px;
+}
+.btn-primary {
+  background: #004AAD;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+/* Vantagens */
+.vantagens {
+  text-align: center;
+  padding: 50px 20px;
+}
+.vantagens h3 {
+  font-size: 22px;
+  margin-bottom: 20px;
+}
+.vantagens ul {
+  list-style: none;
+}
+.vantagens li {
+  margin: 10px 0;
+  font-size: 18px;
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  background: #222;
+  color: white;
+  padding: 15px;
+  margin-top: 40px;
+}
+
+/* Formulário de contrato */
+.contrato-form {
+  max-width: 400px;
+  margin: auto;
+  display: grid;
+  gap: 15px;
+  text-align: left;
+}
+
+.contrato-form label {
+  font-weight: bold;
+  color: #004AAD;
+}
+
+.contrato-form select {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+

@@ -20,9 +20,6 @@ public class Depositos {
     @Enumerated(EnumType.STRING)
     private TipoDeposito tipo;
 
-    @PositiveOrZero
-    private Double saldo = 0.0;
-
     @Positive(message = "O valor tem que ser maior que zero.")
     private Double valor;
 

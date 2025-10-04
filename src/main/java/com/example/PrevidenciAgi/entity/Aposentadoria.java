@@ -28,6 +28,9 @@ public class Aposentadoria {
     @Positive(message = "O valor mensal deve ser positivo")
     private Double valor_mensal;
 
+    @PositiveOrZero
+    private Double Saldo = 0.0;
+
     @PositiveOrZero(message = "valor do deposito tem que ser maior que zero.")
     private Double valor_deposito;
 

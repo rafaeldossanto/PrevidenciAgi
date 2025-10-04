@@ -9,14 +9,19 @@ import com.example.PrevidenciAgi.repository.AposentadoriaRepository;
 import com.example.PrevidenciAgi.repository.ClienteRepository;
 import com.example.PrevidenciAgi.repository.DepositosRepository;
 import com.example.PrevidenciAgi.service.exception.NaoEncontrado;
+import com.example.PrevidenciAgi.service.exception.TempoInsuficiente;
+import com.example.PrevidenciAgi.service.exception.ValorInvalido;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 public class DepositosService {
 
@@ -34,10 +39,7 @@ public class DepositosService {
         Cliente cliente = aposentadoria.getCliente();
         LocalDateTime agora = LocalDateTime.now();
 
-        Double ultimoSaldo = depositosRepository.findTopByClienteIdOrderByDataDepositoDesc(cliente.getId())
-                .map(Depositos::getSaldo)
-                .orElse(0.0);
-        Double novoSaldo = ultimoSaldo + request.valor();
+        Double novoSaldo = aposentadoria.getSaldo() + request.valor();
 
         LocalDateTime inicioMes = agora.toLocalDate().withDayOfMonth(1).atStartOfDay();
         LocalDateTime fimMes = agora.toLocalDate().withDayOfMonth(agora.toLocalDate().lengthOfMonth()).atTime(23, 59, 59);
@@ -54,7 +56,7 @@ public class DepositosService {
         deposito.setValor(request.valor());
         deposito.setAposentadoria(aposentadoria);
         deposito.setCliente(cliente);
-        deposito.setSaldo(novoSaldo);
+        aposentadoria.setSaldo(novoSaldo);
 
         if (totalAposDeposito > aposentadoria.getValor_mensal()) {
             deposito.setTipo(TipoDeposito.APORTE);
@@ -65,6 +67,24 @@ public class DepositosService {
         return depositosRepository.save(deposito);
     }
 
+    public Double emprestimo(Long id, Double valor){
+        Aposentadoria aposentadoria = aposentadoriaRepository.findById(id)
+                .orElseThrow(() -> new NaoEncontrado("Aposentadoria nao encontrada"));
+
+        Double valorImposto = valor + valor*0.25;
+
+        if (aposentadoria.getSaldo() < valorImposto) {
+            throw new ValorInvalido("Saldo insuficiente");
+        }
+        if (aposentadoria.getData_inicio().getYear() >= LocalDate.now().getYear() - 2) {
+            throw new TempoInsuficiente("O tempo para fazer o emprestimo ainda nao e suficiente");
+        }
+
+        aposentadoria.setSaldo(aposentadoria.getSaldo() - valorImposto);
+        aposentadoriaRepository.save(aposentadoria);
+
+        return valor;
+    }
 
     public List<Double> listarDepositos(Long id) {
         return clienteRepository.findById(id)

@@ -34,8 +34,18 @@ public class SecurityConfig {
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
                 .authorizeHttpRequests(auth -> auth
+                        // Rotas públicas existentes
                         .requestMatchers("/previdencia/login", "/previdencia/criar").permitAll()
                         .requestMatchers("/simulacao/**").permitAll()
+                        // Rotas do Swagger - ADICIONE ESTAS LINHAS
+                        .requestMatchers(
+                                "/swagger-ui/**",
+                                "/v3/api-docs/**",
+                                "/swagger-ui.html",
+                                "/swagger-resources/**",
+                                "/webjars/**"
+                        ).permitAll()
+                        // Rotas protegidas
                         .requestMatchers(
                                 "/previdencia/**",
                                 "/depositos/**",

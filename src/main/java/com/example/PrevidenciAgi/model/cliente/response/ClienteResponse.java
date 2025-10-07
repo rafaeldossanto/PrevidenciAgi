@@ -1,6 +1,6 @@
 package com.example.PrevidenciAgi.model.cliente.response;
 
-public record DadosCadastroResponse(
+public record ClienteResponse(
         Long id,
         String cpf,
         String nome,

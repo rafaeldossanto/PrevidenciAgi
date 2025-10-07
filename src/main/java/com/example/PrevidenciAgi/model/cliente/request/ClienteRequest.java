@@ -1,6 +1,6 @@
 package com.example.PrevidenciAgi.model.cliente.request;
 
-public record DadosCadastroRequest(
+public record ClienteRequest(
         String cpf,
         String nome,
         String genero,

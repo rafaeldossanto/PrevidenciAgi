@@ -1,9 +1,9 @@
 package com.example.PrevidenciAgi.service;
 
 import com.example.PrevidenciAgi.component.JwtTokenGenerator;
-import com.example.PrevidenciAgi.entity.Cliente;
-import com.example.PrevidenciAgi.entity.Enum.AtualizacaoDeDados;
-import com.example.PrevidenciAgi.entity.Enum.Role;
+import com.example.PrevidenciAgi.dto.cliente.Cliente;
+import com.example.PrevidenciAgi.Enum.AtualizacaoDeDados;
+import com.example.PrevidenciAgi.Enum.Role;
 import com.example.PrevidenciAgi.repository.ClienteRepository;
 import com.example.PrevidenciAgi.service.exception.EscolhaEnumInvalida;
 import com.example.PrevidenciAgi.service.exception.JaExistente;

@@ -1,6 +1,6 @@
 package com.example.PrevidenciAgi.repository;
 
-import com.example.PrevidenciAgi.entity.Depositos;
+import com.example.PrevidenciAgi.dto.deposito.Depositos;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

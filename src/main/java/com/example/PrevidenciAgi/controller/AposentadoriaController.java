@@ -1,7 +1,7 @@
 package com.example.PrevidenciAgi.controller;
 
 import com.example.PrevidenciAgi.dto.aposentadoria.request.AposentadoriaRequest;
-import com.example.PrevidenciAgi.entity.Aposentadoria;
+import com.example.PrevidenciAgi.dto.aposentadoria.Aposentadoria;
 import com.example.PrevidenciAgi.service.AposentadoriaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

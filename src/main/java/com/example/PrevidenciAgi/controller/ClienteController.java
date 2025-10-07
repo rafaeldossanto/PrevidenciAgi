@@ -2,7 +2,7 @@ package com.example.PrevidenciAgi.controller;
 
 import com.example.PrevidenciAgi.dto.cliente.request.AtualizarDadosRequest;
 import com.example.PrevidenciAgi.dto.cliente.request.LoginRequest;
-import com.example.PrevidenciAgi.entity.Cliente;
+import com.example.PrevidenciAgi.dto.cliente.Cliente;
 import com.example.PrevidenciAgi.service.ClienteService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

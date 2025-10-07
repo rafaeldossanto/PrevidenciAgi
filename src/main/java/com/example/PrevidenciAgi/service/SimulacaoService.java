@@ -2,8 +2,8 @@ package com.example.PrevidenciAgi.service;
 
 
 import com.example.PrevidenciAgi.dto.simulacao.request.SimulacaoRequest;
-import com.example.PrevidenciAgi.entity.Enum.TipoSimulacao;
-import com.example.PrevidenciAgi.entity.Simulacao;
+import com.example.PrevidenciAgi.Enum.TipoSimulacao;
+import com.example.PrevidenciAgi.dto.simulacao.Simulacao;
 import com.example.PrevidenciAgi.repository.SimulacaoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

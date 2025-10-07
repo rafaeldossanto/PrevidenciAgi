@@ -1,6 +1,6 @@
 package com.example.PrevidenciAgi.dto.cliente.request;
 
-import com.example.PrevidenciAgi.entity.Enum.AtualizacaoDeDados;
+import com.example.PrevidenciAgi.Enum.AtualizacaoDeDados;
 
 public record AtualizarDadosRequest(
         AtualizacaoDeDados dado,

@@ -1,10 +1,10 @@
 package com.example.PrevidenciAgi.serviceTest;
 
 import com.example.PrevidenciAgi.dto.deposito.request.DepositosRequest;
-import com.example.PrevidenciAgi.entity.Aposentadoria;
-import com.example.PrevidenciAgi.entity.Cliente;
-import com.example.PrevidenciAgi.entity.Depositos;
-import com.example.PrevidenciAgi.entity.Enum.TipoDeposito;
+import com.example.PrevidenciAgi.dto.aposentadoria.Aposentadoria;
+import com.example.PrevidenciAgi.dto.cliente.Cliente;
+import com.example.PrevidenciAgi.dto.deposito.Depositos;
+import com.example.PrevidenciAgi.Enum.TipoDeposito;
 import com.example.PrevidenciAgi.repository.AposentadoriaRepository;
 import com.example.PrevidenciAgi.repository.DepositosRepository;
 import com.example.PrevidenciAgi.service.DepositosService;

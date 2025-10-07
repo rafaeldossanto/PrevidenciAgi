@@ -1,6 +1,6 @@
 package com.example.PrevidenciAgi.dto.aposentadoria.request;
 
-import com.example.PrevidenciAgi.entity.Enum.TipoAposentadoria;
+import com.example.PrevidenciAgi.Enum.TipoAposentadoria;
 
 import java.time.LocalDate;
 

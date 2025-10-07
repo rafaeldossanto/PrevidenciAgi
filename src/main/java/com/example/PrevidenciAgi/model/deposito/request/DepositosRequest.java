@@ -1,6 +1,4 @@
-package com.example.PrevidenciAgi.dto.deposito.request;
-
-import java.math.BigDecimal;
+package com.example.PrevidenciAgi.model.deposito.request;
 
 public record DepositosRequest(
         Long id_aposentadoria,

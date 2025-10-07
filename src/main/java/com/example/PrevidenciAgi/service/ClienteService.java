@@ -1,7 +1,7 @@
 package com.example.PrevidenciAgi.service;
 
 import com.example.PrevidenciAgi.component.JwtTokenGenerator;
-import com.example.PrevidenciAgi.dto.cliente.Cliente;
+import com.example.PrevidenciAgi.model.cliente.Cliente;
 import com.example.PrevidenciAgi.Enum.AtualizacaoDeDados;
 import com.example.PrevidenciAgi.Enum.Role;
 import com.example.PrevidenciAgi.repository.ClienteRepository;
@@ -16,7 +16,6 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
 
 
 @Service
@@ -52,11 +51,11 @@ public class ClienteService {
         if (clienteRepository.existsByCpf(cliente.getCpf())) {
             throw new JaExistente("Cliente cadastrado.");
         }
-        if (cliente.getSenha().length() < 8){
+        if (cliente.getSenha().length() < 8) {
             throw new SenhaInvalida("Senha muito pequena, coloque uma senha segura");
         }
 
-        if (!cliente.getGenero().getDeclaringClass().isEnum()){
+        if (!cliente.getGenero().getDeclaringClass().isEnum()) {
             throw new EscolhaEnumInvalida("Coloque um genero valido.");
         }
 
@@ -74,7 +73,7 @@ public class ClienteService {
 
         switch (dado) {
             case AtualizacaoDeDados.EMAIL:
-                if (dadoNovo.equals(cliente.getEmail())){
+                if (dadoNovo.equals(cliente.getEmail())) {
                     return;
                 }
                 cliente.setEmail(dadoNovo);
@@ -82,9 +81,9 @@ public class ClienteService {
 
             case AtualizacaoDeDados.SENHA:
                 String novaSenha = passwordEncoder.encode(dadoNovo);
-                if (novaSenha.equals(cliente.getSenha())){
+                if (novaSenha.equals(cliente.getSenha())) {
                     return;
-                } else if (novaSenha.length() < 8){
+                } else if (novaSenha.length() < 8) {
                     throw new SenhaInvalida("senha muito pequena.");
                 }
                 cliente.setSenha(novaSenha);

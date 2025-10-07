@@ -1,4 +1,4 @@
-package com.example.PrevidenciAgi.dto.simulacao.request;
+package com.example.PrevidenciAgi.model.simulacao.request;
 
 import com.example.PrevidenciAgi.Enum.Genero;
 import com.example.PrevidenciAgi.Enum.TempoRecebendo;

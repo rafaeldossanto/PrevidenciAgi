@@ -1,19 +1,31 @@
-import { LoginForm } from "@/components/login-form"
+"use client";
 
-export default function Home() {
+import { useEffect, useState } from "react";
+import { getClientes } from "@/lib/api";
+
+export default function HomePage() {
+  const [clientes, setClientes] = useState([]);
+
+  useEffect(() => {
+    async function carregar() {
+      try {
+        const lista = await getClientes();
+        setClientes(lista);
+      } catch (erro) {
+        console.error("Erro ao carregar clientes:", erro);
+      }
+    }
+    carregar();
+  }, []);
+
   return (
-    <main className="min-h-screen bg-gradient-to-br from-primary/5 via-background to-secondary/5 flex items-center justify-center">
-      <div className="container mx-auto px-4 py-8">
-        <div className="mb-8 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold text-primary mb-3 text-balance">
-            Simulador de Previdência Privada
-          </h1>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto text-pretty">
-            Faça login para acessar seu simulador
-          </p>
-        </div>
-        <LoginForm />
-      </div>
+    <main className="p-6">
+      <h1 className="text-2xl font-bold mb-4">Lista de Clientes</h1>
+      <ul>
+        {clientes.map((c) => (
+          <li key={c.id}>{c.nome}</li>
+        ))}
+      </ul>
     </main>
-  )
+  );
 }

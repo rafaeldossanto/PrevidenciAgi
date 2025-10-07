@@ -1,9 +1,9 @@
 package com.example.PrevidenciAgi.serviceTest;
 
-import com.example.PrevidenciAgi.dto.deposito.request.DepositosRequest;
-import com.example.PrevidenciAgi.dto.aposentadoria.Aposentadoria;
-import com.example.PrevidenciAgi.dto.cliente.Cliente;
-import com.example.PrevidenciAgi.dto.deposito.Depositos;
+import com.example.PrevidenciAgi.model.deposito.request.DepositosRequest;
+import com.example.PrevidenciAgi.model.aposentadoria.Aposentadoria;
+import com.example.PrevidenciAgi.model.cliente.Cliente;
+import com.example.PrevidenciAgi.model.deposito.Depositos;
 import com.example.PrevidenciAgi.Enum.TipoDeposito;
 import com.example.PrevidenciAgi.repository.AposentadoriaRepository;
 import com.example.PrevidenciAgi.repository.DepositosRepository;

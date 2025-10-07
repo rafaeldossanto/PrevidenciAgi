@@ -1,9 +1,9 @@
 package com.example.PrevidenciAgi.service;
 
-import com.example.PrevidenciAgi.dto.deposito.request.DepositosRequest;
-import com.example.PrevidenciAgi.dto.aposentadoria.Aposentadoria;
-import com.example.PrevidenciAgi.dto.cliente.Cliente;
-import com.example.PrevidenciAgi.dto.deposito.Depositos;
+import com.example.PrevidenciAgi.model.deposito.request.DepositosRequest;
+import com.example.PrevidenciAgi.model.aposentadoria.Aposentadoria;
+import com.example.PrevidenciAgi.model.cliente.Cliente;
+import com.example.PrevidenciAgi.model.deposito.Depositos;
 import com.example.PrevidenciAgi.Enum.TipoDeposito;
 import com.example.PrevidenciAgi.repository.AposentadoriaRepository;
 import com.example.PrevidenciAgi.repository.ClienteRepository;
@@ -67,11 +67,11 @@ public class DepositosService {
         return depositosRepository.save(deposito);
     }
 
-    public Double saqueAdiantado(Long id, Double valor){
+    public Double saqueAdiantado(Long id, Double valor) {
         Aposentadoria aposentadoria = aposentadoriaRepository.findById(id)
                 .orElseThrow(() -> new NaoEncontrado("Aposentadoria nao encontrada"));
 
-        Double valorImposto = valor + valor*0.25;
+        Double valorImposto = valor + valor * 0.25;
 
         if (aposentadoria.getSaldo() < valorImposto) {
             throw new ValorInvalido("Saldo insuficiente");

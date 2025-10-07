@@ -22,7 +22,7 @@ public class JwtTokenGenerator {
     }
 
 
-    public String generateToken(Authentication authentication){
+    public String generateToken(Authentication authentication) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         return Jwts.builder()
                 .setSubject(userDetails.getUsername())

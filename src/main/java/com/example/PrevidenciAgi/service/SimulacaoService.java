@@ -1,9 +1,9 @@
 package com.example.PrevidenciAgi.service;
 
 
-import com.example.PrevidenciAgi.dto.simulacao.request.SimulacaoRequest;
+import com.example.PrevidenciAgi.model.simulacao.request.SimulacaoRequest;
 import com.example.PrevidenciAgi.Enum.TipoSimulacao;
-import com.example.PrevidenciAgi.dto.simulacao.Simulacao;
+import com.example.PrevidenciAgi.model.simulacao.Simulacao;
 import com.example.PrevidenciAgi.repository.SimulacaoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,9 +38,9 @@ public class SimulacaoService {
         }
 
         if (request.tipoSimulacao().equals(TipoSimulacao.RECEBER)
-        && request.valorMensal() != null) {
+                && request.valorMensal() != null) {
             throw new IllegalArgumentException("Valor mensal nessa ocasiao deve ser vazio.");
-        } else if (request.tipoSimulacao().equals(TipoSimulacao.RECEBER)){
+        } else if (request.tipoSimulacao().equals(TipoSimulacao.RECEBER)) {
             BigDecimal valorRecebendo = calcularSimulacaoRecebendo(request);
 
             simulacao.setValorRecebendo(valorRecebendo);

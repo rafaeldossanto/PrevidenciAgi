@@ -1,6 +1,6 @@
-package com.example.PrevidenciAgi.dto.simulacao;
+package com.example.PrevidenciAgi.model.simulacao;
 
-import com.example.PrevidenciAgi.dto.cliente.Cliente;
+import com.example.PrevidenciAgi.model.cliente.Cliente;
 import com.example.PrevidenciAgi.Enum.Genero;
 import com.example.PrevidenciAgi.Enum.TempoRecebendo;
 import com.example.PrevidenciAgi.Enum.TipoSimulacao;

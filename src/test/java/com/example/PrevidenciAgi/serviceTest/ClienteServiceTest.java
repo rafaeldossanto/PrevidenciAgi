@@ -1,7 +1,7 @@
 package com.example.PrevidenciAgi.serviceTest;
 
 import com.example.PrevidenciAgi.component.JwtTokenGenerator;
-import com.example.PrevidenciAgi.dto.cliente.Cliente;
+import com.example.PrevidenciAgi.model.cliente.Cliente;
 import com.example.PrevidenciAgi.Enum.AtualizacaoDeDados;
 import com.example.PrevidenciAgi.Enum.Genero;
 import com.example.PrevidenciAgi.Enum.Role;

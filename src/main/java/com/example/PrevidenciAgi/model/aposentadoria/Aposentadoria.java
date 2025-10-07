@@ -1,7 +1,7 @@
-package com.example.PrevidenciAgi.dto.aposentadoria;
+package com.example.PrevidenciAgi.model.aposentadoria;
 
-import com.example.PrevidenciAgi.dto.cliente.Cliente;
-import com.example.PrevidenciAgi.dto.deposito.Depositos;
+import com.example.PrevidenciAgi.model.cliente.Cliente;
+import com.example.PrevidenciAgi.model.deposito.Depositos;
 import com.example.PrevidenciAgi.Enum.TipoAposentadoria;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Future;
@@ -46,7 +46,7 @@ public class Aposentadoria {
     private LocalDate data_inicio;
 
     @OneToOne
-    @JoinColumn(name = "id_cliente", referencedColumnName = "id",nullable = false)
+    @JoinColumn(name = "id_cliente", referencedColumnName = "id", nullable = false)
     private Cliente cliente;
 
     @OneToMany(mappedBy = "aposentadoria", cascade = CascadeType.ALL, fetch = FetchType.LAZY)

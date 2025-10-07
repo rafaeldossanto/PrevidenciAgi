@@ -1,7 +1,7 @@
-package com.example.PrevidenciAgi.dto.deposito;
+package com.example.PrevidenciAgi.model.deposito;
 
-import com.example.PrevidenciAgi.dto.aposentadoria.Aposentadoria;
-import com.example.PrevidenciAgi.dto.cliente.Cliente;
+import com.example.PrevidenciAgi.model.aposentadoria.Aposentadoria;
+import com.example.PrevidenciAgi.model.cliente.Cliente;
 import com.example.PrevidenciAgi.Enum.TipoDeposito;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;

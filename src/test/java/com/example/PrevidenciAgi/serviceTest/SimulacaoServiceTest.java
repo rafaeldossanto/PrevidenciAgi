@@ -1,11 +1,11 @@
 package com.example.PrevidenciAgi.serviceTest;
 
 
-import com.example.PrevidenciAgi.dto.simulacao.request.SimulacaoRequest;
+import com.example.PrevidenciAgi.model.simulacao.request.SimulacaoRequest;
 import com.example.PrevidenciAgi.Enum.Genero;
 import com.example.PrevidenciAgi.Enum.TempoRecebendo;
 import com.example.PrevidenciAgi.Enum.TipoSimulacao;
-import com.example.PrevidenciAgi.dto.simulacao.Simulacao;
+import com.example.PrevidenciAgi.model.simulacao.Simulacao;
 import com.example.PrevidenciAgi.repository.SimulacaoRepository;
 import com.example.PrevidenciAgi.service.SimulacaoService;
 import org.junit.jupiter.api.Test;

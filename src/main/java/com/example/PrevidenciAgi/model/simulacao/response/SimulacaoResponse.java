@@ -1,4 +1,4 @@
-package com.example.PrevidenciAgi.dto.simulacao.response;
+package com.example.PrevidenciAgi.model.simulacao.response;
 
 import java.time.LocalDate;
 

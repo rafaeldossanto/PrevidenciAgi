@@ -1,4 +1,4 @@
-package com.example.PrevidenciAgi.dto.cliente.request;
+package com.example.PrevidenciAgi.model.cliente.request;
 
 public record DadosCadastroRequest(
         String cpf,

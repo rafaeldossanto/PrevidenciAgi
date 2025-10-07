@@ -1,8 +1,8 @@
 package com.example.PrevidenciAgi.service;
 
-import com.example.PrevidenciAgi.dto.aposentadoria.request.AposentadoriaRequest;
-import com.example.PrevidenciAgi.dto.aposentadoria.Aposentadoria;
-import com.example.PrevidenciAgi.dto.cliente.Cliente;
+import com.example.PrevidenciAgi.model.aposentadoria.request.AposentadoriaRequest;
+import com.example.PrevidenciAgi.model.aposentadoria.Aposentadoria;
+import com.example.PrevidenciAgi.model.cliente.Cliente;
 import com.example.PrevidenciAgi.repository.AposentadoriaRepository;
 import com.example.PrevidenciAgi.repository.ClienteRepository;
 import com.example.PrevidenciAgi.service.exception.JaExistente;
@@ -21,8 +21,8 @@ public class AposentadoriaService {
     @Autowired
     private ClienteRepository clienteRepository;
 
-    public Aposentadoria assinarAposentadoria(AposentadoriaRequest request){
-        if (aposentadoriaRepository.existsByClienteId(request.id())){
+    public Aposentadoria assinarAposentadoria(AposentadoriaRequest request) {
+        if (aposentadoriaRepository.existsByClienteId(request.id())) {
             throw new JaExistente("Cliente ja possui aposentadoria cadastrada");
         }
 
@@ -45,14 +45,14 @@ public class AposentadoriaService {
     }
 
 
-    public void ajustarValorMensal(Long id, Double novoValor){
+    public void ajustarValorMensal(Long id, Double novoValor) {
         Aposentadoria aposentadoria = aposentadoriaRepository.findById(id)
                 .orElseThrow(() -> new NaoEncontrado("Aposentadoria com esse id nao encontrada."));
 
-        if (novoValor < 0){
+        if (novoValor < 0) {
             throw new IllegalArgumentException("O valor mensal nao pode ser negativo.");
         }
-        if (novoValor.equals(aposentadoria.getValor_mensal())){
+        if (novoValor.equals(aposentadoria.getValor_mensal())) {
             return;
         }
 

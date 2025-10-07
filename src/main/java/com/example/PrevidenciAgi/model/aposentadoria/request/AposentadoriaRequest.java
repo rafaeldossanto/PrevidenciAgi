@@ -1,4 +1,4 @@
-package com.example.PrevidenciAgi.dto.aposentadoria.request;
+package com.example.PrevidenciAgi.model.aposentadoria.request;
 
 import com.example.PrevidenciAgi.Enum.TipoAposentadoria;
 

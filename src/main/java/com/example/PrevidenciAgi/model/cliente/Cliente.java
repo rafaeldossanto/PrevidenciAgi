@@ -1,10 +1,10 @@
-package com.example.PrevidenciAgi.dto.cliente;
+package com.example.PrevidenciAgi.model.cliente;
 
-import com.example.PrevidenciAgi.dto.aposentadoria.Aposentadoria;
-import com.example.PrevidenciAgi.dto.deposito.Depositos;
+import com.example.PrevidenciAgi.model.aposentadoria.Aposentadoria;
+import com.example.PrevidenciAgi.model.deposito.Depositos;
 import com.example.PrevidenciAgi.Enum.Genero;
 import com.example.PrevidenciAgi.Enum.Role;
-import com.example.PrevidenciAgi.dto.simulacao.Simulacao;
+import com.example.PrevidenciAgi.model.simulacao.Simulacao;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

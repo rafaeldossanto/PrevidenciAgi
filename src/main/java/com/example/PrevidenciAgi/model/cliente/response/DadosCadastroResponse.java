@@ -1,4 +1,4 @@
-package com.example.PrevidenciAgi.dto.cliente.response;
+package com.example.PrevidenciAgi.model.cliente.response;
 
 public record DadosCadastroResponse(
         Long id,

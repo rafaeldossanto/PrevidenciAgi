@@ -5,10 +5,8 @@ import com.example.PrevidenciAgi.entity.Cliente;
 import com.example.PrevidenciAgi.entity.Enum.AtualizacaoDeDados;
 import com.example.PrevidenciAgi.entity.Enum.Role;
 import com.example.PrevidenciAgi.repository.ClienteRepository;
-import com.example.PrevidenciAgi.service.exception.EscolhaEnumInvalida;
-import com.example.PrevidenciAgi.service.exception.JaExistente;
-import com.example.PrevidenciAgi.service.exception.NaoEncontrado;
-import com.example.PrevidenciAgi.service.exception.SenhaInvalida;
+import com.example.PrevidenciAgi.service.exception.*;
+import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -16,7 +14,6 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
 
 
 @Service
@@ -32,12 +29,14 @@ public class ClienteService {
         if (clienteRepository.existsByCpf(cliente.getCpf())) {
             throw new JaExistente("Cliente cadastrado.");
         }
-        if (cliente.getSenha().length() < 8){
+        if (cliente.getSenha().length() < 8) {
             throw new SenhaInvalida("Senha muito pequena, coloque uma senha segura");
         }
-
-        if (!cliente.getGenero().getDeclaringClass().isEnum()){
+        if (!cliente.getGenero().getDeclaringClass().isEnum()) {
             throw new EscolhaEnumInvalida("Coloque um genero valido.");
+        }
+        if (!validacaoEmail(cliente.getEmail())) {
+            throw new EmailInvalido("Coloque um email valido.");
         }
 
         String senhaCriptografada = passwordEncoder.encode(cliente.getSenha());
@@ -74,7 +73,7 @@ public class ClienteService {
 
         switch (dado) {
             case AtualizacaoDeDados.EMAIL:
-                if (dadoNovo.equals(cliente.getEmail())){
+                if (dadoNovo.equals(cliente.getEmail())) {
                     return;
                 }
                 cliente.setEmail(dadoNovo);
@@ -82,9 +81,9 @@ public class ClienteService {
 
             case AtualizacaoDeDados.SENHA:
                 String novaSenha = passwordEncoder.encode(dadoNovo);
-                if (novaSenha.equals(cliente.getSenha())){
+                if (novaSenha.equals(cliente.getSenha())) {
                     return;
-                } else if (novaSenha.length() < 8){
+                } else if (novaSenha.length() < 8) {
                     throw new SenhaInvalida("senha muito pequena.");
                 }
                 cliente.setSenha(novaSenha);
@@ -94,5 +93,10 @@ public class ClienteService {
                 throw new EscolhaEnumInvalida("Campo '" + dado + "' não é válido para atualização. Use 'email' ou 'senha'");
         }
         clienteRepository.save(cliente);
+    }
+
+    private boolean validacaoEmail(String email) {
+        EmailValidator validator = EmailValidator.getInstance();
+        return validator.isValid(email);
     }
 }

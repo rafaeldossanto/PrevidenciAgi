@@ -28,6 +28,25 @@ public class ClienteService {
     @Autowired
     private JwtTokenGenerator jwtTokenGenerator;
 
+    public void CadastrarCliente(Cliente cliente) {
+        if (clienteRepository.existsByCpf(cliente.getCpf())) {
+            throw new JaExistente("Cliente cadastrado.");
+        }
+        if (cliente.getSenha().length() < 8){
+            throw new SenhaInvalida("Senha muito pequena, coloque uma senha segura");
+        }
+
+        if (!cliente.getGenero().getDeclaringClass().isEnum()){
+            throw new EscolhaEnumInvalida("Coloque um genero valido.");
+        }
+
+        String senhaCriptografada = passwordEncoder.encode(cliente.getSenha());
+        cliente.setSenha(senhaCriptografada);
+        cliente.setRole(Role.CLIENTE);
+
+        clienteRepository.save(cliente);
+    }
+
     public String login(String email, String senha) {
         Cliente cliente = clienteRepository.findByEmail(email)
                 .orElseThrow(() -> new NaoEncontrado("Email não encontrado"));
@@ -46,25 +65,6 @@ public class ClienteService {
         Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
 
         return jwtTokenGenerator.generateToken(authentication);
-    }
-
-    public void CadastrarCliente(Cliente cliente) {
-        if (clienteRepository.existsByCpf(cliente.getCpf())) {
-            throw new JaExistente("Cliente cadastrado.");
-        }
-        if (cliente.getSenha().length() < 8){
-            throw new SenhaInvalida("Senha muito pequena, coloque uma senha segura");
-        }
-
-        if (!cliente.getGenero().getDeclaringClass().isEnum()){
-            throw new EscolhaEnumInvalida("Coloque um genero valido.");
-        }
-
-        String senhaCriptografada = passwordEncoder.encode(cliente.getSenha());
-        cliente.setSenha(senhaCriptografada);
-        cliente.setRole(Role.CLIENTE);
-
-        clienteRepository.save(cliente);
     }
 
     public void atualizarDados(Long id, AtualizacaoDeDados dado, String dadoNovo) {

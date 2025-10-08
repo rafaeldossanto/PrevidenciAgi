@@ -20,6 +20,10 @@ public class EmailService {
     @Autowired
     private DepositosService depositosService;
 
+    //fazer test para ver se o envio de email esta funcionando
+    //criar um email para servir de email de envio para as contas cadastradas
+    //...
+
     @Scheduled(cron = "0 0 8 * * *")
     public void enviarEmailCombranca() {
         var message = new SimpleMailMessage();

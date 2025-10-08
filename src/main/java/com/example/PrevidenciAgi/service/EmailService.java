@@ -20,15 +20,11 @@ public class EmailService {
     @Autowired
     private DepositosService depositosService;
 
-    //fazer test para ver se o envio de email esta funcionando
-    //criar um email para servir de email de envio para as contas cadastradas
-    //...
-
-    @Scheduled(cron = "0 0 8 * * *")
+    @Scheduled(fixedRate = 259200000)
     public void enviarEmailCombranca() {
         var message = new SimpleMailMessage();
 
-        message.setFrom("rafael.santoss2802@gmail.com");
+        message.setFrom("contaagiemail@gmail.com");
         message.setTo(emailsPendentes());
         message.setSubject("Lembrete de Depósito");
         message.setText("Olá! Você ainda não realizou seu depósito este mês. Por favor, regularize sua situação.");

@@ -24,9 +24,11 @@ public class EmailService {
     public void enviarEmailCombranca() {
         var message = new SimpleMailMessage();
 
+        message.setFrom("rafael.santoss2802@gmail.com");
         message.setTo(emailsPendentes());
-
-
+        message.setSubject("Lembrete de Depósito");
+        message.setText("Olá! Você ainda não realizou seu depósito este mês. Por favor, regularize sua situação.");
+        mailSender.send(message);
     }
 
     private List<Cliente> clientesPendentes() {

@@ -7,6 +7,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
+import java.time.YearMonth;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,9 +19,4 @@ public interface DepositosRepository extends JpaRepository<Depositos, Long> {
 
     Optional<Depositos> findTopByClienteIdOrderByDataDepositoDesc(Long clienteId);
 
-
-    @Query("SELECT COALESCE(SUM(d.valor), 0) FROM Depositos d WHERE d.cliente.id = :clienteId AND d.dataDeposito BETWEEN :inicioMes AND :fimMes")
-    Double findTotalDepositadoNoPeriodo(@Param("clienteId") Long clienteId,
-                                        @Param("inicioMes") LocalDateTime inicioMes,
-                                        @Param("fimMes") LocalDateTime fimMes);
 }

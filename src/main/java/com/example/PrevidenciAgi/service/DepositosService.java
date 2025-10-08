@@ -41,13 +41,7 @@ public class DepositosService {
 
         Double novoSaldo = aposentadoria.getSaldo() + request.valor();
 
-        LocalDateTime inicioMes = agora.toLocalDate().withDayOfMonth(1).atStartOfDay();
-        LocalDateTime fimMes = agora.toLocalDate().withDayOfMonth(agora.toLocalDate().lengthOfMonth()).atTime(23, 59, 59);
-
-        Double totalDepositadoMes = depositosRepository.findTotalDepositadoNoPeriodo(cliente.getId(), inicioMes, fimMes);
-        if (totalDepositadoMes == null) {
-            totalDepositadoMes = 0.0;
-        }
+        Double totalDepositadoMes = totalDepositadoMes(cliente.getId());
 
         Double totalAposDeposito = totalDepositadoMes + request.valor();
 
@@ -106,6 +100,18 @@ public class DepositosService {
         List<Depositos> depositos = depositosRepository.findByAposentadoriaIdAposentadoria(id);
 
         return depositos.stream()
+                .mapToDouble(Depositos::getValor)
+                .sum();
+    }
+
+    public Double totalDepositadoMes(Long id){
+        Cliente cliente = clienteRepository.findById(id)
+                .orElseThrow(() -> new NaoEncontrado("Cliente com esse Id nao encontrado."));
+        int mesAtual = LocalDate.now().getMonthValue();
+
+        return cliente.getDepositos()
+                .stream()
+                .filter(n -> n.getDataDeposito().getMonthValue() == mesAtual)
                 .mapToDouble(Depositos::getValor)
                 .sum();
     }

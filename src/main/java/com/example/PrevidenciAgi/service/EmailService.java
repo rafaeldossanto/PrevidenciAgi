@@ -7,6 +7,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,6 +21,7 @@ public class EmailService {
     @Autowired
     private DepositosService depositosService;
 
+    @Transactional
     @Scheduled(fixedRate = 259200000)
     public void enviarEmailCombranca() {
         var message = new SimpleMailMessage();

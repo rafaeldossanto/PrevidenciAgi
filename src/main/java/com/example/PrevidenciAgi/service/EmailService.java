@@ -2,6 +2,7 @@ package com.example.PrevidenciAgi.service;
 
 import com.example.PrevidenciAgi.entity.Cliente;
 import com.example.PrevidenciAgi.repository.ClienteRepository;
+import com.example.PrevidenciAgi.service.exception.NaoEncontrado;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -30,6 +31,19 @@ public class EmailService {
         message.setTo(emailsPendentes());
         message.setSubject("Lembrete de Depósito");
         message.setText("Olá! Você ainda não realizou seu depósito este mês. Por favor, regularize sua situação.");
+        mailSender.send(message);
+    }
+
+    public void recuperacaoSenha(String email) {
+        Cliente cliente = clienteRepository.findByEmail(email)
+                .orElseThrow(() -> new NaoEncontrado("Cliente com essa conta nao encontrada."));
+
+        var message = new SimpleMailMessage();
+
+        message.setFrom("contaagiemail@gmail.com");
+        message.setTo(cliente.getEmail());
+        message.setSubject("Recuperação de senha");
+        message.setText("Sua senha é essa: " + cliente.getSenha());
         mailSender.send(message);
     }
 

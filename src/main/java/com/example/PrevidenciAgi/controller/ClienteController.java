@@ -4,6 +4,7 @@ import com.example.PrevidenciAgi.dto.cliente.request.AtualizarDadosRequest;
 import com.example.PrevidenciAgi.dto.cliente.request.LoginRequest;
 import com.example.PrevidenciAgi.entity.Cliente;
 import com.example.PrevidenciAgi.service.ClienteService;
+import com.example.PrevidenciAgi.service.EmailService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,8 @@ import java.util.Map;
 public class ClienteController {
     @Autowired
     private ClienteService clienteService;
+    @Autowired
+    private EmailService emailService;
 
     @PostMapping("/login")
     public ResponseEntity<Map<String, String>> login(@RequestBody LoginRequest login){
@@ -38,5 +41,10 @@ public class ClienteController {
     @PutMapping("/atualizar/{id}")
     public void atualizarDados(@PathVariable Long id, @RequestBody AtualizarDadosRequest request){
         clienteService.atualizarDados(id, request.dado(), request.mudanca());
+    }
+
+    @PostMapping("/recuperar")
+    public void recuperarSenha(@RequestBody String email){
+        emailService.recuperacaoSenha(email);
     }
 }

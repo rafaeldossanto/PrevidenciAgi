@@ -141,6 +141,22 @@ class ClienteServiceTest {
     }
 
     @Test
+    void deveLancar_exceptionQuandoEmail_JaCadastrado(){
+        Cliente cliente = new Cliente();
+        cliente.setEmail("email@gmail.com");
+        cliente.setSenha("123");
+        cliente.setGenero(Genero.MASCULINO);
+
+        when(clienteRepository.existsByEmail(cliente.getEmail()))
+                .thenReturn(true);
+        assertThrows(JaExistente.class, () -> clienteService.CadastrarCliente(cliente));
+
+        verify(clienteRepository).existsByEmail(cliente.getEmail());
+        verifyNoInteractions(passwordEncoder);
+        verify(clienteRepository, never()).save(any());
+    }
+
+    @Test
     void cadastrarCliente_DeveLancarExcecao_QuandoSenhaMuitoPequena() {
         Cliente cliente = new Cliente();
         cliente.setCpf("123.456.789-00");

@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PrevidenciAgi - Invista no seu futuro</title>
+  <link rel="stylesheet" href="../static/style.css">
+  <style>
+    /* Ajustes adicionais para novas seções */
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+    }
+
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      transition: 0.2s;
+    }
+
+    nav ul li a:hover {
+      opacity: 0.8;
+    }
+
+    /* Simulador */
+    .simulador {
+      background: #f9fbff;
+      padding: 60px 20px;
+      text-align: center;
+    }
+
+    .simulador h3 {
+      color: #266BFF;
+      margin-bottom: 20px;
+    }
+
+    .simulador form {
+      display: inline-flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      justify-content: center;
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    }
+
+    .simulador input {
+      padding: 10px 15px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 1rem;
+      width: 180px;
+    }
+
+    .simulador button {
+      background: #266BFF;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    .simulador button:hover {
+      background: #1f5be0;
+    }
+
+    /* Como funciona */
+    .como-funciona {
+      background: #EAF1FF;
+      text-align: center;
+      padding: 60px 20px;
+    }
+
+    .como-funciona h3 {
+      color: #266BFF;
+      margin-bottom: 30px;
+    }
+
+    .passos {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 30px;
+    }
+
+    .passo {
+      max-width: 250px;
+      background: white;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    }
+
+    .passo h4 {
+      color: #266BFF;
+      margin: 10px 0;
+    }
+
+    /* Depoimentos */
+    .depoimentos {
+      padding: 60px 20px;
+      text-align: center;
+      background: #fff;
+    }
+
+    .depoimentos h3 {
+      color: #266BFF;
+      margin-bottom: 40px;
+    }
+
+    .cards {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 25px;
+    }
+
+    .card {
+      background: #f9fbff;
+      border-radius: 12px;
+      padding: 25px;
+      width: 260px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    }
+
+    .card p {
+      font-style: italic;
+      color: #555;
+      margin-bottom: 10px;
+    }
+
+    .card h4 {
+      color: #266BFF;
+    }
+
+    /* Footer atualizado */
+    .footer {
+      position: static;
+      background: #222;
+      color: white;
+      padding: 30px 20px;
+      text-align: center;
+      font-size: 0.9rem;
+    }
+
+    .footer-links {
+      margin-top: 10px;
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      color: #aaa;
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+
+    .footer-links a:hover {
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="header">
+  <h1 class="logo"><a href="../Index.html" style="text-decoration:none;color:white;">PrevidenciAgi</a></h1>
+  <nav>
+    <ul>
+      <li><a href="#vantagens">Vantagens</a></li>
+      <li><a href="#como-funciona">Como funciona</a></li>
+      <li><a href="#simulador">Simulador</a></li>
+      <li><a href="#depoimentos">Depoimentos</a></li>
+    </ul>
+  </nav>
+  <a href="subPaginas/Cadastro/cadastro.html" class="cta">Cadastre-se</a>
+</header>
+
+<!-- Hero -->
+<section class="hero">
+  <h2>Invista no seu futuro com segurança</h2>
+  <p>Planos de previdência privada simples e confiáveis.</p>
+  <a href="subPaginas/aposentadoriaCadastro.html" class="btn-primary">Simule sua previdência</a>
+</section>
+
+<div class="banner-container">
+  <img src="../static/image/Idosa_1.jpg" alt="Banner" class="banner">
+</div>
+
+<!-- Vantagens -->
+<section id="vantagens" class="vantagens">
+  <h3>Por que escolher a PrevidenciAgi?</h3>
+  <ul>
+    <li>Segurança</li>
+    <li>Benefícios fiscais</li>
+    <li>Tranquilidade no futuro</li>
+  </ul>
+</section>
+
+<!-- Como funciona -->
+<section id="como-funciona" class="como-funciona">
+  <h3>Como funciona</h3>
+  <div class="passos">
+    <div class="passo">
+      <h4>1. Cadastre-se</h4>
+      <p>Crie sua conta gratuitamente em poucos minutos.</p>
+    </div>
+    <div class="passo">
+      <h4>2. Escolha seu plano</h4>
+      <p>Selecione o investimento ideal para seu futuro.</p>
+    </div>
+    <div class="passo">
+      <h4>3. Acompanhe seus ganhos</h4>
+      <p>Veja seu patrimônio crescer com segurança e transparência.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Simulador -->
+<section id="simulador" class="simulador">
+  <h3>Simule sua aposentadoria</h3>
+  <form>
+    <input type="number" placeholder="Idade" min="18" max="70" required>
+    <input type="number" placeholder="Renda mensal (R$)" required>
+    <button type="submit">Simular</button>
+  </form>
+</section>
+
+<!-- Depoimentos -->
+<section id="depoimentos" class="depoimentos">
+  <h3>O que nossos clientes dizem</h3>
+  <div class="cards">
+    <div class="card">
+      <p>“A PrevidenciAgi me deu tranquilidade pra planejar o futuro!”</p>
+      <h4>Maria Souza</h4>
+    </div>
+    <div class="card">
+      <p>“Processo rápido e atendimento excelente. Recomendo!”</p>
+      <h4>João Pereira</h4>
+    </div>
+    <div class="card">
+      <p>“Sinto confiança e segurança nos meus investimentos.”</p>
+      <h4>Ana Lima</h4>
+    </div>
+  </div>
+</section>
+
+<!-- Rodapé -->
+<footer class="footer" id="contato">
+  © 2025 PrevidenciAgi - Todos os direitos reservados.
+  <div class="footer-links">
+    <a href="#">Termos de Uso</a>
+    <a href="#">Política de Privacidade</a>
+    <a href="#">Contato</a>
+  </div>
+</footer>
+
+</body>
+</html>

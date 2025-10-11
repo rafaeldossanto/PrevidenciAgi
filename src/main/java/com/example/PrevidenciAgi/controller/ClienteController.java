@@ -47,4 +47,9 @@ public class ClienteController {
     public void recuperarSenha(@RequestBody String email){
         emailService.recuperacaoSenha(email);
     }
+
+    @GetMapping("/dados/{id}")
+    public Cliente dadosCliente(@PathVariable Long id){
+        return clienteService.dadosCliente(id);
+    }
 }

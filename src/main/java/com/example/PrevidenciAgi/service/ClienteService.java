@@ -99,4 +99,9 @@ public class ClienteService {
         EmailValidator validator = EmailValidator.getInstance();
         return validator.isValid(email);
     }
+
+    public Cliente dadosCliente(Long id) {
+        return clienteRepository.findById(id)
+                .orElseThrow(() -> new NaoEncontrado("Cliente nao encontrado."));
+    }
 }

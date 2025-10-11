@@ -29,6 +29,9 @@ public class ClienteService {
         if (clienteRepository.existsByCpf(cliente.getCpf())) {
             throw new JaExistente("Cliente cadastrado.");
         }
+        if (clienteRepository.existsByEmail(cliente.getEmail())){
+            throw new JaExistente("Esse email ja foi cadastrado");
+        }
         if (cliente.getSenha().length() < 8) {
             throw new SenhaInvalida("Senha muito pequena, coloque uma senha segura");
         }

@@ -20,7 +20,6 @@ import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -67,8 +66,6 @@ class DepositosServiceTest {
 
         when(aposentadoriaRepository.findById(aposentadoriaId))
                 .thenReturn(Optional.of(aposentadoria));
-        when(depositosRepository.findTotalDepositadoNoPeriodo(eq(clienteId), any(LocalDateTime.class), any(LocalDateTime.class)))
-                .thenReturn(300.0);
         when(depositosRepository.save(any(Depositos.class))).thenReturn(depositoSalvo);
 
         Depositos resultado = depositosService.depositar(request);
@@ -80,7 +77,6 @@ class DepositosServiceTest {
         assertEquals(cliente, resultado.getCliente());
 
         verify(aposentadoriaRepository).findById(aposentadoriaId);
-        verify(depositosRepository).findTotalDepositadoNoPeriodo(eq(clienteId), any(LocalDateTime.class), any(LocalDateTime.class));
         verify(depositosRepository).save(any(Depositos.class));
     }
 
@@ -109,8 +105,6 @@ class DepositosServiceTest {
 
         when(aposentadoriaRepository.findById(aposentadoriaId))
                 .thenReturn(Optional.of(aposentadoria));
-        when(depositosRepository.findTotalDepositadoNoPeriodo(eq(clienteId), any(LocalDateTime.class), any(LocalDateTime.class)))
-                .thenReturn(800.0);
         when(depositosRepository.save(any(Depositos.class))).thenReturn(depositoSalvo);
 
         Depositos resultado = depositosService.depositar(request);
@@ -137,8 +131,6 @@ class DepositosServiceTest {
 
         when(aposentadoriaRepository.findById(aposentadoriaId))
                 .thenReturn(Optional.of(aposentadoria));
-        when(depositosRepository.findTotalDepositadoNoPeriodo(eq(clienteId), any(LocalDateTime.class), any(LocalDateTime.class)))
-                .thenReturn(1000.0);
 
         when(depositosRepository.save(any(Depositos.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
@@ -167,8 +159,6 @@ class DepositosServiceTest {
 
         when(aposentadoriaRepository.findById(aposentadoriaId))
                 .thenReturn(Optional.of(aposentadoria));
-        when(depositosRepository.findTotalDepositadoNoPeriodo(eq(clienteId), any(LocalDateTime.class), any(LocalDateTime.class)))
-                .thenReturn(1000.0);
 
         when(depositosRepository.save(any(Depositos.class))).thenAnswer(invocation -> invocation.getArgument(0));
 

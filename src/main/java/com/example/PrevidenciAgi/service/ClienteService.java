@@ -1,6 +1,7 @@
 package com.example.PrevidenciAgi.service;
 
 import com.example.PrevidenciAgi.component.JwtTokenGenerator;
+import com.example.PrevidenciAgi.dto.cliente.request.DadosRequest;
 import com.example.PrevidenciAgi.entity.Cliente;
 import com.example.PrevidenciAgi.entity.Enum.AtualizacaoDeDados;
 import com.example.PrevidenciAgi.entity.Enum.Role;
@@ -103,8 +104,9 @@ public class ClienteService {
         return validator.isValid(email);
     }
 
-    public Cliente dadosCliente(Long id) {
-        return clienteRepository.findById(id)
+    public DadosRequest dadosCliente(Long id) {
+        Cliente cliente = clienteRepository.findById(id)
                 .orElseThrow(() -> new NaoEncontrado("Cliente nao encontrado."));
+        return new DadosRequest(cliente.getCpf(), cliente.getNome(), cliente.getGenero(), cliente.getEmail(), cliente.getSenha(), cliente.getAposentadoria());
     }
 }

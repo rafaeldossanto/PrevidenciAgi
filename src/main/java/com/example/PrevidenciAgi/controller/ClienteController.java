@@ -25,10 +25,13 @@ public class ClienteController {
 
     @PostMapping("/login")
     public ResponseEntity<Map<String, String>> login(@RequestBody LoginRequest login){
-        String token = clienteService.login(login.email(), login.senha());
+        Map<String, Object> resultado = clienteService.loginAlt(login.email(), login.senha());
+        String token = (String) resultado.get("token");
+        Cliente cliente = (Cliente) resultado.get("cliente");
 
         return ResponseEntity.ok(Map.of(
                 "token", token,
+                "clienteId", cliente.getId().toString(),
                 "message", "Login realizado com sucesso"
         ));
     }

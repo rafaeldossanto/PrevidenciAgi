@@ -16,6 +16,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+import java.util.Map;
+
 
 @Service
 public class ClienteService {
@@ -68,6 +71,27 @@ public class ClienteService {
         Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
 
         return jwtTokenGenerator.generateToken(authentication);
+    }
+
+    public Map<String, Object> loginAlt(String email, String senha) {
+        Cliente cliente = clienteRepository.findByEmail(email)
+                .orElseThrow(() -> new NaoEncontrado("Email não encontrado"));
+
+        if (!passwordEncoder.matches(senha, cliente.getSenha())) {
+            throw new SenhaInvalida("Senha incorreta");
+        }
+        UserDetails userDetails = User.builder()
+                .username(cliente.getEmail())
+                .password(cliente.getSenha())
+                .roles(cliente.getRole().name())
+                .build();
+        Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+        String token = jwtTokenGenerator.generateToken(authentication);
+        Map<String, Object> resultado = new HashMap<>();
+        resultado.put("token", token);
+        resultado.put("cliente", cliente);
+
+        return resultado;
     }
 
     public void atualizarDados(Long id, AtualizacaoDeDados dado, String dadoNovo) {

@@ -3,13 +3,18 @@ package com.example.PrevidenciAgi.service;
 import com.example.PrevidenciAgi.entity.Cliente;
 import com.example.PrevidenciAgi.repository.ClienteRepository;
 import com.example.PrevidenciAgi.service.exception.NaoEncontrado;
+import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StreamUtils;
 
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,13 +30,23 @@ public class EmailService {
     @Transactional
     @Scheduled(fixedRate = 259200000)
     public void enviarEmailCombranca() {
-        var message = new SimpleMailMessage();
+        try {
+            String html = carregarHtml("templates/email.html");
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+            helper.setFrom("contaagiemail@gmail.com");
+            helper.setTo(emailsPendentes());
+            helper.setSubject("Lembrete de Depósito");
+            helper.setText(html, true);
+            mailSender.send(message);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
-        message.setFrom("contaagiemail@gmail.com");
-        message.setTo(emailsPendentes());
-        message.setSubject("Lembrete de Depósito");
-        message.setText("Olá! Você ainda não realizou seu depósito este mês. Por favor, regularize sua situação.");
-        mailSender.send(message);
+    private String carregarHtml(String caminho) throws Exception {
+        var resource = new ClassPathResource(caminho);
+        return StreamUtils.copyToString(resource.getInputStream(), StandardCharsets.UTF_8);
     }
 
     public void recuperacaoSenha(String email) {

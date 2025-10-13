@@ -40,7 +40,7 @@ public class SecurityConfig {
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/previdencia/login", "/previdencia/criar").permitAll()
+                        .requestMatchers("/previdencia/login", "/previdencia/criar", "/camunda/**").permitAll()
                         .requestMatchers("/simulacao/**").permitAll()
                         .requestMatchers(
                                 "/swagger-ui/**",

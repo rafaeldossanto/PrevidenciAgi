@@ -40,21 +40,7 @@ public class SecurityConfig {
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/previdencia/login", "/previdencia/criar", "/camunda/**").permitAll()
-                        .requestMatchers("/simulacao/**").permitAll()
-                        .requestMatchers(
-                                "/swagger-ui/**",
-                                "/v3/api-docs/**",
-                                "/swagger-ui.html",
-                                "/swagger-resources/**",
-                                "/webjars/**"
-                        ).permitAll()
-                        .requestMatchers(
-                                "/previdencia/**",
-                                "/depositos/**",
-                                "/aposentadoria/**"
-                        ).hasRole("CLIENTE")
-                        .anyRequest().authenticated()
+                        .anyRequest().permitAll()
                 );
 
         return http.build();

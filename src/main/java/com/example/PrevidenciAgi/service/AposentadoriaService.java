@@ -38,10 +38,11 @@ public class AposentadoriaService {
         aposentadoria.setData_contratada(LocalDate.now());
         aposentadoria.setCliente(cliente);
 
+        aposentadoriaRepository.save(aposentadoria);
         cliente.setAposentadoria(aposentadoria);
         clienteRepository.save(cliente);
 
-        return aposentadoriaRepository.save(aposentadoria);
+        return aposentadoria;
     }
 
 

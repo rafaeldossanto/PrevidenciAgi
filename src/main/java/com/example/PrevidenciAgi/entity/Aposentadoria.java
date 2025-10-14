@@ -23,6 +23,7 @@ public class Aposentadoria {
     private Long idAposentadoria;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "tipo_aposentadoria", length = 50)
     private TipoAposentadoria tipoAposentadoria;
 
     @Positive(message = "O valor mensal deve ser positivo")

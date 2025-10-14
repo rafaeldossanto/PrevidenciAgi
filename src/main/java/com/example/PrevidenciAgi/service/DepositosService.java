@@ -1,6 +1,7 @@
 package com.example.PrevidenciAgi.service;
 
 import com.example.PrevidenciAgi.dto.deposito.request.DepositosRequest;
+import com.example.PrevidenciAgi.dto.deposito.response.DepositosResponse;
 import com.example.PrevidenciAgi.entity.Aposentadoria;
 import com.example.PrevidenciAgi.entity.Cliente;
 import com.example.PrevidenciAgi.entity.Depositos;
@@ -32,7 +33,7 @@ public class DepositosService {
     @Autowired
     private DepositosRepository depositosRepository;
 
-    public Depositos depositar(DepositosRequest request) {
+    public DepositosResponse depositar(DepositosRequest request) {
         Aposentadoria aposentadoria = aposentadoriaRepository.findById(request.id_aposentadoria())
                 .orElseThrow(() -> new NaoEncontrado("Aposentadoria nao encontrada"));
 
@@ -57,15 +58,19 @@ public class DepositosService {
         } else {
             deposito.setTipo(TipoDeposito.MENSAL);
         }
+        depositosRepository.save(deposito);
 
-        return depositosRepository.save(deposito);
+        return new DepositosResponse(deposito.getTipo(),
+                deposito.getValor(),
+                cliente.getNome(),
+                deposito.getDataDeposito());
     }
 
-    public Double saqueAdiantado(Long id, Double valor){
+    public Double saqueAdiantado(Long id, Double valor) {
         Aposentadoria aposentadoria = aposentadoriaRepository.findById(id)
                 .orElseThrow(() -> new NaoEncontrado("Aposentadoria nao encontrada"));
 
-        Double valorImposto = valor + valor*0.25;
+        Double valorImposto = valor + valor * 0.25;
 
         if (aposentadoria.getSaldo() < valorImposto) {
             throw new ValorInvalido("Saldo insuficiente");
@@ -104,7 +109,7 @@ public class DepositosService {
                 .sum();
     }
 
-    public Double totalDepositadoMes(Long id){
+    public Double totalDepositadoMes(Long id) {
         Cliente cliente = clienteRepository.findById(id)
                 .orElseThrow(() -> new NaoEncontrado("Cliente com esse Id nao encontrado."));
         int mesAtual = LocalDate.now().getMonthValue();

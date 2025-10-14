@@ -2,10 +2,15 @@ package com.example.PrevidenciAgi.dto.aposentadoria.response;
 
 import com.example.PrevidenciAgi.entity.Enum.TipoAposentadoria;
 
+import java.time.LocalDate;
+
 public record AposentadoriaResponse(
-        Long idAposentadoria,
         TipoAposentadoria tipoAposentadoria,
-        String dataAposentar,
-        String dataContratada
-) {
+        LocalDate dataAposentar,
+        LocalDate dataInicio,
+        Double valorMensal,
+        Double valorDeposito,
+        String nomeCliente,
+        LocalDate dataContratada
+        ) {
 }

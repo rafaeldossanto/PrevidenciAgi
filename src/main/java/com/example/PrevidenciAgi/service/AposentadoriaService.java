@@ -1,6 +1,7 @@
 package com.example.PrevidenciAgi.service;
 
 import com.example.PrevidenciAgi.dto.aposentadoria.request.AposentadoriaRequest;
+import com.example.PrevidenciAgi.dto.aposentadoria.response.AposentadoriaResponse;
 import com.example.PrevidenciAgi.entity.Aposentadoria;
 import com.example.PrevidenciAgi.entity.Cliente;
 import com.example.PrevidenciAgi.repository.AposentadoriaRepository;
@@ -21,8 +22,8 @@ public class AposentadoriaService {
     @Autowired
     private ClienteRepository clienteRepository;
 
-    public Aposentadoria assinarAposentadoria(AposentadoriaRequest request){
-        if (aposentadoriaRepository.existsByClienteId(request.id())){
+    public AposentadoriaResponse assinarAposentadoria(AposentadoriaRequest request) {
+        if (aposentadoriaRepository.existsByClienteId(request.id())) {
             throw new JaExistente("Cliente ja possui aposentadoria cadastrada");
         }
 
@@ -42,18 +43,24 @@ public class AposentadoriaService {
         cliente.setAposentadoria(aposentadoria);
         clienteRepository.save(cliente);
 
-        return aposentadoria;
+        return new AposentadoriaResponse(aposentadoria.getTipoAposentadoria(),
+                aposentadoria.getData_aposentar(),
+                aposentadoria.getData_inicio(),
+                aposentadoria.getValor_mensal(),
+                aposentadoria.getValor_deposito(),
+                aposentadoria.getCliente().getNome(),
+                aposentadoria.getData_inicio());
     }
 
 
-    public void ajustarValorMensal(Long id, Double novoValor){
+    public void ajustarValorMensal(Long id, Double novoValor) {
         Aposentadoria aposentadoria = aposentadoriaRepository.findById(id)
                 .orElseThrow(() -> new NaoEncontrado("Aposentadoria com esse id nao encontrada."));
 
-        if (novoValor < 0){
+        if (novoValor < 0) {
             throw new IllegalArgumentException("O valor mensal nao pode ser negativo.");
         }
-        if (novoValor.equals(aposentadoria.getValor_mensal())){
+        if (novoValor.equals(aposentadoria.getValor_mensal())) {
             return;
         }
 

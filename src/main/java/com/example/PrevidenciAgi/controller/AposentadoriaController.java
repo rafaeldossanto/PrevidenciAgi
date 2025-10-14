@@ -1,6 +1,7 @@
 package com.example.PrevidenciAgi.controller;
 
 import com.example.PrevidenciAgi.dto.aposentadoria.request.AposentadoriaRequest;
+import com.example.PrevidenciAgi.dto.aposentadoria.response.AposentadoriaResponse;
 import com.example.PrevidenciAgi.entity.Aposentadoria;
 import com.example.PrevidenciAgi.service.AposentadoriaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,7 @@ public class AposentadoriaController {
     private AposentadoriaService aposentadoriaService;
 
     @PostMapping("/assinar")
-    public Aposentadoria assinarAposentadoria(@RequestBody AposentadoriaRequest request){
+    public AposentadoriaResponse assinarAposentadoria(@RequestBody AposentadoriaRequest request){
         return aposentadoriaService.assinarAposentadoria(request);
     }
 

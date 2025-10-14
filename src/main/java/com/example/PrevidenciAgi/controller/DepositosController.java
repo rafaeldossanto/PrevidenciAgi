@@ -1,6 +1,7 @@
 package com.example.PrevidenciAgi.controller;
 
 import com.example.PrevidenciAgi.dto.deposito.request.DepositosRequest;
+import com.example.PrevidenciAgi.dto.deposito.response.DepositosResponse;
 import com.example.PrevidenciAgi.entity.Depositos;
 import com.example.PrevidenciAgi.service.DepositosService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,7 @@ public class DepositosController {
     private DepositosService depositosService;
 
     @PostMapping
-    public Depositos depositar(@RequestBody DepositosRequest request){
+    public DepositosResponse depositar(@RequestBody DepositosRequest request){
         return depositosService.depositar(request);
     }
 

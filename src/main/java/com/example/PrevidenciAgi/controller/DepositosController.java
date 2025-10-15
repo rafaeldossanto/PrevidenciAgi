@@ -2,7 +2,6 @@ package com.example.PrevidenciAgi.controller;
 
 import com.example.PrevidenciAgi.dto.deposito.request.DepositosRequest;
 import com.example.PrevidenciAgi.dto.deposito.response.DepositosResponse;
-import com.example.PrevidenciAgi.entity.Depositos;
 import com.example.PrevidenciAgi.service.DepositosService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

@@ -44,8 +44,8 @@ public class ClienteController {
         clienteService.atualizarDados(id, request.dado(), request.mudanca());
     }
 
-    @PostMapping("/recuperar")
-    public void recuperarSenha(@RequestBody String email){
+    @PostMapping("/recuperar/{email}")
+    public void recuperarSenha(@PathVariable String email){
         emailService.recuperacaoSenha(email);
     }
 

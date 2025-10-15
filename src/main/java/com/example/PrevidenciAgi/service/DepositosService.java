@@ -66,11 +66,11 @@ public class DepositosService {
                 deposito.getDataDeposito());
     }
 
-    public Double saqueAdiantado(Long id, Double valor) {
-        Aposentadoria aposentadoria = aposentadoriaRepository.findById(id)
+    public Double saqueAdiantado(DepositosRequest request) {
+        Aposentadoria aposentadoria = aposentadoriaRepository.findById(request.id_aposentadoria())
                 .orElseThrow(() -> new NaoEncontrado("Aposentadoria nao encontrada"));
 
-        Double valorImposto = valor + valor * 0.25;
+        Double valorImposto = request.valor() + request.valor() * 0.25;
 
         if (aposentadoria.getSaldo() < valorImposto) {
             throw new ValorInvalido("Saldo insuficiente");
@@ -82,7 +82,7 @@ public class DepositosService {
         aposentadoria.setSaldo(aposentadoria.getSaldo() - valorImposto);
         aposentadoriaRepository.save(aposentadoria);
 
-        return valor;
+        return request.valor();
     }
 
     public List<Double> listarDepositos(Long id) {

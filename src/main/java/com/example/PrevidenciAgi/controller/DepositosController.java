@@ -24,4 +24,9 @@ public class DepositosController {
     public List<Double> listarDepositosAposentadoria(@PathVariable Long id){
         return depositosService.listarDepositos(id);
     }
+
+    @PostMapping("/saque/adiantado")
+    public Double saqueAdiantado(@RequestBody DepositosRequest request){
+        return depositosService.saqueAdiantado(request);
+    }
 }
